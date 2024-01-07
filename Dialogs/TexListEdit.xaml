@@ -1,0 +1,71 @@
+﻿<Window x:Class="Armoire.Dialogs.TexListEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Armoire.Dialogs"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        SizeToContent="Width"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Title="Texture Replacement Editor" Height="250" Width="350" FontFamily="Meiryo UI">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderThickness="2" CornerRadius="4" Background="#FF252525">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Text="Armoire - Texture Replacements" Foreground="White" FontSize="14" TextAlignment="Center"/>
+            <Separator Grid.Row="1" Grid.ColumnSpan="5"/>
+            <DataGrid 
+                x:Name="texDataGrid"
+                Height="200"
+                Background="#FF252525"
+                BorderBrush="White"
+                BorderThickness="2"
+                AlternationCount="2"
+                AlternatingRowBackground="#FF303030"
+                FontSize="10"
+                Grid.Row="2"
+                Grid.ColumnSpan="3"
+                HeadersVisibility="Column"
+                DataContext="{Binding textureList}"
+                CanUserAddRows="False"
+                CanUserResizeRows="False"
+                VerticalScrollBarVisibility="Visible"
+                HorizontalScrollBarVisibility="Disabled"
+                AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" Margin="5,0,5,0">
+                <DataGrid.ContextMenu>
+                    <ContextMenu Width="125">
+                        <MenuItem Header="Add Replacement" Style="{StaticResource SingleButton}" Click="Add_Click"/>
+                        <Separator Background="Transparent" Foreground="Transparent" BorderBrush="Transparent"/>
+                        <MenuItem Header="Remove Selected" Click="Remove_Click" Style="{StaticResource SingleButton}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Original Texture" MinWidth="161" Binding="{Binding org}"/>
+                    <DataGridTextColumn Header="New Texture" MinWidth="161" Binding="{Binding chg}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Content="Close" Grid.Row="4" Grid.Column="1" Click="Button_Click" IsDefault="True"/>
+        </Grid>
+    </Border>
+</Window>

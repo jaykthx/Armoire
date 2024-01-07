@@ -1,0 +1,98 @@
+﻿<Window x:Class="Armoire.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Title="Armoire (Modules)" Height="615" Width="610" FontFamily="Meiryo UI">
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+O" Command="Open"/>
+        <KeyBinding Gesture="Ctrl+S" Command="Save"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="SaveAs"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenCommandBinding_Executed"/>
+        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
+        <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
+    </Window.CommandBindings>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderBrush="#FF252525" BorderThickness="8" CornerRadius="8">
+        <Grid Background="#FF252525">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="550"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Foreground="White" Text="Armoire (Modules)" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
+            <Menu Grid.Row="1" Grid.ColumnSpan="5" Height="20" Background="Transparent" Margin="0,-1.3,0,5">
+                <MenuItem StaysOpenOnClick="True" Width="60" Header="File" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Width="60" Header="Open" Style="{StaticResource SingleButton}" Command="Open"/>
+                    <MenuItem Width="60" Header="Save" Style="{StaticResource SingleButton}" Command="Save"/>
+                    <MenuItem Width="60" Header="Save As" Style="{StaticResource SingleButton}" Command="SaveAs"/>
+                    <MenuItem Width="60" Header="To CSV" Style="{StaticResource SingleButton}" Click="Export_Click"/>
+                </MenuItem>
+                <MenuItem Width="136" Header="Customise Item Editor" Margin="6.25,0,6.25,0" Click="Open_CustEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="136" Header="Character Item Editor" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="86" Header="Sprite DB Editor" Margin="6.25,0,6.25,0" Click="Open_SprEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="60" Header="Preview" Margin="6.25,0,6.25,0" Click="Preview_Click"  Style="{StaticResource SingleButton}"/>
+                <MenuItem x:Name="Exit" Width="40" Header="Exit" Click="Exit_Click" Margin="6.25,0,6.25,0" Style="{StaticResource SingleButton}"/>
+            </Menu>
+            <DataGrid x:Name="DataGrid"
+                      Background="Transparent"
+                      BorderThickness="2"
+                      AlternationCount="2"
+                      AlternatingRowBackground="#FF303030"
+                      FontSize="10"
+                      Grid.Row="2"
+                      Grid.ColumnSpan="5"
+                      HeadersVisibility="Column"
+                      ItemsSource="{Binding Modules}"
+                      CanUserAddRows="False"
+                      CanUserResizeRows="False"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Drop="DataGrid_Drop"
+                      AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" BorderBrush="White">
+                <DataGrid.ContextMenu>
+                    <ContextMenu Width="auto">
+                        <MenuItem Header="Add Module (At Sel.)" Style="{StaticResource SingleButton}" Click="AddButton_Click"/>
+                        <MenuItem Header="Add Module (At End)" Style="{StaticResource SingleButton}" Click="AddButton2_Click"/>
+                        <Separator Background="Transparent" Foreground="Transparent" BorderBrush="Transparent"/>
+                        <MenuItem Header="Remove Module(s)" Click="DeleteEntry" Style="{StaticResource SingleButton}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idRow" Header="ID" Width="30" Binding="{Binding id}"/>
+                    <DataGridComboBoxColumn x:Name="attrBox" Header="Attribute" Width="70" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridComboBoxColumn x:Name="charaBox" Width="55" Header="Character"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="Name" Width="160*" Binding="{Binding name}"/>
+                    <DataGridTextColumn Header="Price" Width="35" Binding="{Binding shop_price}"/>
+                    <DataGridTextColumn Header="Index" Width="35" Binding="{Binding sort_index}"/>
+                    <DataGridTextColumn Header="Costume" Width="55" Binding="{Binding cos}"/>
+                    <DataGridTextColumn Header="Day" Width="25" Binding="{Binding shop_st_day}"/>
+                    <DataGridTextColumn Header="Month" Width="35" Binding="{Binding shop_st_month}"/>
+                    <DataGridTextColumn Header="Year" Width="36" Binding="{Binding shop_st_year}"/>
+                    <DataGridCheckBoxColumn Header="Ignore" Width="45" Binding="{Binding ng}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</Window>

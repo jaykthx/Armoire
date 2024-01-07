@@ -1,0 +1,150 @@
+﻿<Window x:Class="Armoire.CharaEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Armoire"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Title="Armoire (Character Item Tables)" Height="610" Width="800" FontFamily="Meiryo UI">
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+O" Command="Open"/>
+        <KeyBinding Gesture="Ctrl+S" Command="Save"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="SaveAs"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenCommandBinding_Executed"/>
+        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
+        <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
+    </Window.CommandBindings>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderBrush="#FF252525" BorderThickness="8" CornerRadius="8">
+        <Grid Background="#FF252525">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Foreground="White" Text="Armoire (Character Item Tables)" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
+            <Menu Grid.Row="1" Grid.ColumnSpan="5" Height="20" Background="Transparent" Margin="0,-1.3,0,5">
+                <MenuItem StaysOpenOnClick="True" Width="60" Header="File" Background="Transparent" Style="{StaticResource MenuButton}" Margin="0,0,5,0">
+                    <MenuItem Width="60" Header="Open" Style="{StaticResource SingleButton}" Command="Open"/>
+                    <MenuItem Width="60" Header="Save" Style="{StaticResource SingleButton}" Command="Save"/>
+                    <MenuItem Width="60" Header="Save As" Style="{StaticResource SingleButton}" Command="SaveAs"/>
+                </MenuItem>
+                <MenuItem Width="180" Header="Customise Item Editor" Click="Open_CustEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
+                <MenuItem Width="180" Header="Module Table Editor" Click="Open_MainEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
+                <MenuItem Width="140" Header="Object Database Editor" Click="Open_ObjEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
+                <MenuItem Width="150" Header="Texture Database Editor" Click="Open_TexEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
+                <MenuItem x:Name="Exit" Width="40" Header="Exit" Click="Exit_Click" Style="{StaticResource SingleButton}"/>
+            </Menu>
+            <ComboBox x:Name="CharaBox" Grid.Row="2" Grid.ColumnSpan="5" Height="20" Background="#FF292929" Margin="0,0,10,0" Foreground="White" SelectionChanged="CharaBox_SelectionChanged"/>
+            <DataGrid x:Name="CosDataGrid"
+                      Height="150"
+                      Background="#FF252525"
+                      BorderBrush="White"
+                      BorderThickness="2"
+                      AlternationCount="2"
+                      AlternatingRowBackground="#FF303030"
+                      FontSize="10"
+                      Grid.Row="3"
+                      Grid.RowSpan="1"
+                      Grid.ColumnSpan="5"
+                      HeadersVisibility="Column"
+                      ItemsSource="{Binding costumes, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
+                      CanUserAddRows="False"
+                      CanUserResizeRows="False"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Drop="DataGrid_Drop"
+                      AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" Margin="0,0,10,0">
+                <DataGrid.ContextMenu>
+                    <ContextMenu Width="125">
+                        <MenuItem Header="Add Costume" Style="{StaticResource SingleButton}" Click="AddCos"/>
+                        <Separator Background="Transparent" Foreground="Transparent" BorderBrush="Transparent"/>
+                        <MenuItem Header="Remove Costume" Click="DelCos" Style="{StaticResource SingleButton}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idRow" Header="COS" Width="32" Binding="{Binding id}"/>
+                    <DataGridTextColumn x:Name="item1" Header="Item 1" Width="*" Binding="{Binding items[0]}"/>
+                    <DataGridTextColumn x:Name="item2" Header="Item 2" Width="*" Binding="{Binding items[1]}"/>
+                    <DataGridTextColumn x:Name="item3" Header="Item 3" Width="*" Binding="{Binding items[2]}"/>
+                    <DataGridTextColumn x:Name="item4" Header="Item 4" Width="*" Binding="{Binding items[3]}"/>
+                    <DataGridTextColumn x:Name="item5" Header="Item 5" Width="*" Binding="{Binding items[4]}"/>
+                    <DataGridTemplateColumn Header="List" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit List" Click="List_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="ItemDataGrid"  Background="#FF252525"
+                      BorderBrush="White"
+                      BorderThickness="2"
+                      AlternationCount="2"
+                      AlternatingRowBackground="#FF303030"
+                      FontSize="10"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="5"
+                      Grid.Row="4"
+                      Grid.RowSpan="1"
+                      HeadersVisibility="Column"
+                      ItemsSource="{Binding items, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
+                      CanUserAddRows="False"
+                      CanUserResizeRows="False"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Drop="DataGrid_Drop"
+                      AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" Margin="0,0,10,0">>
+                <DataGrid.ContextMenu>
+                    <ContextMenu Width="125">
+                        <MenuItem Header="Add Item" Style="{StaticResource SingleButton}" Click="AddItem"/>
+                        <Separator Background="Transparent" Foreground="Transparent" BorderBrush="Transparent"/>
+                        <MenuItem Header="Remove Item" Click="DelItem" Style="{StaticResource SingleButton}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="No" Width="32" Binding="{Binding no}"/>
+                    <DataGridTextColumn Header="Name" Width="80*" Binding="{Binding name}"/>
+                    <DataGridTextColumn Header="Object UID" Width="80*" Binding="{Binding uid}"/>
+                    <DataGridTemplateColumn Header="Preset" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Change" Click="Change_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Details" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" Click="Edit_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</Window>

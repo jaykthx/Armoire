@@ -1,0 +1,64 @@
+﻿<Window x:Class="Armoire.Dialogs.PresetPicker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Armoire.Dialogs"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Title="Preset Picker" Height="300" Width="250" FontFamily="Meiryo UI">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderThickness="2" CornerRadius="4" Background="#FF252525">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Text="Armoire - Select Preset" Foreground="White" FontSize="14" TextAlignment="Center"/>
+            <TextBlock x:Name="holdName" Text="{Binding name}" Grid.Row="2" Grid.ColumnSpan="5" TextAlignment="Center" Foreground="White"/>
+            <Separator Grid.Row="1" Grid.ColumnSpan="5"/>
+            <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="auto">
+                <TextBlock Text="Select a Preset" Foreground="White" HorizontalAlignment="Center" FontSize="14"/>
+                <Border Height="5" Background="Transparent"/>
+                <Button Content="Hair"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Body"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Hands"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Contact Lenses"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Eye Texture Swap"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Head Accessory"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Face Accessory"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Chest Accessory"/>
+                <Border Height="2" Background="Transparent"/>
+                <Button Content="Back Accessory"/>
+            </StackPanel>
+            <Button Content="Apply &amp; Close" Click="Button_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" Height="20"/>
+        </Grid>
+    </Border>
+</Window>

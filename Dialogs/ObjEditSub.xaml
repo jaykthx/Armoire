@@ -1,0 +1,46 @@
+﻿<Window x:Class="Armoire.Dialogs.ObjEditSub"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Armoire.Dialogs"
+        mc:Ignorable="d"
+        Title="Armoire - Object Info Editor" Height="400" Width="400" ResizeMode="NoResize" WindowStyle="None" FontFamily="Meiryo UI">
+    <Grid DataContext="thisObj">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Object Info Editor" MouseDown="MoveWindow" Width="auto"/>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    Width="380"
+                    >
+            <TextBlock Text="List" HorizontalAlignment="Center"/>
+            <DataGrid x:Name="Grid123" AutoGenerateColumns="False" CanUserAddRows="False" Height="325">
+                <DataGrid.InputBindings>
+                    <KeyBinding Gesture="Ctrl+A" Command="ApplicationCommands.NotACommand"/>
+                </DataGrid.InputBindings>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="AddMenu"  Header="Add Object" Click="MenuItem_Click"/>
+                        <MenuItem x:Name="DelMenu" Header="Delete Object(s)" Click="MenuItem2_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="300"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Separator Height="5"/>
+            <Button Content="Close" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
