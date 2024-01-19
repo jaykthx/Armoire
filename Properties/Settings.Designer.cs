@@ -34,5 +34,17 @@ namespace Armoire.Properties {
                 this["gamePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Pink")]
+        public global::System.Drawing.Color HighlightedColour {
+            get {
+                return ((global::System.Drawing.Color)(this["HighlightedColour"]));
+            }
+            set {
+                this["HighlightedColour"] = value;
+            }
+        }
     }
 }

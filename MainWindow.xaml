@@ -48,6 +48,7 @@
                     <MenuItem Width="60" Header="Save" Style="{StaticResource SingleButton}" Command="Save"/>
                     <MenuItem Width="60" Header="Save As" Style="{StaticResource SingleButton}" Command="SaveAs"/>
                     <MenuItem Width="60" Header="To CSV" Style="{StaticResource SingleButton}" Click="Export_Click"/>
+                    <MenuItem Width="60" Header="Wizard" Style="{StaticResource SingleButton}" Click="Wizard_Click"/>
                 </MenuItem>
                 <MenuItem Width="136" Header="Customise Item Editor" Margin="6.25,0,6.25,0" Click="Open_CustEditor" Style="{StaticResource SingleButton}"/>
                 <MenuItem Width="136" Header="Character Item Editor" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>

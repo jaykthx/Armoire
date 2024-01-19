@@ -19,29 +19,41 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class PresetPicker : Window
     {
-        public List<string> presets = new List<string> { "Eye Texture Swap", "Contact Lenses", "Hair", "Body", "Hands", "Head Accessory", "Face Accessory", "Chest Accessory", "Back Accessory", "Custom" };
+        public List<string> presets = new List<string> { "Eye Texture Swap", "Contact Lenses", "Hair", "Body", "Hands", "Head Accessory", "Face Accessory", "Chest Accessory", "Back Accessory"};
+        public itemEntry itemCurrent;
         public PresetPicker(itemEntry item)
         {
             InitializeComponent();
-            this.DataContext= item;
+            Program.CreatePresetList();
+            presetBox.ItemsSource = presets;
+            presetBox.SelectedIndex = 0;
+            itemCurrent = item;
             holdName.Text = item.name;
+            presetBox.Focus();
         }
+
+        private itemEntry applyPreset(Program.ItemPreset preset, itemEntry item)
+        {
+            item.attr = preset.attr;
+            item.desID = preset.desid;
+            item.subID = preset.subid;
+            item.flag = preset.flag;
+            item.rpk = preset.rpk;
+            item.orgItm = preset.orgitm;
+            item.face_depth = preset.face_depth;
+            item.type = preset.type;
+            return item;
+        }
+
+        // attr,subid,desid,rpk,type,orgitm,flag,face_depth
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if(presetBox.SelectedIndex > -1)
+            {
+                applyPreset(Program.itemPresets[presetBox.SelectedIndex], itemCurrent);
+            }
             this.Close();
         }
-        /*
-         * attr,subid,desid,rpk,type,orgitm,flag,face_depth
-         * Head Acc (1,0,0,-1,0,0,0,0.00)
-         * Face Acc (1,4,1,-1,0,0,0,0.00)
-         * Chest Acc (1,8,2,-1,0,0,0,0.00)
-         * Back Acc (1,16,2,-1,0,0,0,0.00)
-         * Hair (1,1,0,-1,0,0,0,0.00)
-         * Body (1,10,2,-1,1,0,0,0.00)
-         * Hands (1,14,2,-1,0,0,0,0.00)
-         * Contact Lenses (1,6,1,-1,0,0,0,0.00)
-         * Eye Tex (37,24,0,1,2,0,0,0.00) uid = NULL
-         */
     }
 }

@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterOwner"
         Title="Armoire - Enter Value" Height="100" Width="250" FontFamily="Meiryo UI" x:Name="win1">
     <Window.Resources>
         <ResourceDictionary>

@@ -2,6 +2,8 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.Win32;
+using MikuMikuLibrary.Archives;
+using MikuMikuLibrary.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -125,7 +127,8 @@ namespace Armoire
             CosDataGrid.Items.Clear();
             ItemDataGrid.Items.Clear();
             CharaBox.Items.Clear();
-            chritmFiles = Program.readCharaFile(Program.charaPath);
+            var farc = BinaryFile.Load<FarcArchive>(Program.charaPath);
+            chritmFiles = Program.IO.ReadCharaFile(farc);
             foreach (chritmFile x in chritmFiles)
             {
                 CharaBox.Items.Add(x.getFullName());
@@ -140,7 +143,7 @@ namespace Armoire
             {
                 if (isQuickSave)
                 {
-                    Program.saveChr(Program.charaPath, chritmFiles);
+                    Program.IO.SaveChr(Program.charaPath, chritmFiles);
                 }
                 else
                 {
@@ -152,7 +155,7 @@ namespace Armoire
                     if (sfd.ShowDialog() == true)
                     {
                         Program.charaPath = sfd.FileName;
-                        Program.saveChr(Program.charaPath, chritmFiles);
+                        Program.IO.SaveChr(Program.charaPath, chritmFiles);
                     }
                 }
             }

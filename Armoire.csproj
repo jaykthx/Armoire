@@ -35,7 +35,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -49,7 +49,8 @@
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -255,6 +256,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\ChoiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\ItemEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -287,7 +292,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\WizItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EntryDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ModuleInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ModuleWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -315,6 +332,9 @@
     <Compile Include="CustEditor.xaml.cs">
       <DependentUpon>CustEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ChoiceWindow.xaml.cs">
+      <DependentUpon>ChoiceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ItemEdit.xaml.cs">
       <DependentUpon>ItemEdit.xaml</DependentUpon>
     </Compile>
@@ -339,8 +359,17 @@
     <Compile Include="Dialogs\TexEdit.xaml.cs">
       <DependentUpon>TexEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\WizItem.xaml.cs">
+      <DependentUpon>WizItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EntryDisplay.xaml.cs">
       <DependentUpon>EntryDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModuleInfo.xaml.cs">
+      <DependentUpon>ModuleInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModuleWizard.xaml.cs">
+      <DependentUpon>ModuleWizard.xaml</DependentUpon>
     </Compile>
     <Compile Include="PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
@@ -404,9 +433,6 @@
     <Resource Include="Resources\info_p.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
@@ -417,6 +443,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\md_dummy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

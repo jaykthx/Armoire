@@ -8,7 +8,7 @@
         ResizeMode="CanResizeWithGrip"
         Background="#FF393939"
         WindowStartupLocation="CenterScreen"
-        Title="Armoire (Preview)" Height="600" Width="500" FontFamily="Meiryo UI">
+        Title="Armoire (Preview)" Height="600" Width="500" FontFamily="Meiryo UI" Foreground="White">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>

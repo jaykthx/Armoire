@@ -29,6 +29,13 @@ namespace Armoire.Dialogs
         }
         TextureDatabase db = new TextureDatabase();
         string saveLocation = null;
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
 
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -42,17 +49,17 @@ namespace Armoire.Dialogs
         {
             SaveAs();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             Save();
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveAs();
         }
@@ -134,12 +141,11 @@ namespace Armoire.Dialogs
             if (saveLocation != null && db.Textures.Count > 0)
             {
                 db.Save(saveLocation);
-                MessageBox.Show("Saved successfully.");
+                Program.NotiBox("Saved successfully.", "Notice");
             }
             else
             {
-                MessageBox.Show("An error occurred while saving your file" +
-                        "\n" + "Please try again.");
+                Program.NotiBox("Please save your file correctly.", "Error");
             }
         }
         private void SaveAs()
@@ -154,23 +160,22 @@ namespace Armoire.Dialogs
                 if (sfd.ShowDialog() == true)
                 {
                     db.Save(sfd.FileName);
-                    System.Windows.MessageBox.Show("Saved successfully.");
+                    Program.NotiBox("Saved successfully.", "Notice");
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("An error occurred while saving your file" +
-                        "\n" + "Please try again.");
+                    Program.NotiBox("An error occurred while saving your file.\nPlease try again.", "Error");
                 }
             }
-            else { MessageBox.Show("Please save your file normally."); }
+            else { Program.NotiBox("Please save your file correctly.", "Error"); }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Replace_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This is case sensitive." + "\nThis only applies to selected items");
-                TextEntry ti = new TextEntry(false, "Enter the old text");
-                TextEntry ti2 = new TextEntry(false, "Enter the new text");
-                string detect;
+            Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items", "Information");
+            TextEntry ti = new TextEntry(false, "Enter the old text");
+            TextEntry ti2 = new TextEntry(false, "Enter the new text");
+            string detect;
             string number;
             ti.ShowDialog();
             ti2.ShowDialog();
@@ -184,6 +189,10 @@ namespace Armoire.Dialogs
                 }
             }
             Grid1.Items.Refresh();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

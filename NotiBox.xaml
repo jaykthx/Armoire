@@ -11,7 +11,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="CharaCos" Height="75" Width="200" FontFamily="Meiryo UI">
+        Title="Notice" Height="75" Width="200" FontFamily="Meiryo UI">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -29,6 +29,13 @@ namespace Armoire.Dialogs
         {
             InitializeComponent();
         }
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFile();
@@ -41,23 +48,23 @@ namespace Armoire.Dialogs
         {
             SaveAs();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e) // Sprite editor
+        private void Object_Click(object sender, RoutedEventArgs e) // Object sub-editor
         {
             ObjectSetInfo obj = ((FrameworkElement)sender).DataContext as ObjectSetInfo;
             ObjEditSub win = new ObjEditSub(obj);
             win.ShowDialog();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             Save();
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveAs();
         }
@@ -86,15 +93,19 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            ObjectSetInfo objSet = new ObjectSetInfo();
-            objSet.Id = 0;
-            objSet.Name = "NEW OBJECT SET ENTRY";
-            objSet.TextureFileName = "dummy_tex.bin";
-            objSet.FileName = "dummy_obj.bin";
-            objSet.ArchiveFileName = "dummy.farc";
-            ObjectInfo newObj = new ObjectInfo();
-            newObj.Id = 0;
-            newObj.Name = "NEW OBJECT ENTRY";
+            ObjectSetInfo objSet = new ObjectSetInfo
+            {
+                Id = 0,
+                Name = "NEW OBJECT SET ENTRY",
+                TextureFileName = "dummy_tex.bin",
+                FileName = "dummy_obj.bin",
+                ArchiveFileName = "dummy.farc"
+            };
+            ObjectInfo newObj = new ObjectInfo
+            {
+                Id = 0,
+                Name = "NEW OBJECT ENTRY"
+            };
             objSet.Objects.Add(newObj);
             db.ObjectSets.Add(objSet);
             Grid1.Items.Refresh();
@@ -106,7 +117,7 @@ namespace Armoire.Dialogs
             foreach (var x in Grid1.SelectedItems)
             {
                 index = Grid1.Items.IndexOf(x);
-                objColle.Add(objDupe(index));
+                objColle.Add(ObjDupe(index));
             }
             foreach (ObjectSetInfo obj in objColle)
             {
@@ -116,19 +127,23 @@ namespace Armoire.Dialogs
             Grid1.Items.Refresh();
         }
 
-        private ObjectSetInfo objDupe(int index) // return ObjectSetInfo
+        private ObjectSetInfo ObjDupe(int index) // return ObjectSetInfo
         {
-            ObjectSetInfo newObjInfo = new ObjectSetInfo();
-            newObjInfo.FileName = db.ObjectSets[index].FileName;
-            newObjInfo.ArchiveFileName = db.ObjectSets[index].ArchiveFileName;
-            newObjInfo.TextureFileName = db.ObjectSets[index].TextureFileName;
-            newObjInfo.Name = db.ObjectSets[index].Name;
-            newObjInfo.Id = db.ObjectSets[index].Id;
+            ObjectSetInfo newObjInfo = new ObjectSetInfo
+            {
+                FileName = db.ObjectSets[index].FileName,
+                ArchiveFileName = db.ObjectSets[index].ArchiveFileName,
+                TextureFileName = db.ObjectSets[index].TextureFileName,
+                Name = db.ObjectSets[index].Name,
+                Id = db.ObjectSets[index].Id
+            };
             foreach (ObjectInfo obj in db.ObjectSets[index].Objects)
             {
-                ObjectInfo newObj = new ObjectInfo();
-                newObj.Id = obj.Id;
-                newObj.Name = obj.Name;
+                ObjectInfo newObj = new ObjectInfo
+                {
+                    Id = obj.Id,
+                    Name = obj.Name
+                };
                 newObjInfo.Objects.Add(newObj);
             }
             return newObjInfo;
@@ -158,37 +173,38 @@ namespace Armoire.Dialogs
             if (saveLocation != null && db.ObjectSets.Count > 0)
             {
                 db.Save(saveLocation);
-                MessageBox.Show("Saved successfully.");
+                Program.NotiBox("Saved successfully.", "Notice");
             }
             else
             {
-                MessageBox.Show("Please save your file normally.");
+                Program.NotiBox("Please save your file correctly.", "Error");
             }
         }
         private void SaveAs()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Object Database files|*obj_db.bin";
-            sfd.FileName = "mod_obj_db.bin";
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "Object Database files|*obj_db.bin",
+                FileName = "mod_obj_db.bin"
+            };
             if (db.ObjectSets.Count != 0)
             {
                 if (sfd.ShowDialog() == true)
                 {
                     db.Save(sfd.FileName);
-                    MessageBox.Show("Saved successfully.");
+                    Program.NotiBox("Saved successfully.", "Notice");
                 }
                 else
                 {
-                    MessageBox.Show("An error occurred while saving your file" +
-                        "\n" + "Please try again.");
+                    Program.NotiBox("An error occurred while saving your file.\nPlease try again.", "Error");
                 }
             }
-            else { MessageBox.Show("Please save your file normally."); }
+            else { Program.NotiBox("Please save your file correctly.", "Error"); }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Replace_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This is case sensitive." + "\nThis only applies to selected items");
+            Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items", "Information");
             TextEntry ti = new TextEntry(false, "Enter the old text");
             TextEntry ti2 = new TextEntry(false, "Enter the new text");
             string detect;
@@ -224,6 +240,10 @@ namespace Armoire.Dialogs
                 }
             }
             Grid1.Items.Refresh();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -59,5 +59,383 @@ namespace Armoire.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_attr {
+            get {
+                return ResourceManager.GetString("cmn_attr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_bind {
+            get {
+                return ResourceManager.GetString("cmn_bind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_button_change {
+            get {
+                return ResourceManager.GetString("cmn_button_change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_button_edit {
+            get {
+                return ResourceManager.GetString("cmn_button_edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_chara {
+            get {
+                return ResourceManager.GetString("cmn_chara", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_cos {
+            get {
+                return ResourceManager.GetString("cmn_cos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_cos_item {
+            get {
+                return ResourceManager.GetString("cmn_cos_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_day {
+            get {
+                return ResourceManager.GetString("cmn_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_details {
+            get {
+                return ResourceManager.GetString("cmn_details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_exit {
+            get {
+                return ResourceManager.GetString("cmn_exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_id {
+            get {
+                return ResourceManager.GetString("cmn_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_index {
+            get {
+                return ResourceManager.GetString("cmn_index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_item_no {
+            get {
+                return ResourceManager.GetString("cmn_item_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_month {
+            get {
+                return ResourceManager.GetString("cmn_month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_name {
+            get {
+                return ResourceManager.GetString("cmn_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_ng {
+            get {
+                return ResourceManager.GetString("cmn_ng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_objid {
+            get {
+                return ResourceManager.GetString("cmn_objid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_objuid {
+            get {
+                return ResourceManager.GetString("cmn_objuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_parts {
+            get {
+                return ResourceManager.GetString("cmn_parts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_preset {
+            get {
+                return ResourceManager.GetString("cmn_preset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_price {
+            get {
+                return ResourceManager.GetString("cmn_price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string cmn_year {
+            get {
+                return ResourceManager.GetString("cmn_year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string db_edit_obj {
+            get {
+                return ResourceManager.GetString("db_edit_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string db_edit_spr {
+            get {
+                return ResourceManager.GetString("db_edit_spr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string db_edit_tex {
+            get {
+                return ResourceManager.GetString("db_edit_tex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string file_csv {
+            get {
+                return ResourceManager.GetString("file_csv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string file_open {
+            get {
+                return ResourceManager.GetString("file_open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string file_save {
+            get {
+                return ResourceManager.GetString("file_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string file_saveas {
+            get {
+                return ResourceManager.GetString("file_saveas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string file_title {
+            get {
+                return ResourceManager.GetString("file_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string file_wizard {
+            get {
+                return ResourceManager.GetString("file_wizard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_chritm {
+            get {
+                return ResourceManager.GetString("title_chritm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_custom {
+            get {
+                return ResourceManager.GetString("title_custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_edit_obj {
+            get {
+                return ResourceManager.GetString("title_edit_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_edit_spr {
+            get {
+                return ResourceManager.GetString("title_edit_spr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_edit_tex {
+            get {
+                return ResourceManager.GetString("title_edit_tex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_module {
+            get {
+                return ResourceManager.GetString("title_module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string title_wizard {
+            get {
+                return ResourceManager.GetString("title_wizard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string window_chritm {
+            get {
+                return ResourceManager.GetString("window_chritm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string window_custom {
+            get {
+                return ResourceManager.GetString("window_custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string window_module {
+            get {
+                return ResourceManager.GetString("window_module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string window_preview {
+            get {
+                return ResourceManager.GetString("window_preview", resourceCulture);
+            }
+        }
     }
 }

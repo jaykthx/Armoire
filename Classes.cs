@@ -1,13 +1,137 @@
-﻿using System;
+﻿using MikuMikuLibrary.Archives;
+using MikuMikuLibrary.Archives.CriMw;
+using MikuMikuLibrary.Databases;
+using MikuMikuLibrary.IO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace Armoire
 {
+    public class usedIDs
+    {
+        public List<uint> spr_db = new List<uint>();
+        public List<uint> obj_db = new List<uint>();
+        public List<uint> tex_db = new List<uint>();
+        public List<int> module_tbl = new List<int>();
+        public List<int> module_tbl_index = new List<int>();
+        public List<int> customize_item_tbl = new List<int>();
+        public List<int> customize_item_tbl_index = new List<int>();
+        public Dictionary<string, List<int>> chritm_prop_cos = new Dictionary<string, List<int>>();
+        public Dictionary<string, List<int>> chritm_prop_item = new Dictionary<string, List<int>>();
+        public void get_used_ids (SpriteDatabase s_db)
+        {
+            foreach (SpriteSetInfo spr in s_db.SpriteSets)
+            {
+                spr_db.Add(spr.Id);
+                foreach (SpriteInfo s in spr.Sprites)
+                {
+                    spr_db.Add(s.Id);
+                }
+                foreach (SpriteTextureInfo t in spr.Textures)
+                {
+                    spr_db.Add(t.Id);
+                }
+            }
+        }
+        public void get_used_ids(ObjectDatabase o_db)
+        {
+            foreach (ObjectSetInfo obj in o_db.ObjectSets)
+            {
+                obj_db.Add(obj.Id);
+            }
+        }
+
+        public void get_used_ids(TextureDatabase t_db)
+        {
+            foreach (TextureInfo t in t_db.Textures)
+            {
+                tex_db.Add(t.Id);
+            }
+        }
+        /// <summary>
+        /// Get the used IDs for your farc archive table file. (mode: 0 = Modules, 1 = Customize Items, 2 = Character Items (chritm_prop))
+        /// </summary>
+        /// <param name="farc"></param>
+        /// <param name="mode"></param>
+        public void get_used_ids(FarcArchive farc, int mode) // mode: 0 - module 1 - customize 2 - chritm
+        {
+            if(mode == 0) // works
+            {
+                ObservableCollection<module> m_tbl = Program.IO.ReadModuleFile(farc);
+                foreach (module m in m_tbl)
+                {
+                    if (!module_tbl.Contains(m.id))
+                    {
+                        module_tbl.Add(m.id);
+                    }
+                    if (!module_tbl_index.Contains(m.sort_index))
+                    {
+                        module_tbl_index.Add(m.sort_index);
+                    }
+                }
+            }
+            else if(mode == 1) // will work if used
+            {
+                ObservableCollection<cstm_item> c_tbl = Program.IO.ReadCustomFile(farc);
+                foreach (cstm_item c in c_tbl)
+                {
+                    if (!customize_item_tbl.Contains(c.id))
+                    {
+                        customize_item_tbl.Add(c.id);
+                    }
+                    if (!customize_item_tbl.Contains(c.sort_index))
+                    {
+                        customize_item_tbl.Add(c.sort_index);
+                    }
+                }
+            }
+            else if(mode == 2) // works
+            {
+                ObservableCollection<chritmFile> chritms = Program.IO.ReadCharaFile(farc);
+                foreach (chritmFile chrFile in chritms)
+                {
+                    List<int> costumes = new List<int>();
+                    List<int> items = new List<int>();
+                    foreach (cosEntry cos in chrFile.costumes)
+                    {
+                        costumes.Add(cos.id);
+                    }
+                    foreach (itemEntry item in chrFile.items)
+                    {
+                        items.Add(item.no);
+                    }
+                    if (chritm_prop_cos.ContainsKey(chrFile.chara))
+                    {
+                        foreach(int cos in costumes)
+                        {
+                            chritm_prop_cos[chrFile.chara].Add(cos);
+                        }
+                        foreach (int item in items)
+                        {
+                            chritm_prop_item[chrFile.chara].Add(item);
+                        }
+                    }
+                    else
+                    {
+                        chritm_prop_cos.Add(chrFile.chara, costumes);
+                        chritm_prop_item.Add(chrFile.chara, items);
+                    }
+                    
+                }
+            }
+            else
+            {
+                Program.NotiBox("Don't play with me right now.", "You messed up");
+            }
+        }
+    }
+
     public enum Attr
     {
         Default_N = 0,
@@ -235,5 +359,44 @@ namespace Armoire
             string x = chara + "itm_tbl.txt";
             return x;
         }
+    }
+    public class wizObj
+    {
+        public string objectFilePath; // file path
+        public wizObjEntry objEntry; // add after assigning for better follow-up
+        public itemEntry item;
+    }
+    public class wizModule
+    {
+        public List<wizObj> objects = new List<wizObj>();
+        public localisedNames localNames = new localisedNames();
+        public bool hairNG;
+        public string name;
+        public int id = -1; //default to a number
+        public string chara;
+        public int sort_index = 999;
+        public string image_path;
+    }
+
+    public class localisedNames
+    {
+        public string cn = "发型";
+        public string en = " Hair";
+        public string fr = " - Coupe";
+        public string ge = "Frisur: ";
+        public string it = "Capelli ";
+        public string kr = " 헤어";
+        public string sp = "Pelo ";
+        public string tw = "髮型:";
+    }
+    public class wizObjEntry
+    {
+        public string name;
+        public string fileName; //obj
+        public string textureFileName;//tex
+        public string archiveFileName;//farc
+        public uint id;//obj_db id
+        public string objName; //divskn
+        public uint objId; //divskn id
     }
 }

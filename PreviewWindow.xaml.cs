@@ -26,9 +26,11 @@ namespace Armoire.Dialogs
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Please select your game directory.";
-            fbd.SelectedPath = Properties.Settings.Default.gamePath;
+            FolderBrowserDialog fbd = new FolderBrowserDialog
+            {
+                Description = "Please select your game directory.",
+                SelectedPath = Properties.Settings.Default.gamePath
+            };
             moduleFlag = isModule;
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -55,18 +57,6 @@ namespace Armoire.Dialogs
             }
         }
 
-        private string getIdString(int id)
-        {
-            string final = id.ToString();
-            while(final.Length < 3)
-            {
-                StringBuilder sb = new StringBuilder(final);
-                sb.Insert(0, "0");
-                final = sb.ToString();
-            }
-            return final;
-        }
-
         private void populateNames()
         {
             mikuPanel.Children.Clear();
@@ -84,8 +74,18 @@ namespace Armoire.Dialogs
             CpkArchive cpk = new CpkArchive();
             if (imagePath != null)
             {
-                dirs = new List<string>(Directory.EnumerateDirectories(imagePath + "\\mods", "2d", SearchOption.AllDirectories));
-                cpk = BinaryFile.Load<CpkArchive>(imagePath + "\\diva_main.cpk");
+                if(Directory.Exists(imagePath + "\\mods"))
+                {
+                    dirs = new List<string>(Directory.EnumerateDirectories(imagePath + "\\mods", "2d", SearchOption.AllDirectories));
+                }
+                if(File.Exists((imagePath + "\\diva_main.cpk")))
+                {
+                    cpk = BinaryFile.Load<CpkArchive>(imagePath + "\\diva_main.cpk");
+                }
+                else
+                {
+                    Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory, no images will be shown.", "Error");
+                }
             }
             if (moduleFlag)
             {
@@ -93,9 +93,9 @@ namespace Armoire.Dialogs
                 {
                     bool isFound = false;
                     if (isFound) { continue; }
-                    if (dirs != null)
+                    if (dirs.Count > 0)
                     {
-                        string fileSearch = "spr_sel_md" + getIdString(x.id) + "cmn";
+                        string fileSearch = "spr_sel_md" + Program.Databases.GetIDString(x.id.ToString()) + "cmn";
                         img = new BitmapImage();
                         foreach (string dir in dirs)
                         {
@@ -109,7 +109,7 @@ namespace Armoire.Dialogs
                                 EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
                                 SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
                                 Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-                                img = ToBitmapImage(cropSprite);
+                                img = Program.ToBitmapImage(cropSprite);
                                 cropSprite.Dispose();
                                 sprite.Dispose();
                                 source.Dispose();
@@ -130,7 +130,7 @@ namespace Armoire.Dialogs
                                 EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
                                 SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
                                 Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-                                img = ToBitmapImage(cropSprite);
+                                img = Program.ToBitmapImage(cropSprite);
                                 cropSprite.Dispose();
                                 sprite.Dispose();
                                 source.Dispose();
@@ -186,7 +186,7 @@ namespace Armoire.Dialogs
                     if (isFound) { continue; }
                     if (dirs != null)
                     {
-                        string fileSearch = "spr_cmnitm_thmb" + getIdString(x.id); //spr_cmnitm_thmb1210
+                        string fileSearch = "spr_cmnitm_thmb" + Program.Databases.GetIDString(x.id.ToString());
                         img = new BitmapImage();
                         foreach (string dir in dirs)
                         {
@@ -200,7 +200,7 @@ namespace Armoire.Dialogs
                                 EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
                                 SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
                                 Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-                                img = ToBitmapImage(cropSprite);
+                                img = Program.ToBitmapImage(cropSprite);
                                 cropSprite.Dispose();
                                 sprite.Dispose();
                                 source.Dispose();
@@ -221,7 +221,7 @@ namespace Armoire.Dialogs
                                 EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
                                 SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
                                 Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-                                img = ToBitmapImage(cropSprite);
+                                img = Program.ToBitmapImage(cropSprite);
                                 cropSprite.Dispose();
                                 sprite.Dispose();
                                 source.Dispose();
@@ -271,22 +271,6 @@ namespace Armoire.Dialogs
                             break;
                     }
                 }
-            }
-        }
-
-        public BitmapImage ToBitmapImage(Bitmap bitmap) // Credit to the uploader of this code on StackOverflow who i forgot to note :(
-        {
-            using (var memory = new MemoryStream())
-            {
-                bitmap.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-                return bitmapImage;
             }
         }
     }

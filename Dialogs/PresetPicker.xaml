@@ -9,8 +9,8 @@
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen"
-        Title="Preset Picker" Height="300" Width="250" FontFamily="Meiryo UI">
+        WindowStartupLocation="CenterOwner"
+        Title="Preset Picker" Height="140" Width="250" FontFamily="Meiryo UI">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,25 +40,9 @@
             <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="auto">
                 <TextBlock Text="Select a Preset" Foreground="White" HorizontalAlignment="Center" FontSize="14"/>
                 <Border Height="5" Background="Transparent"/>
-                <Button Content="Hair"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Body"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Hands"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Contact Lenses"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Eye Texture Swap"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Head Accessory"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Face Accessory"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Chest Accessory"/>
-                <Border Height="2" Background="Transparent"/>
-                <Button Content="Back Accessory"/>
+                <ComboBox x:Name="presetBox" Foreground="White" MinWidth="147.6"/>
             </StackPanel>
-            <Button Content="Apply &amp; Close" Click="Button_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" Height="20"/>
+            <Button Content="Apply &amp; Close" Click="Button_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" Height="20" IsDefault="True"/>
         </Grid>
     </Border>
 </Window>

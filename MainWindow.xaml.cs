@@ -3,6 +3,8 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.SqlServer.Server;
 using Microsoft.Win32;
+using MikuMikuLibrary.Archives;
+using MikuMikuLibrary.IO;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -96,15 +98,16 @@ namespace Armoire
                 if (ofd.FileName != null && ofd.FileName.EndsWith(".farc"))
                 {
                     Program.modulePath = ofd.FileName;
-                    Modules = Program.readModuleFile(Program.modulePath);
+                    var farc = BinaryFile.Load<FarcArchive>(Program.modulePath);
+                    Modules = Program.IO.ReadModuleFile(farc);
                 }
                 else if(ofd.FileName != null && ofd.FileName.EndsWith(".csv"))
                 {
                     string[] split = ofd.FileName.Split('\\');
                     string newFileNameLocation = ofd.FileName.Remove((ofd.FileName.Length - split[split.Length-1].Length),split[split.Length-1].Length);
-                    newFileNameLocation = newFileNameLocation + "mod_gm_module_tbl.farc";
+                    newFileNameLocation += "mod_gm_module_tbl.farc";
                     Program.modulePath = newFileNameLocation;
-                    Modules = Program.readModuleFileCSV(ofd.FileName);
+                    Modules = Program.IO.ReadModuleFileCSV(ofd.FileName);
                 }
                 else { return; }
             }
@@ -116,7 +119,7 @@ namespace Armoire
             {
                 if (isQuickSave)
                 {
-                    Program.saveFile<module>(Program.modulePath, Modules);
+                    Program.IO.SaveFile<module>(Program.modulePath, Modules);
                 }
                 else
                 {
@@ -125,7 +128,7 @@ namespace Armoire
                     if (sfd.ShowDialog() == true)
                     {
                         Program.modulePath = sfd.FileName;
-                        Program.saveFile<module>(sfd.FileName, Modules);
+                        Program.IO.SaveFile<module>(sfd.FileName, Modules);
                     }
                 }
             }
@@ -181,16 +184,17 @@ namespace Armoire
             if (files[0].EndsWith(".farc"))
             {
                 Program.modulePath = files[0];
-                Modules = Program.readModuleFile(Program.modulePath);
+                var farc = BinaryFile.Load<FarcArchive>(Program.modulePath);
+                Modules = Program.IO.ReadModuleFile(farc);
                 DataGrid.ItemsSource = Modules;
             }
             else if (files[0].EndsWith(".csv"))
             {
-                Modules = Program.readModuleFileCSV(files[0]);
+                Modules = Program.IO.ReadModuleFileCSV(files[0]);
                 DataGrid.ItemsSource = Modules;
                 string[] split = files[0].Split('\\');
                 string newFileNameLocation = files[0].Remove((files[0].Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                newFileNameLocation = newFileNameLocation + "mod_gm_module_tbl.farc";
+                newFileNameLocation += "mod_gm_module_tbl.farc";
                 Program.modulePath = newFileNameLocation;
             }
             else { return; }
@@ -249,6 +253,11 @@ namespace Armoire
             {
                 Program.NotiBox("This window is already open.", "Friendly Reminder");
             }
+        }
+        private void Wizard_Click(object sender, RoutedEventArgs e)
+        {
+            ModuleWizard wiz = new ModuleWizard();
+            wiz.ShowDialog();
         }
     }
 }

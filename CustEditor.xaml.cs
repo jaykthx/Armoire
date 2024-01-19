@@ -2,6 +2,8 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.Win32;
+using MikuMikuLibrary.Archives;
+using MikuMikuLibrary.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -33,8 +35,9 @@ namespace Armoire
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             if (files[0].EndsWith(".farc"))
             {
-                Program.modulePath = files[0];
-                CustItems = Program.readCustomFile(Program.customPath);
+                Program.customPath = files[0];
+                var farc = BinaryFile.Load<FarcArchive>(Program.customPath);
+                CustItems = Program.IO.ReadCustomFile(farc);
                 DataGrid.ItemsSource = CustItems;
             }
             else { return; }
@@ -63,7 +66,7 @@ namespace Armoire
             {
                 if (isQuickSave)
                 {
-                    Program.saveFile<cstm_item>(Program.customPath, CustItems);
+                    Program.IO.SaveFile<cstm_item>(Program.customPath, CustItems);
                 }
                 else
                 {
@@ -72,7 +75,7 @@ namespace Armoire
                     if (sfd.ShowDialog() == true)
                     {
                         Program.customPath = sfd.FileName;
-                        Program.saveFile<cstm_item>(sfd.FileName, CustItems);
+                        Program.IO.SaveFile<cstm_item>(sfd.FileName, CustItems);
                     }
                 }
             }
@@ -126,15 +129,16 @@ namespace Armoire
                 if (ofd.FileName != null && ofd.FileName.EndsWith(".farc"))
                 {
                     Program.customPath = ofd.FileName;
-                    CustItems = Program.readCustomFile(Program.customPath);
+                    var farc = BinaryFile.Load<FarcArchive>(Program.customPath);
+                    CustItems = Program.IO.ReadCustomFile(farc);
                 }
                 else if (ofd.FileName != null && ofd.FileName.EndsWith(".csv"))
                 {
                     string[] split = ofd.FileName.Split('\\');
                     string newFileNameLocation = ofd.FileName.Remove((ofd.FileName.Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                    newFileNameLocation = newFileNameLocation + "mod_gm_customize_item_tbl.farc";
+                    newFileNameLocation += "mod_gm_customize_item_tbl.farc";
                     Program.customPath = newFileNameLocation;
-                    CustItems = Program.readCustomFileCSV(ofd.FileName);
+                    CustItems = Program.IO.ReadCustomFileCSV(ofd.FileName);
                 }
                 else { return; }
             }

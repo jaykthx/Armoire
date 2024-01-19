@@ -1,0 +1,42 @@
+﻿<Window x:Class="Armoire.Dialogs.ChoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Armoire.Dialogs"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterOwner"
+        Title="Decision" Height="125" Width="300" FontFamily="Meiryo UI" Foreground="White">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderBrush="#FF252525" BorderThickness="8" CornerRadius="8">
+        <Grid Background="#FF252525">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="PromptInfo" Text="" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Margin="0,0,0,10" TextAlignment="Center" FontSize="13" TextWrapping="Wrap" MinHeight="20"/>
+            <Button x:Name="RightButton" Content="Yes" Grid.Column="3" Grid.Row="2" Click="RightButton_Click" IsDefault="True" Height="20"/>
+            <Button x:Name="LeftButton" Content="No" Grid.Column="1" Grid.Row="2" Click="LeftButton_Click" Height="20"/>
+        </Grid>
+    </Border>
+</Window>

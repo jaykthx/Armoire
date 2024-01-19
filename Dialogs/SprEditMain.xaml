@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Armoire.Dialogs"
         mc:Ignorable="d"
-        Title="Armoire - Sprite DB Editor" Height="500" Width="600" FontFamily="Meiryo UI">
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterOwner"
+        Title="Armoire - Sprite Database Editor"  Height="500" Width="600" FontFamily="Meiryo UI" Background="Transparent">
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="Open"/>
         <KeyBinding Gesture="Ctrl+S" Command="Save"/>
@@ -16,53 +20,76 @@
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
     </Window.CommandBindings>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Menu Grid.ColumnSpan="2">
-            <Button Content="Open" Background="Transparent" BorderBrush="Transparent" Click="Button_Click"/>
-            <Button Content="Save" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_3"/>
-            <Button Content="Save As" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_4"/>
-            <Button Content="Replace All" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_6"/>
-        </Menu>
-        <DataGrid x:Name="Grid1" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.InputBindings>
-                <KeyBinding Gesture="Ctrl+A" Command="ApplicationCommands.NotACommand"/>
-            </DataGrid.InputBindings>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Add Sprite" Click="Add_Click"/>
-                    <MenuItem Header="Copy Sprite" Click="Dupe_Click"/>
-                    <MenuItem Header="Delete Sprite" Click="Delete_Click"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="30*"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150*"/>
-                <DataGridTextColumn Header="Filename" Binding="{Binding FileName}" Width="125*"/>
-                <DataGridTemplateColumn Header="Sprites" Width="60" CanUserResize="False">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Edit" Click="Button_Click_1"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Textures" Width="60" CanUserResize="False">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Edit" Click="Button_Click_2"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderBrush="#FF252525" BorderThickness="8" CornerRadius="8">
+        <Grid Background="#FF252525">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Foreground="White" Text="Armoire (Sprite Database Editor)" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
+            <Menu Grid.ColumnSpan="2" Height="20" Grid.Row="1" Margin="0,-1.3,0,5">
+                <MenuItem StaysOpenOnClick="True" Width="90" Header="File" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Header="Open" Width="90" Click="Open_Click" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Header="Save" Width="90" Click="Save_Click" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Header="Save As" Width="90" Click="SaveAs_Click" Style="{StaticResource SingleButton}"/>
+                </MenuItem>
+                <MenuItem Header="Replace All" Margin="6.25,0,6.25,0" Width="90" Click="Replace_Click" Style="{StaticResource SingleButton}"/>
+                <MenuItem Header="Exit" Margin="282,0,6.25,0" Width="90" Click="Exit_Click" Style="{StaticResource SingleButton}"/>
+            </Menu>
+            <DataGrid 
+            Background="Transparent"
+                      BorderThickness="2"
+                      AlternationCount="2"
+                      AlternatingRowBackground="#FF303030"
+                      FontSize="10"
+                      CanUserResizeRows="False"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Disabled"
+                      HeadersVisibility="Column" x:Name="Grid1" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.InputBindings>
+                    <KeyBinding Gesture="Ctrl+A" Command="ApplicationCommands.NotACommand"/>
+                </DataGrid.InputBindings>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Sprite" Click="Add_Click" Style="{StaticResource SingleButton}"/>
+                        <MenuItem Header="Copy Sprite" Click="Dupe_Click" Style="{StaticResource SingleButton}"/>
+                        <MenuItem Header="Delete Sprite" Click="Delete_Click" Style="{StaticResource SingleButton}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="30*"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150*"/>
+                    <DataGridTextColumn Header="Filename" Binding="{Binding FileName}" Width="125*"/>
+                    <DataGridTemplateColumn Header="Sprites" Width="60" CanUserResize="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" Click="Spr_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Textures" Width="60" CanUserResize="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" Click="Tex_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
 </Window>
