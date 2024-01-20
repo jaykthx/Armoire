@@ -658,7 +658,7 @@ namespace Armoire
                 backacc
             };
         }
-        public static BitmapImage ToBitmapImage(Bitmap bitmap) // Credit to the uploader of this code on StackOverflow who i forgot to note :(
+        public static BitmapImage ToBitmapImage(Bitmap bitmap) // Credit to the uploader of this code LawMan on StackOverflow
         {
             using (var memory = new MemoryStream())
             {
@@ -671,6 +671,17 @@ namespace Armoire
                 bitmapImage.EndInit();
                 bitmapImage.Freeze();
                 return bitmapImage;
+            }
+        }
+        private Bitmap ToBitmap(BitmapImage bitmapImage)
+        {
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                Bitmap bitmap = new Bitmap(outStream);
+                return new Bitmap(bitmap);
             }
         }
 

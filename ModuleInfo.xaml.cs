@@ -33,6 +33,7 @@ namespace Armoire
             InitializeComponent();
             charBox.ItemsSource = Program.charas;
             charBox.SelectedIndex = 0;
+            moduleImage.Source = new BitmapImage(new Uri(wizMod.image_path));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //add
