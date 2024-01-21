@@ -440,25 +440,25 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\info_n.png" />
+    <Resource Include="Resources\info_n.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\info_p.png" />
+    <Resource Include="Resources\info_p.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\item.png" />
+    <Resource Include="Resources\item.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\item_ct.png" />
+    <Resource Include="Resources\item_ct.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\item_fs.png" />
+    <Resource Include="Resources\item_fs.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\item_n.png" />
+    <Resource Include="Resources\item_n.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\md_dummy.png" />
+    <Resource Include="Resources\md_dummy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

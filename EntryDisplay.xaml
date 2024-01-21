@@ -18,7 +18,7 @@
             <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image x:Name="highlightBox"  Grid.Row="0" Grid.Column="1" Source="Resources/item.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+        <Image x:Name="highlightBox"  Grid.Row="0" Grid.Column="1" Source="/Resources/item.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
         <Image x:Name="imageBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Image Grid.Row="1" Grid.Column="1" Source="Resources/info_n.png" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         <TextBlock x:Name="mainText" Text="Name" Grid.Column="1" Grid.Row="1" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White"/>

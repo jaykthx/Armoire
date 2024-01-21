@@ -214,44 +214,21 @@ namespace Armoire
                             {
                                 AddToModuleTable(info.wizMod);
                                 Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.name, info.wizMod.id);
-                                if (info.wizMod.image_path != null)
+                                Program.GenerateSprite(info.wizMod, exportFolder + "2d", false);
+                                foreach (wizObj obj in info.wizMod.objects)
                                 {
-                                    Program.GenerateSprite(info.wizMod.image_path, Program.Databases.GetIDString(info.wizMod.id.ToString()), exportFolder + "2d", false);
-                                    foreach (wizObj obj in info.wizMod.objects)
+                                    if (obj.item.subID == 1)
                                     {
-                                        if (obj.item.subID == 1)
-                                        {
-                                            info.wizMod.localNames.cn = info.wizMod.name + info.wizMod.localNames.cn;
-                                            info.wizMod.localNames.en = info.wizMod.name + info.wizMod.localNames.en;
-                                            info.wizMod.localNames.kr = info.wizMod.name + info.wizMod.localNames.kr;
-                                            info.wizMod.localNames.fr = info.wizMod.name + info.wizMod.localNames.fr;
-                                            info.wizMod.localNames.sp += info.wizMod.name;
-                                            info.wizMod.localNames.ge += info.wizMod.name;
-                                            info.wizMod.localNames.it += info.wizMod.name;
-                                            info.wizMod.localNames.tw += info.wizMod.name;
-                                            Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.localNames, info.wizMod.id);
-                                            Program.GenerateSprite(info.wizMod.image_path, Program.Databases.GetIDString(info.wizMod.id.ToString()), exportFolder + "2d", true);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Program.GenerateSprite("../../Resources/md_dummy.png", Program.Databases.GetIDString(info.wizMod.id.ToString()), exportFolder + "2d", false);
-                                    foreach (wizObj obj in info.wizMod.objects)
-                                    {
-                                        if (obj.item.subID == 1)
-                                        {
-                                            info.wizMod.localNames.cn = info.wizMod.name + info.wizMod.localNames.cn;
-                                            info.wizMod.localNames.en = info.wizMod.name + info.wizMod.localNames.en;
-                                            info.wizMod.localNames.kr = info.wizMod.name + info.wizMod.localNames.kr;
-                                            info.wizMod.localNames.fr = info.wizMod.name + info.wizMod.localNames.fr;
-                                            info.wizMod.localNames.sp += info.wizMod.name;
-                                            info.wizMod.localNames.ge += info.wizMod.name;
-                                            info.wizMod.localNames.it += info.wizMod.name;
-                                            info.wizMod.localNames.tw += info.wizMod.name;
-                                            Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.localNames, info.wizMod.id);
-                                            Program.GenerateSprite("../../Resources/md_dummy.png", Program.Databases.GetIDString(info.wizMod.id.ToString()), exportFolder + "2d", true);
-                                        }
+                                        info.wizMod.localNames.cn = info.wizMod.name + info.wizMod.localNames.cn;
+                                        info.wizMod.localNames.en = info.wizMod.name + info.wizMod.localNames.en;
+                                        info.wizMod.localNames.kr = info.wizMod.name + info.wizMod.localNames.kr;
+                                        info.wizMod.localNames.fr = info.wizMod.name + info.wizMod.localNames.fr;
+                                        info.wizMod.localNames.sp += info.wizMod.name;
+                                        info.wizMod.localNames.ge += info.wizMod.name;
+                                        info.wizMod.localNames.it += info.wizMod.name;
+                                        info.wizMod.localNames.tw += info.wizMod.name;
+                                        Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.localNames, info.wizMod.id);
+                                        Program.GenerateSprite(info.wizMod, exportFolder + "2d", true);
                                     }
                                 }
                                 AddToCharaItemTable(info);
@@ -323,7 +300,6 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This ID is already being used and the resulting module will cause compatibility issues.", "Notice");
                 ChoiceWindow win = new ChoiceWindow("This ID is already being used and the resulting module will cause compatibility issues." +
                     "\nWould you like to use a random, unused ID instead?", "No", "Yes");
                 win.ShowDialog();
@@ -342,7 +318,6 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This sortiing index is already being used, the resulting module will have sorting issues.", "Warning");
                 ChoiceWindow win = new ChoiceWindow("This sorting index is already being used and the resulting module will cause minor issues." +
                     "\nWould you like to use a random, unused sorting index instead?", "No", "Yes");
                 win.ShowDialog();

@@ -378,7 +378,6 @@ namespace Armoire
         public string chara;
         public int sort_index = 999;
         public Bitmap bitmap = Armoire.Properties.Resources.md_dummy;
-        public string image_path = Directory.GetCurrentDirectory() + "/Resources/md_dummy.png";
     }
 
     public class localisedNames

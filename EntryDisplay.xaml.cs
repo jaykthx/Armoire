@@ -22,29 +22,29 @@ namespace Armoire
     {
         public EntryDisplay(BitmapImage image, string main, int sub, string price, Attr attr)
         {
-            var fsSource = new Uri("/Resources/item_fs.png", UriKind.Relative);
-            var ctSource = new Uri("/Resources/item_ct.png", UriKind.Relative);
-            var nSource = new Uri("/Resources/item_n.png", UriKind.Relative);
+            BitmapImage fsSource = Program.ToBitmapImage(Armoire.Properties.Resources.item_fs);
+            BitmapImage ctSource = Program.ToBitmapImage(Armoire.Properties.Resources.item_ct);
+            BitmapImage nSource = Program.ToBitmapImage(Armoire.Properties.Resources.item_n);
             InitializeComponent();
             switch (attr)
             {
                 case Attr.Default_FS:
-                    highlightBox.Source = new BitmapImage(fsSource);
+                    highlightBox.Source = fsSource;
                     break;
                 case Attr.NoSwap_FS:
-                    highlightBox.Source = new BitmapImage(fsSource);
+                    highlightBox.Source = fsSource;
                     break;
                 case Attr.Swimsuit_FS:
-                    highlightBox.Source = new BitmapImage(fsSource);
+                    highlightBox.Source = fsSource;
                     break;
                 case Attr.Default_CT:
-                    highlightBox.Source = new BitmapImage(ctSource);
+                    highlightBox.Source = ctSource;
                     break;
                 case Attr.NoSwap_CT:
-                    highlightBox.Source = new BitmapImage(ctSource);
+                    highlightBox.Source = ctSource;
                     break;
                 case Attr.Swimsuit_CT:
-                    highlightBox.Source = new BitmapImage(ctSource);
+                    highlightBox.Source = ctSource;
                     break;
                 case Attr.Default_N:
                     break;
@@ -53,13 +53,13 @@ namespace Armoire
                 case Attr.Swimsuit_N:
                     break;
                 case Attr.Default_PL:
-                    highlightBox.Source = new BitmapImage(nSource);
+                    highlightBox.Source = nSource;
                     break;
                 case Attr.NoSwap_PL:
-                    highlightBox.Source = new BitmapImage(nSource);
+                    highlightBox.Source = nSource;
                     break;
                 case Attr.Swimsuit_PL:
-                    highlightBox.Source = new BitmapImage(nSource);
+                    highlightBox.Source = nSource;
                     break;
                 default:
                     break;

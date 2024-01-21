@@ -592,13 +592,12 @@ namespace Armoire
             spr.ResolutionMode = ResolutionMode.HDTV1080;
             return spr;
         }
-        public static void GenerateSprite(string pngPath, string id, string outputFolder, bool isCustomise)
+        public static void GenerateSprite(wizModule wizmod, string outputFolder, bool isCustomise)
         {
             Sprite spr = GetSprite(isCustomise);
-            Bitmap pngImage = new Bitmap(pngPath);
-            pngImage.RotateFlip(RotateFlipType.Rotate180FlipX);
+            wizmod.bitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
             MikuMikuLibrary.Textures.Processing.TextureEncoderCore tex = new MikuMikuLibrary.Textures.Processing.TextureEncoderCore();
-            Texture text = tex.EncodeFromBitmap(pngImage, TextureFormat.DXT5, true);
+            Texture text = tex.EncodeFromBitmap(wizmod.bitmap, TextureFormat.DXT5, true);
             text.Name = "MERGE_BC5COMP_0";
             SpriteSet sprSet = new SpriteSet();
             sprSet.Sprites.Add(spr);
@@ -609,11 +608,11 @@ namespace Armoire
             string fileName = "spr_";
             if (isCustomise)
             {
-                fileName = fileName + "cmnitm_thmb" + id;
+                fileName = fileName + "cmnitm_thmb" + wizmod.id;
             }
             else
             {
-                fileName = fileName + "sel_md" + id + "cmn";
+                fileName = fileName + "sel_md" + wizmod.id + "cmn";
             }
             farc.Add(fileName + ".bin", stream, false, ConflictPolicy.Replace);
             farc.Save(outputFolder + "/" + fileName + ".farc");
