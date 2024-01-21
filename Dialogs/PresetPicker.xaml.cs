@@ -34,6 +34,12 @@ namespace Armoire.Dialogs
 
         private itemEntry applyPreset(Program.ItemPreset preset, itemEntry item)
         {
+            if(preset.subid == 6 || preset.subid == 24)
+            {
+                Program.NotiBox("You have selected a preset related to texture swapping." +
+                    "\nYou will need to add the texture swaps within the Item Edit window of the Character Item Editor, as the program cannot do this automatically." +
+                    "\nIf you do not do this, the texture swaps will not be applied and the item will not appear in-game.", "Notice");
+            }
             item.attr = preset.attr;
             item.desID = preset.desid;
             item.subID = preset.subid;

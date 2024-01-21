@@ -324,6 +324,14 @@ namespace Armoire
             else
             {
                 Program.NotiBox("This ID is already being used and the resulting module will cause compatibility issues.", "Notice");
+                ChoiceWindow win = new ChoiceWindow("This ID is already being used and the resulting module will cause compatibility issues." +
+                    "\nWould you like to use a random, unused ID instead?", "No", "Yes");
+                win.ShowDialog();
+                if (win.isRightClicked)
+                {
+                    wizMod.id = Program.Databases.GetUnusedID(finalUsedIDs.module_tbl);
+                    finalUsedIDs.module_tbl.Add(wizMod.id);
+                }
             }
             temp.id = wizMod.id;
             temp.cos = "COS_" + Program.Databases.GetIDString((temp.id + 1).ToString());
@@ -335,6 +343,14 @@ namespace Armoire
             else
             {
                 Program.NotiBox("This sortiing index is already being used, the resulting module will have sorting issues.", "Warning");
+                ChoiceWindow win = new ChoiceWindow("This sorting index is already being used and the resulting module will cause minor issues." +
+                    "\nWould you like to use a random, unused sorting index instead?", "No", "Yes");
+                win.ShowDialog();
+                if (win.isRightClicked)
+                {
+                    wizMod.sort_index = Program.Databases.GetUnusedID(finalUsedIDs.module_tbl_index);
+                    finalUsedIDs.module_tbl_index.Add(wizMod.sort_index);
+                }
             }
             temp.sort_index = wizMod.sort_index;
             temp.shop_price = "900";
@@ -388,14 +404,14 @@ namespace Armoire
             foreach (wizObj x in modInfo.wizMod.objects)
             {
                 wizObjEntry objEntry = new wizObjEntry();
-                if (File.Exists(exportFolder + "/objset/" + System.IO.Path.GetFileName(x.objectFilePath)))
+                /*if (File.Exists(exportFolder + "/objset/" + System.IO.Path.GetFileName(x.objectFilePath)))
                 {
                     Program.NotiBox("The object files already exist in this folder and can't be overwritten.", "Notice"); // could do with a yes or no box for this part
                 }
                 else
                 {
                     File.Copy(x.objectFilePath, exportFolder + "/objset/" + System.IO.Path.GetFileName(x.objectFilePath), true);
-                }
+                }*/
                 var farc = BinaryFile.Load<FarcArchive>(x.objectFilePath);
                 foreach (string fileName in farc)
                 {
@@ -441,7 +457,7 @@ namespace Armoire
                         {
                             foreach(MaterialTexture mat in objset.Objects[0].Materials[i].MaterialTextures)
                             {
-                                if(mat.TextureId != UInt32.MaxValue)
+                                if(texIDs.ContainsKey(mat.TextureId))
                                 {
                                     mat.TextureId = texIDs[mat.TextureId];
                                 }

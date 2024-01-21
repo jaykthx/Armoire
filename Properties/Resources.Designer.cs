@@ -22,7 +22,7 @@ namespace Armoire.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Armoire.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Armoire.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Armoire.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_attr {
+        public static string cmn_attr {
             get {
                 return ResourceManager.GetString("cmn_attr", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_bind {
+        public static string cmn_bind {
             get {
                 return ResourceManager.GetString("cmn_bind", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_button_change {
+        public static string cmn_button_change {
             get {
                 return ResourceManager.GetString("cmn_button_change", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_button_edit {
+        public static string cmn_button_edit {
             get {
                 return ResourceManager.GetString("cmn_button_edit", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_chara {
+        public static string cmn_chara {
             get {
                 return ResourceManager.GetString("cmn_chara", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_cos {
+        public static string cmn_cos {
             get {
                 return ResourceManager.GetString("cmn_cos", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_cos_item {
+        public static string cmn_cos_item {
             get {
                 return ResourceManager.GetString("cmn_cos_item", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_day {
+        public static string cmn_day {
             get {
                 return ResourceManager.GetString("cmn_day", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_details {
+        public static string cmn_details {
             get {
                 return ResourceManager.GetString("cmn_details", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_exit {
+        public static string cmn_exit {
             get {
                 return ResourceManager.GetString("cmn_exit", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_id {
+        public static string cmn_id {
             get {
                 return ResourceManager.GetString("cmn_id", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_index {
+        public static string cmn_index {
             get {
                 return ResourceManager.GetString("cmn_index", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_item_no {
+        public static string cmn_item_no {
             get {
                 return ResourceManager.GetString("cmn_item_no", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_month {
+        public static string cmn_month {
             get {
                 return ResourceManager.GetString("cmn_month", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_name {
+        public static string cmn_name {
             get {
                 return ResourceManager.GetString("cmn_name", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_ng {
+        public static string cmn_ng {
             get {
                 return ResourceManager.GetString("cmn_ng", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_objid {
+        public static string cmn_objid {
             get {
                 return ResourceManager.GetString("cmn_objid", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_objuid {
+        public static string cmn_objuid {
             get {
                 return ResourceManager.GetString("cmn_objuid", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_parts {
+        public static string cmn_parts {
             get {
                 return ResourceManager.GetString("cmn_parts", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_preset {
+        public static string cmn_preset {
             get {
                 return ResourceManager.GetString("cmn_preset", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_price {
+        public static string cmn_price {
             get {
                 return ResourceManager.GetString("cmn_price", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string cmn_year {
+        public static string cmn_year {
             get {
                 return ResourceManager.GetString("cmn_year", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string db_edit_obj {
+        public static string db_edit_obj {
             get {
                 return ResourceManager.GetString("db_edit_obj", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string db_edit_spr {
+        public static string db_edit_spr {
             get {
                 return ResourceManager.GetString("db_edit_spr", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string db_edit_tex {
+        public static string db_edit_tex {
             get {
                 return ResourceManager.GetString("db_edit_tex", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string file_csv {
+        public static string file_csv {
             get {
                 return ResourceManager.GetString("file_csv", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string file_open {
+        public static string file_open {
             get {
                 return ResourceManager.GetString("file_open", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string file_save {
+        public static string file_save {
             get {
                 return ResourceManager.GetString("file_save", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string file_saveas {
+        public static string file_saveas {
             get {
                 return ResourceManager.GetString("file_saveas", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string file_title {
+        public static string file_title {
             get {
                 return ResourceManager.GetString("file_title", resourceCulture);
             }
@@ -333,16 +333,86 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string file_wizard {
+        public static string file_wizard {
             get {
                 return ResourceManager.GetString("file_wizard", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap info_n {
+            get {
+                object obj = ResourceManager.GetObject("info_n", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap info_p {
+            get {
+                object obj = ResourceManager.GetObject("info_p", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap item {
+            get {
+                object obj = ResourceManager.GetObject("item", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap item_ct {
+            get {
+                object obj = ResourceManager.GetObject("item_ct", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap item_fs {
+            get {
+                object obj = ResourceManager.GetObject("item_fs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap item_n {
+            get {
+                object obj = ResourceManager.GetObject("item_n", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap md_dummy {
+            get {
+                object obj = ResourceManager.GetObject("md_dummy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_chritm {
+        public static string title_chritm {
             get {
                 return ResourceManager.GetString("title_chritm", resourceCulture);
             }
@@ -351,7 +421,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_custom {
+        public static string title_custom {
             get {
                 return ResourceManager.GetString("title_custom", resourceCulture);
             }
@@ -360,7 +430,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_edit_obj {
+        public static string title_edit_obj {
             get {
                 return ResourceManager.GetString("title_edit_obj", resourceCulture);
             }
@@ -369,7 +439,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_edit_spr {
+        public static string title_edit_spr {
             get {
                 return ResourceManager.GetString("title_edit_spr", resourceCulture);
             }
@@ -378,7 +448,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_edit_tex {
+        public static string title_edit_tex {
             get {
                 return ResourceManager.GetString("title_edit_tex", resourceCulture);
             }
@@ -387,7 +457,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_module {
+        public static string title_module {
             get {
                 return ResourceManager.GetString("title_module", resourceCulture);
             }
@@ -396,7 +466,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string title_wizard {
+        public static string title_wizard {
             get {
                 return ResourceManager.GetString("title_wizard", resourceCulture);
             }
@@ -405,7 +475,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string window_chritm {
+        public static string window_chritm {
             get {
                 return ResourceManager.GetString("window_chritm", resourceCulture);
             }
@@ -414,7 +484,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string window_custom {
+        public static string window_custom {
             get {
                 return ResourceManager.GetString("window_custom", resourceCulture);
             }
@@ -423,7 +493,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string window_module {
+        public static string window_module {
             get {
                 return ResourceManager.GetString("window_module", resourceCulture);
             }
@@ -432,7 +502,7 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string window_preview {
+        public static string window_preview {
             get {
                 return ResourceManager.GetString("window_preview", resourceCulture);
             }

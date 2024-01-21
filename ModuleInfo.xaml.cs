@@ -33,7 +33,7 @@ namespace Armoire
             InitializeComponent();
             charBox.ItemsSource = Program.charas;
             charBox.SelectedIndex = 0;
-            moduleImage.Source = new BitmapImage(new Uri(wizMod.image_path));
+            setModuleImage(Armoire.Properties.Resources.md_dummy);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //add
@@ -116,8 +116,8 @@ namespace Armoire
                 Bitmap pngImage = new Bitmap(ofd.FileName);
                 if (pngImage.Width == 512 && pngImage.Height == 512)
                 {
-                    setModuleImage(ofd.FileName);
-                    wizMod.image_path = ofd.FileName;
+                    setModuleImage(pngImage);
+                    wizMod.bitmap = pngImage;
                 }
                 else
                 {
@@ -125,15 +125,14 @@ namespace Armoire
                 }
             }
         }
-        private void setModuleImage(string pngFile)
+        private void setModuleImage(Bitmap pngFile)
         {
             Sprite spr = Program.GetSprite(false);
             SpriteSet sprite = new SpriteSet();
             sprite.Sprites.Add(spr);
-            Bitmap pngImage = new Bitmap(pngFile);
-            pngImage.RotateFlip(RotateFlipType.Rotate180FlipX);
+            pngFile.RotateFlip(RotateFlipType.Rotate180FlipX);
             MikuMikuLibrary.Textures.Processing.TextureEncoderCore tex = new TextureEncoderCore();
-            MikuMikuLibrary.Textures.Texture text = tex.EncodeFromBitmap(pngImage, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
+            MikuMikuLibrary.Textures.Texture text = tex.EncodeFromBitmap(pngFile, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
             sprite.TextureSet.Textures.Add(text);
             Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
             BitmapImage img = Program.ToBitmapImage(cropSprite);

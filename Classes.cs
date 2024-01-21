@@ -5,6 +5,7 @@ using MikuMikuLibrary.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -376,6 +377,7 @@ namespace Armoire
         public int id = -1; //default to a number
         public string chara;
         public int sort_index = 999;
+        public Bitmap bitmap = Armoire.Properties.Resources.md_dummy;
         public string image_path = Directory.GetCurrentDirectory() + "/Resources/md_dummy.png";
     }
 

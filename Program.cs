@@ -466,6 +466,16 @@ namespace Armoire
                 }
                 return sb.ToString();
             }
+            public static int GetUnusedID(List<int> used) // no limit version
+            {
+                Random rnd = new Random();
+                int final = rnd.Next();
+                while (used.Contains(final))
+                {
+                    final = rnd.Next();
+                }
+                return final;
+            }
             public static uint GetUnusedID(List<uint> used) // no limit version
             {
                 Random rnd = new Random();
