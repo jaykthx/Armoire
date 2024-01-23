@@ -140,7 +140,6 @@ namespace Armoire
             if (Modules.Count > 1)
             {
                 List<module> sel = new List<module>();
-
                 foreach (module x in DataGrid.SelectedItems)
                 {
                     sel.Add(x);
@@ -150,7 +149,6 @@ namespace Armoire
                     Modules.Remove(m);
 
                 }
-                //Modules.RemoveAt(DataGrid.SelectedIndexes);
             }
             else
             {
@@ -220,7 +218,7 @@ namespace Armoire
             sfd.Filter = "CSV Files|*.csv";
             if (sfd.ShowDialog() == true)
             {
-                using (TextWriter writer = new StreamWriter(sfd.FileName, false, System.Text.Encoding.UTF8))
+                using (TextWriter writer = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
                 {
                     var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
                     csv.Context.RegisterClassMap<moduleMap>();

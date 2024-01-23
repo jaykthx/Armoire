@@ -22,9 +22,9 @@ namespace Armoire
     {
         public EntryDisplay(BitmapImage image, string main, int sub, string price, Attr attr)
         {
-            BitmapImage fsSource = Program.ToBitmapImage(Armoire.Properties.Resources.item_fs);
-            BitmapImage ctSource = Program.ToBitmapImage(Armoire.Properties.Resources.item_ct);
-            BitmapImage nSource = Program.ToBitmapImage(Armoire.Properties.Resources.item_n);
+            BitmapImage fsSource = Program.ToBitmapImage(Properties.Resources.item_fs);
+            BitmapImage ctSource = Program.ToBitmapImage(Properties.Resources.item_ct);
+            BitmapImage nSource = Program.ToBitmapImage(Properties.Resources.item_n);
             InitializeComponent();
             switch (attr)
             {

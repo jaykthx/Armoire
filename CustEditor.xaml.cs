@@ -40,6 +40,15 @@ namespace Armoire
                 CustItems = Program.IO.ReadCustomFile(farc);
                 DataGrid.ItemsSource = CustItems;
             }
+            else if (files[0].EndsWith(".csv"))
+            {
+                CustItems = Program.IO.ReadCustomFileCSV(files[0]);
+                DataGrid.ItemsSource = CustItems;
+                string[] split = files[0].Split('\\');
+                string newFileNameLocation = files[0].Remove((files[0].Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
+                newFileNameLocation += "mod_gm_customize_item_tbl.farc";
+                Program.customPath = newFileNameLocation;
+            }
             else { return; }
         }
 
@@ -98,7 +107,7 @@ namespace Armoire
         }
         private void Open_MainEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
+            if (!Application.Current.Windows.OfType<MainWindow>().Any())
             {
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
@@ -110,7 +119,7 @@ namespace Armoire
         }
         private void Open_CharaEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<CharaEditor>().Any())
+            if (!Application.Current.Windows.OfType<CharaEditor>().Any())
             {
                 CharaEditor win = new CharaEditor();
                 win.Show();
@@ -150,7 +159,6 @@ namespace Armoire
             if (CustItems.Count > 1)
             {
                 List<cstm_item> sel = new List<cstm_item>();
-
                 foreach (cstm_item x in DataGrid.SelectedItems)
                 {
                     sel.Add(x);
@@ -160,7 +168,6 @@ namespace Armoire
                     CustItems.Remove(m);
 
                 }
-                //Modules.RemoveAt(DataGrid.SelectedIndexes);
             }
             else
             {
@@ -171,6 +178,10 @@ namespace Armoire
         {
             CustItems.Insert(DataGrid.SelectedIndex + 1, GetDummy());
         }
+        private void AddButton2_Click(object sender, RoutedEventArgs e)
+        {
+            CustItems.Add(GetDummy());
+        }
         private cstm_item GetDummy()
         {
             cstm_item dummyModule = new cstm_item();
@@ -180,7 +191,7 @@ namespace Armoire
             dummyModule.bind_module = -1;
             dummyModule.parts = "ZUJO";
             dummyModule.ng = false;
-            dummyModule.shop_price = "750";
+            dummyModule.shop_price = "300";
             return dummyModule;
         }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -232,7 +243,7 @@ namespace Armoire
         }
         private void Open_SprEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<SprEditMain>().Any())
+            if (!Application.Current.Windows.OfType<SprEditMain>().Any())
             {
                 SprEditMain spr = new SprEditMain();
                 spr.Show();

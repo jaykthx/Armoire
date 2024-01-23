@@ -2,7 +2,6 @@
 using CsvHelper;
 using MikuMikuLibrary.Archives;
 using MikuMikuLibrary.Databases;
-using MikuMikuLibrary.IO;
 using MikuMikuLibrary.Sprites;
 using MikuMikuLibrary.Textures;
 using System;
@@ -14,9 +13,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Windows;
 using System.Windows.Media.Imaging;
 using static Armoire.MainWindow;
 
@@ -66,7 +63,7 @@ namespace Armoire
                     }
                     else
                     {
-                        NotiBox("La p*ta maldita: " + fileName.ToString(), "¿En serio, crees que soy idiota?");
+                        NotiBox("This file: " + fileName.ToString(), " could not be opened.\nDon't do that again.");
                     }
                 }
                 farc.Dispose();
@@ -387,7 +384,7 @@ namespace Armoire
                     }
                     farc.Dispose();
                 }
-                else { Program.NotiBox("That didn't work. Try opening a table first.", "Error"); }
+                else { NotiBox("That didn't work. Try opening a table first.", "Error"); }
             }
             public static void SaveChr(string path, ObservableCollection<chritmFile> list)
         {
@@ -440,7 +437,7 @@ namespace Armoire
                 }
                 farc.Dispose();
             }
-            else { Program.NotiBox("That didn't work. Try opening a table first.", "Error"); }
+            else { NotiBox("That didn't work. Try opening a table first.", "Error"); }
         }
         }
         public static void NotiBox(string value, string title)
@@ -471,6 +468,16 @@ namespace Armoire
                 Random rnd = new Random();
                 int final = rnd.Next();
                 while (used.Contains(final))
+                {
+                    final = rnd.Next();
+                }
+                return final;
+            }
+            public static int GetUnusedID(List<int> used1, List<int> used2) // 2 list (int) version
+            {
+                Random rnd = new Random();
+                int final = rnd.Next();
+                while (used1.Contains(final) && used2.Contains(final))
                 {
                     final = rnd.Next();
                 }
@@ -595,9 +602,10 @@ namespace Armoire
         public static void GenerateSprite(wizModule wizmod, string outputFolder, bool isCustomise)
         {
             Sprite spr = GetSprite(isCustomise);
-            wizmod.bitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
+            Bitmap newBitmap = new Bitmap(wizmod.bitmap);
+            newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
             MikuMikuLibrary.Textures.Processing.TextureEncoderCore tex = new MikuMikuLibrary.Textures.Processing.TextureEncoderCore();
-            Texture text = tex.EncodeFromBitmap(wizmod.bitmap, TextureFormat.DXT5, true);
+            Texture text = tex.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
             text.Name = "MERGE_BC5COMP_0";
             SpriteSet sprSet = new SpriteSet();
             sprSet.Sprites.Add(spr);
@@ -680,17 +688,6 @@ namespace Armoire
                 bitmapImage.EndInit();
                 bitmapImage.Freeze();
                 return bitmapImage;
-            }
-        }
-        private Bitmap ToBitmap(BitmapImage bitmapImage)
-        {
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                Bitmap bitmap = new Bitmap(outStream);
-                return new Bitmap(bitmap);
             }
         }
 

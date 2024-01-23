@@ -45,7 +45,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("Usted debe abrir un archivo antes de intentar a salvarlo.", "Error");
+                Program.NotiBox("You must open a file before trying to save it.", "Error");
             }
         }
         private void SaveAsCommandBinding_Executed(object sender, RoutedEventArgs e)
@@ -54,7 +54,7 @@ namespace Armoire
         }
         private void Open_CustEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<CustEditor>().Any())
+            if (!Application.Current.Windows.OfType<CustEditor>().Any())
             {
                 CustEditor custEditor = new CustEditor();
                 custEditor.Show();
@@ -67,7 +67,7 @@ namespace Armoire
         }
         private void Open_MainEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
+            if (!Application.Current.Windows.OfType<MainWindow>().Any())
             {
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
@@ -79,7 +79,7 @@ namespace Armoire
         }
         private void Open_TexEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<TexEdit>().Any())
+            if (!Application.Current.Windows.OfType<TexEdit>().Any())
             {
                 TexEdit texEditor = new TexEdit();
                 texEditor.Show();
@@ -91,7 +91,7 @@ namespace Armoire
         }
         private void Open_ObjEditor(object sender, RoutedEventArgs e)
         {
-            if (!System.Windows.Application.Current.Windows.OfType<ObjEditMain>().Any())
+            if (!Application.Current.Windows.OfType<ObjEditMain>().Any())
             {
                 ObjEditMain objEditor = new ObjEditMain();
                 objEditor.Show();
@@ -115,6 +115,7 @@ namespace Armoire
                 {
                     Program.charaPath = ofd.FileName;
                     OpenProcess();
+                    CharaBox.SelectedIndex = 0;
                 }
                 else { return; }
             }
@@ -167,7 +168,7 @@ namespace Armoire
 
         private void DelCos(object sender, RoutedEventArgs e)
         {
-            if (chritmFiles[CharaBox.SelectedIndex].costumes.Count > 1)
+            try
             {
                 List<cosEntry> sel = new List<cosEntry>();
                 foreach (cosEntry x in CosDataGrid.SelectedItems)
@@ -180,14 +181,14 @@ namespace Armoire
                 }
                 CosDataGrid.Items.Refresh();
             }
-            else
+            catch
             {
                 Program.NotiBox("No haga eso.", "Error");
             }
         }
         private void DelItem(object sender, RoutedEventArgs e)
         {
-            if (chritmFiles[CharaBox.SelectedIndex].items.Count > 1)
+            try
             {
                 List<itemEntry> sel = new List<itemEntry>();
                 foreach (itemEntry x in ItemDataGrid.SelectedItems)
@@ -200,7 +201,7 @@ namespace Armoire
                 }
                 ItemDataGrid.Items.Refresh();
             }
-            else
+            catch
             {
                 Program.NotiBox("No haga eso.", "Error");
             }
@@ -208,13 +209,21 @@ namespace Armoire
 
         private void AddCos(object sender, RoutedEventArgs e)
         {
-            chritmFiles[CharaBox.SelectedIndex].costumes.Insert(CosDataGrid.SelectedIndex + 1, GetDummy());
-            CosDataGrid.Items.Refresh();
+            try
+            {
+                chritmFiles[CharaBox.SelectedIndex].costumes.Insert(CosDataGrid.SelectedIndex + 1, GetDummy());
+                CosDataGrid.Items.Refresh();
+            }
+            catch { }
         }
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            chritmFiles[CharaBox.SelectedIndex].items.Insert(ItemDataGrid.SelectedIndex + 1, GetDummyItem());
-            ItemDataGrid.Items.Refresh();
+            try
+            {
+                chritmFiles[CharaBox.SelectedIndex].items.Insert(ItemDataGrid.SelectedIndex + 1, GetDummyItem());
+                ItemDataGrid.Items.Refresh();
+            }
+            catch { }
         }
         private cosEntry GetDummy()
         {

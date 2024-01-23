@@ -5,8 +5,5 @@
     <Setting Name="gamePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="HighlightedColour" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Pink</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

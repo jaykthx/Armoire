@@ -68,93 +68,107 @@ namespace Armoire
             CpkArchive cpk = new CpkArchive();
             if (gameDirectory != null)
             {
-                if (Directory.Exists(gameDirectory + "\\mods"))
+                string currentFile = "";
+                try
                 {
-                    obj_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*obj_db.bin", SearchOption.AllDirectories));
-                    tex_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*tex_db.bin", SearchOption.AllDirectories));
-                    spr_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*spr_db.bin", SearchOption.AllDirectories));
-                    module_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_module_tbl.farc", SearchOption.AllDirectories));
-                    customise_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_customize_item_tbl.farc", SearchOption.AllDirectories));
-                    chritm_props = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*chritm_prop.farc", SearchOption.AllDirectories));
-                    foreach (string file in module_tbls)
+                    if (Directory.Exists(gameDirectory + "\\mods"))
                     {
-                        FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                        usedID.get_used_ids(farc, 0);
-                    }
-                    foreach (string file in customise_tbls)
-                    {
-                        FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                        usedID.get_used_ids(farc, 1);
-                    }
-                    foreach (string file in chritm_props)
-                    {
-                        FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                        usedID.get_used_ids(farc, 2);
-                    }
-                    foreach (string file in obj_dbs)
-                    {
-                        ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(file);
-                        usedID.get_used_ids(obj_db);
-                    }
-                    foreach (string file in tex_dbs)
-                    {
-                        TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(file);
-                        usedID.get_used_ids(tex_db);
-                    }
-                    foreach (string file in spr_dbs)
-                    {
-                        SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(file);
-                        usedID.get_used_ids(spr_db);
-                    }
-                }
-                if (File.Exists((gameDirectory + "\\diva_dlc00_region.cpk")))
-                {
-                    cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_dlc00_region.cpk");
-                }
-                else if (File.Exists((gameDirectory + "\\diva_main_region.cpk")))
-                {
-                    cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main_region.cpk");
-                }
-                else if (File.Exists((gameDirectory + "\\diva_main.cpk")))
-                {
-                    cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main.cpk");
-                }
-                else
-                {
-                    Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory.", "Error");
-                }
-                foreach (string file in cpk.FileNames)
-                {
-                    switch (file)
-                    {
-                        case string s when s.Contains("gm_module_tbl.farc"):
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        obj_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*obj_db.bin", SearchOption.AllDirectories));
+                        tex_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*tex_db.bin", SearchOption.AllDirectories));
+                        spr_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*spr_db.bin", SearchOption.AllDirectories));
+                        module_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_module_tbl.farc", SearchOption.AllDirectories));
+                        customise_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_customize_item_tbl.farc", SearchOption.AllDirectories));
+                        chritm_props = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*chritm_prop.farc", SearchOption.AllDirectories));
+                        foreach (string file in module_tbls)
+                        {
+                            currentFile = file;
+                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
                             usedID.get_used_ids(farc, 0);
-                            break;
-                        case string s when s.Contains("gm_customize_item_tbl.farc"):
-                            FarcArchive farc2 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                            usedID.get_used_ids(farc2, 1);
-                            break;
-                        case string s when s.Contains("chritm_prop.farc"):
-                            FarcArchive farc3 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                            usedID.get_used_ids(farc3, 2);
-                            break;
-                        case string s when s.Contains("*obj_db.farc"):
-                            ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        }
+                        foreach (string file in customise_tbls)
+                        {
+                            currentFile = file;
+                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                            usedID.get_used_ids(farc, 1);
+                        }
+                        foreach (string file in chritm_props)
+                        {
+                            currentFile = file;
+                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                            usedID.get_used_ids(farc, 2);
+                        }
+                        foreach (string file in obj_dbs)
+                        {
+                            currentFile = file;
+                            ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(file);
                             usedID.get_used_ids(obj_db);
-                            break;
-                        case string s when s.Contains("*tex_db.farc"):
-                            TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        }
+                        foreach (string file in tex_dbs)
+                        {
+                            currentFile = file;
+                            TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(file);
                             usedID.get_used_ids(tex_db);
-                            break;
-                        case string s when s.Contains("*spr_db.farc"):
-                            SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        }
+                        foreach (string file in spr_dbs)
+                        {
+                            currentFile = file;
+                            SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(file);
                             usedID.get_used_ids(spr_db);
-                            break;
-                        default:
-                            break;
+                        }
+                    }
+                    if (File.Exists((gameDirectory + "\\diva_dlc00_region.cpk")))
+                    {
+                            currentFile = "diva_dlc00_region";
+                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_dlc00_region.cpk");
+                    }
+                    else if (File.Exists((gameDirectory + "\\diva_main_region.cpk")))
+                    {
+                            currentFile = "diva_main_region";
+                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main_region.cpk");
+                    }
+                    else if (File.Exists((gameDirectory + "\\diva_main.cpk")))
+                    {
+                            currentFile = "diva_main";
+                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main.cpk");
+                    }
+                    else
+                    {
+                        Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory.", "Error");
+                    }
+                    foreach (string file in cpk.FileNames)
+                    {
+                        switch (file)
+                        {
+                            case string s when s.Contains("gm_module_tbl.farc"):
+                                FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(farc, 0);
+                                break;
+                            case string s when s.Contains("gm_customize_item_tbl.farc"):
+                                FarcArchive farc2 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(farc2, 1);
+                                break;
+                            case string s when s.Contains("chritm_prop.farc"):
+                                FarcArchive farc3 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(farc3, 2);
+                                break;
+                            case string s when s.Contains("*obj_db.farc"):
+                                ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(obj_db);
+                                break;
+                            case string s when s.Contains("*tex_db.farc"):
+                                TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(tex_db);
+                                break;
+                            case string s when s.Contains("*spr_db.farc"):
+                                SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(spr_db);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
+                catch { Program.NotiBox("An error occurred while reading the files in your game directory.\nError in: " + currentFile, "Error"); }
             }
         }
 
@@ -279,7 +293,13 @@ namespace Armoire
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-            moduleHost.Children.RemoveAt(moduleHost.Children.Count - 1);
+            try
+            {
+                moduleHost.Children.RemoveAt(moduleHost.Children.Count - 1);
+            }
+            catch
+            {
+            }
         }
 
         private void AddToModuleTable(wizModule wizMod)
@@ -305,7 +325,7 @@ namespace Armoire
                 win.ShowDialog();
                 if (win.isRightClicked)
                 {
-                    wizMod.id = Program.Databases.GetUnusedID(finalUsedIDs.module_tbl);
+                    wizMod.id = Program.Databases.GetUnusedID(finalUsedIDs.module_tbl, finalUsedIDs.customize_item_tbl);
                     finalUsedIDs.module_tbl.Add(wizMod.id);
                 }
             }
@@ -424,7 +444,7 @@ namespace Armoire
                         Dictionary<uint, uint> texIDs = new Dictionary<uint, uint>();
                         for (int i = 0; i < objset.TextureIds.Count; i++)
                         {
-                            texIDs.Add(objset.TextureIds[i], Program.Databases.GetUnusedID(finalUsedIDs.tex_db));
+                            texIDs.Add(objset.TextureIds[i], Program.Databases.GetUnusedID(finalUsedIDs.tex_db, 9999999));
                             objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
                             finalUsedIDs.tex_db.Add(objset.TextureIds[i]);
                         }
@@ -454,7 +474,7 @@ namespace Armoire
                         entries.Add(objEntry);
                         farc.Add(fileName, stream, false, ConflictPolicy.Replace);
                         farc.IsCompressed = true;
-                        farc.Save(exportFolder + "/objset/" + System.IO.Path.GetFileName(x.objectFilePath));
+                        farc.Save(exportFolder + "/objset/" + Path.GetFileName(x.objectFilePath));
                     }
                     farc.Dispose();
                 }
@@ -526,7 +546,7 @@ namespace Armoire
 
         private int GetItemNumber(string item_file_name, string chara)
         {
-            string name = System.IO.Path.GetFileNameWithoutExtension(item_file_name);
+            string name = Path.GetFileNameWithoutExtension(item_file_name);
             if (name.Contains("itm"))
             {
                 string[] final = name.Split(new string[] { "itm" }, StringSplitOptions.None);
@@ -540,7 +560,17 @@ namespace Armoire
                     {
                         // make code to change mikitm number and resave
                     }*/
-                    return int.Parse(final[1]);
+                    ChoiceWindow choice = new ChoiceWindow("The item number of the object you selected is already being used with this character.\n" +
+                        "Would you like to use a unused, randomly generated one?", "No", "Yes");
+                    choice.ShowDialog();
+                    if (choice.isRightClicked)
+                    {
+                        return Program.Databases.GetUnusedID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)]);
+                    }
+                    else
+                    {
+                        return int.Parse(final[1]);
+                    }
                 }
             }
             else

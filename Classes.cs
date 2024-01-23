@@ -377,7 +377,7 @@ namespace Armoire
         public int id = -1; //default to a number
         public string chara;
         public int sort_index = 999;
-        public Bitmap bitmap = Armoire.Properties.Resources.md_dummy;
+        public Bitmap bitmap = Properties.Resources.md_dummy;
     }
 
     public class localisedNames

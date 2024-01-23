@@ -33,7 +33,7 @@ namespace Armoire
             InitializeComponent();
             charBox.ItemsSource = Program.charas;
             charBox.SelectedIndex = 0;
-            setModuleImage(Armoire.Properties.Resources.md_dummy);
+            setModuleImage(Properties.Resources.md_dummy);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //add
@@ -44,9 +44,12 @@ namespace Armoire
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if(itemPanel.Children.Count > 0)
+            try
             {
-                itemPanel.Children.RemoveAt(itemPanel.Children.Count-1);
+                itemPanel.Children.RemoveAt(itemPanel.Children.Count - 1);
+            }
+            catch
+            {
             }
         }
 
@@ -110,8 +113,8 @@ namespace Armoire
         {
             System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
             ofd.Filter = "PNG Files|*.png";
-            
-                if (ofd.ShowDialog() == DialogResult.OK)
+
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
                 Bitmap pngImage = new Bitmap(ofd.FileName);
                 if (pngImage.Width == 512 && pngImage.Height == 512)
@@ -130,9 +133,10 @@ namespace Armoire
             Sprite spr = Program.GetSprite(false);
             SpriteSet sprite = new SpriteSet();
             sprite.Sprites.Add(spr);
-            pngFile.RotateFlip(RotateFlipType.Rotate180FlipX);
-            MikuMikuLibrary.Textures.Processing.TextureEncoderCore tex = new TextureEncoderCore();
-            MikuMikuLibrary.Textures.Texture text = tex.EncodeFromBitmap(pngFile, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
+            Bitmap newBitmap = new Bitmap(pngFile);
+            newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
+            TextureEncoderCore tex = new TextureEncoderCore();
+            MikuMikuLibrary.Textures.Texture text = tex.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
             sprite.TextureSet.Textures.Add(text);
             Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
             BitmapImage img = Program.ToBitmapImage(cropSprite);

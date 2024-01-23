@@ -74,9 +74,10 @@
                       AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" BorderBrush="White">
                 <DataGrid.ContextMenu>
                     <ContextMenu Width="125">
-                        <MenuItem Header="Add Item" Style="{StaticResource SingleButton}" Click="AddButton_Click"/>
+                        <MenuItem Header="Add Item (At Sel.)" Style="{StaticResource SingleButton}" Click="AddButton_Click"/>
+                        <MenuItem Header="Add Item (At End)" Style="{StaticResource SingleButton}" Click="AddButton2_Click"/>
                         <Separator Background="Transparent" Foreground="Transparent" BorderBrush="Transparent"/>
-                        <MenuItem Header="Remove Item" Click="DeleteEntry" Style="{StaticResource SingleButton}"/>
+                        <MenuItem Header="Remove Item(s)" Click="DeleteEntry" Style="{StaticResource SingleButton}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
@@ -91,7 +92,7 @@
                     <DataGridTextColumn Header="Day" Width="25" Binding="{Binding shop_st_day}"/>
                     <DataGridTextColumn Header="Month" Width="35" Binding="{Binding shop_st_month}"/>
                     <DataGridTextColumn Header="Year" Width="36" Binding="{Binding shop_st_year}"/>
-                    <DataGridCheckBoxColumn Header="Ignore" Width="38" Binding="{Binding ng}"/>
+                    <!-- DataGridCheckBoxColumn Header="Ignore" Width="38" Binding="{Binding ng}"/-->
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
