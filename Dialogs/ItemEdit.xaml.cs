@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Armoire.Dialogs
 {
@@ -79,6 +68,13 @@ namespace Armoire.Dialogs
             }
             TexListEdit texEdit = new TexListEdit(itemCxt.dataSetTexes);
             texEdit.ShowDialog();
+        }
+        private void textChangedEventHandler(object sender, TextChangedEventArgs e)
+        {
+            var box = e.Source as TextBox;
+            box.CaretIndex = box.Text.Length;
+            // Omitted Code: Insert code that does something whenever
+            // the text changes...
         }
     }
 }

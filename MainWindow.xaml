@@ -3,13 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Armoire.Properties"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="Armoire (Modules)" Height="615" Width="610" FontFamily="Meiryo UI">
+        Title="{x:Static p:Resources.title_module}" Height="615" Width="610" FontFamily="Meiryo UI">
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="Open"/>
         <KeyBinding Gesture="Ctrl+S" Command="Save"/>
@@ -41,19 +42,24 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Foreground="White" Text="Armoire (Modules)" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
+            <TextBlock Foreground="White" Text="{x:Static p:Resources.title_module}" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
             <Menu Grid.Row="1" Grid.ColumnSpan="5" Height="20" Background="Transparent" Margin="0,-1.3,0,5">
-                <MenuItem StaysOpenOnClick="True" Width="60" Header="File" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
-                    <MenuItem Width="60" Header="Open" Style="{StaticResource SingleButton}" Command="Open"/>
-                    <MenuItem Width="60" Header="Save" Style="{StaticResource SingleButton}" Command="Save"/>
-                    <MenuItem Width="60" Header="Save As" Style="{StaticResource SingleButton}" Command="SaveAs"/>
-                    <MenuItem Width="60" Header="To CSV" Style="{StaticResource SingleButton}" Click="Export_Click"/>
-                    <MenuItem Width="60" Header="Wizard" Style="{StaticResource SingleButton}" Click="Wizard_Click"/>
+                <MenuItem StaysOpenOnClick="True" Width="60" Header="{x:Static p:Resources.file_title}" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_open}" Style="{StaticResource SingleButton}" Command="Open"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_save}" Style="{StaticResource SingleButton}" Command="Save"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_saveas}" Style="{StaticResource SingleButton}" Command="SaveAs"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_csv}" Style="{StaticResource SingleButton}" Click="Export_Click"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_wizard}" Style="{StaticResource SingleButton}" Click="Wizard_Click"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_db_clean}" Style="{StaticResource SingleButton}" Click="Test_Click"/>
                 </MenuItem>
-                <MenuItem Width="136" Header="Customise Item Editor" Margin="6.25,0,6.25,0" Click="Open_CustEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="136" Header="Character Item Editor" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="86" Header="Sprite DB Editor" Margin="6.25,0,6.25,0" Click="Open_SprEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="60" Header="Preview" Margin="6.25,0,6.25,0" Click="Preview_Click"  Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="136" Header="{x:Static p:Resources.window_custom}" Margin="6.25,0,6.25,0" Click="Open_CustEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="136" Header="{x:Static p:Resources.window_chritm}" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem StaysOpenOnClick="True" Width="86" Header="{x:Static p:Resources.window_db_title}" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Width="86" Header="{x:Static p:Resources.window_spr}" Click="Open_SprEditor" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Width="86" Header="{x:Static p:Resources.window_obj}" Click="Open_ObjEditor" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Width="86" Header="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Style="{StaticResource SingleButton}"/>
+                </MenuItem>
+                <MenuItem Width="60" Header="{x:Static p:Resources.window_preview}" Margin="6.25,0,6.25,0" Click="Preview_Click"  Style="{StaticResource SingleButton}"/>
                 <MenuItem x:Name="Exit" Width="40" Header="Exit" Click="Exit_Click" Margin="6.25,0,6.25,0" Style="{StaticResource SingleButton}"/>
             </Menu>
             <DataGrid x:Name="DataGrid"
@@ -81,16 +87,16 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="idRow" Header="ID" Width="30" Binding="{Binding id}"/>
-                    <DataGridComboBoxColumn x:Name="attrBox" Header="Attribute" Width="70" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridComboBoxColumn x:Name="charaBox" Width="55" Header="Character"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Name" Width="160*" Binding="{Binding name}"/>
-                    <DataGridTextColumn Header="Price" Width="35" Binding="{Binding shop_price}"/>
-                    <DataGridTextColumn Header="Index" Width="35" Binding="{Binding sort_index}"/>
-                    <DataGridTextColumn Header="Costume" Width="55" Binding="{Binding cos}"/>
-                    <DataGridTextColumn Header="Day" Width="25" Binding="{Binding shop_st_day}"/>
-                    <DataGridTextColumn Header="Month" Width="35" Binding="{Binding shop_st_month}"/>
-                    <DataGridTextColumn Header="Year" Width="36" Binding="{Binding shop_st_year}"/>
+                    <DataGridTextColumn x:Name="idRow" Header="{x:Static p:Resources.cmn_id}" Width="30" Binding="{Binding id}"/>
+                    <DataGridComboBoxColumn x:Name="attrBox" Header="{x:Static p:Resources.cmn_attr}" Width="70" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridComboBoxColumn x:Name="charaBox" Width="55" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="160*" Binding="{Binding name}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" Width="35" Binding="{Binding shop_price}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" Width="35" Binding="{Binding sort_index}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_cos}" Width="55" Binding="{Binding cos}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" Width="25" Binding="{Binding shop_st_day}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" Width="35" Binding="{Binding shop_st_month}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" Width="36" Binding="{Binding shop_st_year}"/>
                     <!-- DataGridCheckBoxColumn Header="Ignore" Width="45" Binding="{Binding ng}"/ -->
                 </DataGrid.Columns>
             </DataGrid>

@@ -1,17 +1,10 @@
 ﻿using MikuMikuLibrary.Archives;
-using MikuMikuLibrary.Archives.CriMw;
 using MikuMikuLibrary.Databases;
-using MikuMikuLibrary.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls.Primitives;
 
 namespace Armoire
 {
@@ -230,8 +223,8 @@ namespace Armoire
     public class cosEntry
     {
         public string entry { get; set; }
-        public int id { get; set; }
-        public ObservableCollection<int> items { get; set; }
+        public int id { get; set; } = 9999;
+        public ObservableCollection<int> items { get; set; } = new ObservableCollection<int> { 500, 1, 300 };
         public List<string> getEntry()
         {
             List<string> x = new List<string>();
@@ -251,26 +244,26 @@ namespace Armoire
     public class dataSetTex
     {
         public string entry { get; set; }
-        public string chg { get; set; }
-        public string org { get; set; }
+        public string chg { get; set; } = "ENTER NEW TEX NAME";
+        public string org { get; set; } = "ENTER OLD TEX NAME";
     }
     [Serializable]
     public class itemEntry
     {
         public string entry { get; set; }
-        public int attr { get; set; }  //Editable
+        public int attr { get; set; } = 0; //Editable
         public int rpk = -1; // N/A
-        public string uid { get; set; } //Table
-        public ObservableCollection<dataSetTex> dataSetTexes { get; set; } //Editable - Window
-        public int desID { get; set; } //Editable
-        public decimal face_depth { get; set; } //Editable (Combobox?)
+        public string uid { get; set; } = "DUMMY_DIVSKN"; //Table
+        public ObservableCollection<dataSetTex> dataSetTexes { get; set; } = new ObservableCollection<dataSetTex>(); //Editable - Window
+        public int desID { get; set; } = 0; //Editable
+        public decimal face_depth { get; set; } = 0; //Editable (Combobox?)
         public int flag = 0; //Marks tex swaps, not needed?
-        public string name { get; set; } // Table
-        public int no { get; set; } // Table
-        public List<string> objset { get; set; } //Editable - Window
-        public int orgItm { get; set; } //Editable
-        public int subID { get; set; }  //Editable
-        public int type { get; set; } //Editable
+        public string name { get; set; } = "DUMMY";// Table
+        public int no { get; set; } = 9999; // Table
+        public List<string> objset { get; set; } = new List<string> { "MIKITM001" };//Editable - Window
+        public int orgItm { get; set; } = 0; //Editable
+        public int subID { get; set; } = 0;  //Editable
+        public int type { get; set; } = 0; //Editable
 
         public List<string> getEntry()
         {
@@ -279,11 +272,13 @@ namespace Armoire
             {
                 rpk = 1;
             }
-            List<string> x = new List<string>();
-            x.Add(a + "attr=" + attr);
-            x.Add(a + "data.obj.0.rpk=" + rpk);
-            x.Add(a + "data.obj.0.uid=" + uid);
-            x.Add(a + "data.obj.length=1");
+            List<string> x = new List<string>
+            {
+                a + "attr=" + attr,
+                a + "data.obj.0.rpk=" + rpk,
+                a + "data.obj.0.uid=" + uid,
+                a + "data.obj.length=1"
+            };
             int count = 0;
             foreach (dataSetTex tex in dataSetTexes)
             {

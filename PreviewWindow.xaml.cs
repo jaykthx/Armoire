@@ -4,10 +4,8 @@ using MikuMikuLibrary.IO;
 using MikuMikuLibrary.Sprites;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
@@ -34,7 +32,7 @@ namespace Armoire.Dialogs
             moduleFlag = isModule;
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                imagePath= fbd.SelectedPath;
+                imagePath = fbd.SelectedPath;
                 Properties.Settings.Default.gamePath = fbd.SelectedPath;
                 Properties.Settings.Default.Save();
                 NotiBox noti = new NotiBox("This process might take a short while. Please be patient.\nA new window will open once the process is complete.", "Notice");
@@ -74,11 +72,11 @@ namespace Armoire.Dialogs
             CpkArchive cpk = new CpkArchive();
             if (imagePath != null)
             {
-                if(Directory.Exists(imagePath + "\\mods"))
+                if (Directory.Exists(imagePath + "\\mods"))
                 {
                     dirs = new List<string>(Directory.EnumerateDirectories(imagePath + "\\mods", "2d", SearchOption.AllDirectories));
                 }
-                if(File.Exists((imagePath + "\\diva_main.cpk")))
+                if (File.Exists((imagePath + "\\diva_main.cpk")))
                 {
                     cpk = BinaryFile.Load<CpkArchive>(imagePath + "\\diva_main.cpk");
                 }
@@ -91,54 +89,9 @@ namespace Armoire.Dialogs
             {
                 foreach (module x in MainWindow.Modules.OrderBy(x => x.sort_index))
                 {
-                    bool isFound = false;
-                    if (isFound) { continue; }
                     if (dirs.Count > 0)
                     {
-                        string fileSearch = "spr_sel_md" + Program.Databases.GetIDString(x.id.ToString()) + "cmn";
-                        img = new BitmapImage();
-                        foreach (string dir in dirs)
-                        {
-                            if (isFound)
-                            {
-                                break;
-                            }
-                            foreach (string file in Directory.EnumerateFiles(dir, fileSearch + ".farc"))
-                            {
-                                FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                                EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
-                                SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
-                                Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-                                img = Program.ToBitmapImage(cropSprite);
-                                cropSprite.Dispose();
-                                sprite.Dispose();
-                                source.Dispose();
-                                farc.Dispose();
-                                isFound = true;
-                                break;
-                            }
-                        }
-                        foreach (string file in cpk.FileNames)
-                        {
-                            if (isFound)
-                            {
-                                break;
-                            }
-                            if (file == "rom_switch/rom/2d/" + fileSearch + ".farc")
-                            {
-                                FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
-                                SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
-                                Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-                                img = Program.ToBitmapImage(cropSprite);
-                                cropSprite.Dispose();
-                                sprite.Dispose();
-                                source.Dispose();
-                                farc.Dispose();
-                                isFound = true;
-                                break;
-                            }
-                        }
+                        img = SearchFile("spr_sel_md" + Program.Databases.GetIDString(x.id.ToString()) + "cmn", dirs, cpk);
                     }
                     EntryDisplay chara = new EntryDisplay(img, x.name, x.sort_index, x.shop_price, x.attr);
                     switch (x.chara)
@@ -272,6 +225,46 @@ namespace Armoire.Dialogs
                     }
                 }
             }
+            cpk.Dispose();
+        }
+
+
+        private BitmapImage SearchFile(string IDString, List<string> Directories, CpkArchive Cpk)
+        {
+            string fileSearch = IDString;
+            BitmapImage img = new BitmapImage();
+            foreach (string dir in Directories)
+            {
+                List<string> cpkFiles = Cpk.FileNames.ToList();
+                string cpkFile = "rom_switch/rom/2d/" + fileSearch + ".farc";
+                if (cpkFiles.Contains(cpkFile))
+                {
+                    FarcArchive farc = BinaryFile.Load<FarcArchive>(Cpk.Open(cpkFile, EntryStreamMode.MemoryStream));
+                    EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
+                    SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
+                    Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
+                    img = Program.ToBitmapImage(cropSprite);
+                    cropSprite.Dispose();
+                    sprite.Dispose();
+                    source.Dispose();
+                    farc.Dispose();
+                    return img;
+                }
+                foreach (string file in Directory.EnumerateFiles(dir, fileSearch + ".farc"))
+                {
+                    FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                    EntryStream source = farc.Open(fileSearch + ".bin", EntryStreamMode.MemoryStream);
+                    SpriteSet sprite = BinaryFile.Load<SpriteSet>(source);
+                    Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
+                    img = Program.ToBitmapImage(cropSprite);
+                    cropSprite.Dispose();
+                    sprite.Dispose();
+                    source.Dispose();
+                    farc.Dispose();
+                    return img;
+                }
+            }
+            return img;
         }
     }
 }

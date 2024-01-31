@@ -61,7 +61,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Attribute.
         /// </summary>
         public static string cmn_attr {
             get {
@@ -70,7 +70,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Bound Module.
         /// </summary>
         public static string cmn_bind {
             get {
@@ -79,7 +79,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string cmn_button_change {
             get {
@@ -88,7 +88,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string cmn_button_edit {
             get {
@@ -97,7 +97,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Character.
         /// </summary>
         public static string cmn_chara {
             get {
@@ -106,7 +106,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Costume.
         /// </summary>
         public static string cmn_cos {
             get {
@@ -115,7 +115,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Item .
         /// </summary>
         public static string cmn_cos_item {
             get {
@@ -124,7 +124,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Day.
         /// </summary>
         public static string cmn_day {
             get {
@@ -133,7 +133,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string cmn_details {
             get {
@@ -142,7 +142,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string cmn_exit {
             get {
@@ -151,7 +151,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string cmn_id {
             get {
@@ -160,7 +160,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Index.
         /// </summary>
         public static string cmn_index {
             get {
@@ -169,7 +169,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to No..
         /// </summary>
         public static string cmn_item_no {
             get {
@@ -178,7 +178,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Month.
         /// </summary>
         public static string cmn_month {
             get {
@@ -187,7 +187,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string cmn_name {
             get {
@@ -196,16 +196,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string cmn_ng {
-            get {
-                return ResourceManager.GetString("cmn_ng", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Object ID.
         /// </summary>
         public static string cmn_objid {
             get {
@@ -214,7 +205,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Object UID.
         /// </summary>
         public static string cmn_objuid {
             get {
@@ -223,7 +214,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Parts.
         /// </summary>
         public static string cmn_parts {
             get {
@@ -232,7 +223,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Preset.
         /// </summary>
         public static string cmn_preset {
             get {
@@ -241,7 +232,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string cmn_price {
             get {
@@ -250,7 +241,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Year.
         /// </summary>
         public static string cmn_year {
             get {
@@ -286,7 +277,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to To CSV.
         /// </summary>
         public static string file_csv {
             get {
@@ -295,7 +286,16 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Cleaner.
+        /// </summary>
+        public static string file_db_clean {
+            get {
+                return ResourceManager.GetString("file_db_clean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string file_open {
             get {
@@ -304,7 +304,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string file_save {
             get {
@@ -313,7 +313,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Save As.
         /// </summary>
         public static string file_saveas {
             get {
@@ -322,7 +322,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to File.
         /// </summary>
         public static string file_title {
             get {
@@ -331,7 +331,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Wizard.
         /// </summary>
         public static string file_wizard {
             get {
@@ -410,7 +410,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Character Item Tables).
         /// </summary>
         public static string title_chritm {
             get {
@@ -419,7 +419,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Customize Items).
         /// </summary>
         public static string title_custom {
             get {
@@ -428,7 +428,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Object Database Editor).
         /// </summary>
         public static string title_edit_obj {
             get {
@@ -437,7 +437,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Sprite Database Editor).
         /// </summary>
         public static string title_edit_spr {
             get {
@@ -446,7 +446,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Texture Database Editor).
         /// </summary>
         public static string title_edit_tex {
             get {
@@ -455,7 +455,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Modules).
         /// </summary>
         public static string title_module {
             get {
@@ -464,7 +464,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Armoire (Module Wizard).
         /// </summary>
         public static string title_wizard {
             get {
@@ -473,7 +473,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Character Item Editor.
         /// </summary>
         public static string window_chritm {
             get {
@@ -482,7 +482,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Customize Item Editor.
         /// </summary>
         public static string window_custom {
             get {
@@ -491,7 +491,16 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to DB Editors.
+        /// </summary>
+        public static string window_db_title {
+            get {
+                return ResourceManager.GetString("window_db_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Module Editor.
         /// </summary>
         public static string window_module {
             get {
@@ -500,11 +509,38 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Object DB.
+        /// </summary>
+        public static string window_obj {
+            get {
+                return ResourceManager.GetString("window_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
         /// </summary>
         public static string window_preview {
             get {
                 return ResourceManager.GetString("window_preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprite DB.
+        /// </summary>
+        public static string window_spr {
+            get {
+                return ResourceManager.GetString("window_spr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texture DB.
+        /// </summary>
+        public static string window_tex {
+            get {
+                return ResourceManager.GetString("window_tex", resourceCulture);
             }
         }
     }

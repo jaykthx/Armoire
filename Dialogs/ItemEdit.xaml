@@ -35,21 +35,21 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Text="Armoire - Item Details" FontSize="14" TextAlignment="Center"/>
-            <TextBlock x:Name="nameHold" Text="{Binding name}" Grid.Row="2" Grid.ColumnSpan="5" TextAlignment="Center" />
+            <TextBlock x:Name="nameHold" Text="{Binding name}" Grid.Row="2" Grid.ColumnSpan="5" TextAlignment="Center"/>
             <Separator Grid.Row="1" Grid.ColumnSpan="5"/>
             <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="350">
                 <TextBlock  Text="Attribute" TextAlignment="Center"/>
-                <TextBox Text="{Binding attr}" x:Name="t_att"/>
+                <TextBox Text="{Binding attr}" x:Name="t_att" TextChanged="textChangedEventHandler"/>
                 <TextBlock  Text="Des ID" TextAlignment="Center"/>
-                <TextBox Text="{Binding desID}" x:Name="t_des"/>
+                <TextBox Text="{Binding desID}" x:Name="t_des" TextChanged="textChangedEventHandler"/>
                 <TextBlock  Text="Face Depth" TextAlignment="Center"/>
-                <TextBox Text="{Binding face_depth}" x:Name="t_fac"/>
+                <TextBox Text="{Binding face_depth}" x:Name="t_fac" TextChanged="textChangedEventHandler"/>
                 <TextBlock  Text="Original Item" TextAlignment="Center"/>
-                <TextBox Text="{Binding orgItm}" x:Name="t_org"/>
+                <TextBox Text="{Binding orgItm}" x:Name="t_org" TextChanged="textChangedEventHandler"/>
                 <TextBlock  Text="Sub ID" TextAlignment="Center"/>
-                <TextBox Text="{Binding subID}" x:Name="t_sub"/>
+                <TextBox Text="{Binding subID}" x:Name="t_sub" TextChanged="textChangedEventHandler"/>
                 <TextBlock  Text="Type" TextAlignment="Center"/>
-                <TextBox Text="{Binding type}" x:Name="t_typ"/>
+                <TextBox Text="{Binding type}" x:Name="t_typ" TextChanged="textChangedEventHandler"/>
                 <TextBlock  Text="Objset Entries" TextAlignment="Center"/>
                 <ListBox x:Name="ObjsetBox" ItemsSource="{Binding objset}" Height="45" Background="#FF373737"  BorderBrush="White" BorderThickness="2"/>
                 <Button Content="Add" Click="Add_Click"/>

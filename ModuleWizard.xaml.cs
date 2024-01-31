@@ -11,12 +11,7 @@ using System.Windows.Input;
 using Armoire.Dialogs;
 using System.Windows.Forms;
 using MikuMikuLibrary.Archives.CriMw;
-using System.Reflection;
-using MikuMikuLibrary.Textures;
-using System.Runtime.InteropServices.ComTypes;
 using MikuMikuLibrary.Materials;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Armoire
 {
@@ -59,15 +54,15 @@ namespace Armoire
 
         private void GetExistingIDs(string gameDirectory, usedIDs usedID)
         {
-            List<string> obj_dbs;
-            List<string> tex_dbs;
-            List<string> spr_dbs;
-            List<string> module_tbls;
-            List<string> customise_tbls;
-            List<string> chritm_props;
-            CpkArchive cpk = new CpkArchive();
             if (gameDirectory != null)
             {
+                List<string> obj_dbs;
+                List<string> tex_dbs;
+                List<string> spr_dbs;
+                List<string> module_tbls;
+                List<string> customise_tbls;
+                List<string> chritm_props;
+                CpkArchive cpk = new CpkArchive();
                 string currentFile = "";
                 try
                 {
@@ -399,14 +394,6 @@ namespace Armoire
             foreach (wizObj x in modInfo.wizMod.objects)
             {
                 wizObjEntry objEntry = new wizObjEntry();
-                /*if (File.Exists(exportFolder + "/objset/" + System.IO.Path.GetFileName(x.objectFilePath)))
-                {
-                    Program.NotiBox("The object files already exist in this folder and can't be overwritten.", "Notice"); // could do with a yes or no box for this part
-                }
-                else
-                {
-                    File.Copy(x.objectFilePath, exportFolder + "/objset/" + System.IO.Path.GetFileName(x.objectFilePath), true);
-                }*/
                 var farc = BinaryFile.Load<FarcArchive>(x.objectFilePath);
                 foreach (string fileName in farc)
                 {
@@ -444,17 +431,28 @@ namespace Armoire
                         Dictionary<uint, uint> texIDs = new Dictionary<uint, uint>();
                         for (int i = 0; i < objset.TextureIds.Count; i++)
                         {
-                            texIDs.Add(objset.TextureIds[i], Program.Databases.GetUnusedID(finalUsedIDs.tex_db, 9999999));
-                            objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
-                            finalUsedIDs.tex_db.Add(objset.TextureIds[i]);
-                        }
-                        for (int i = 0; i < objset.Objects[0].Materials.Count; i++)
-                        {
-                            foreach(MaterialTexture mat in objset.Objects[0].Materials[i].MaterialTextures)
+                            if (texIDs.ContainsKey(objset.TextureIds[i]))
                             {
-                                if(texIDs.ContainsKey(mat.TextureId))
+                                objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
+                            }
+                            else
+                            {
+                                texIDs.Add(objset.TextureIds[i], Program.Databases.GetUnusedID(finalUsedIDs.tex_db, 9999999));
+                                objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
+                                finalUsedIDs.tex_db.Add(objset.TextureIds[i]);
+                            }
+
+                        }
+                        foreach(MikuMikuLibrary.Objects.Object obj in objset.Objects)
+                        {
+                            foreach (Material mat in obj.Materials)
+                            {
+                                foreach(MaterialTexture matTex in mat.MaterialTextures)
                                 {
-                                    mat.TextureId = texIDs[mat.TextureId];
+                                    if (texIDs.ContainsKey(matTex.TextureId))
+                                    {
+                                        matTex.TextureId = texIDs[matTex.TextureId];
+                                    }
                                 }
                             }
                         }

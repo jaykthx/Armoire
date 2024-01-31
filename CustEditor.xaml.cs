@@ -133,23 +133,42 @@ namespace Armoire
         private void OpenFile()
         {
             OpenFileDialog ofd = new OpenFileDialog() { Filter = "Supported files|*.csv;*customize_item_tbl.farc|Customize Item Table files|*customize_item_tbl.farc|Armoire-exported CSV files|*.csv|All files (*.*)|*.*" };
+            ofd.Multiselect= true;
             if (ofd.ShowDialog() == true)
             {
-                if (ofd.FileName != null && ofd.FileName.EndsWith(".farc"))
+                CustItems.Clear();
+                ObservableCollection<cstm_item> tempCustoms = new ObservableCollection<cstm_item>();
+                foreach (string file in ofd.FileNames)
                 {
-                    Program.customPath = ofd.FileName;
-                    var farc = BinaryFile.Load<FarcArchive>(Program.customPath);
-                    CustItems = Program.IO.ReadCustomFile(farc);
+                    if (file.EndsWith(".farc"))
+                    {
+                        Program.customPath = ofd.FileNames[0];
+                        var farc = BinaryFile.Load<FarcArchive>(file);
+                        tempCustoms = Program.IO.ReadCustomFile(farc);
+                        List<cstm_item> customs = tempCustoms.ToList();
+                        foreach (cstm_item c in tempCustoms)
+                        {
+                            CustItems.Add(c);
+                        }
+                    }
+                    else if (file.EndsWith(".csv"))
+                    {
+                        string[] split = file.Split('\\');
+                        Program.customPath = ofd.FileNames[0];
+                        string newFileNameLocation = ofd.FileNames[0].Remove((ofd.FileName.Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
+                        newFileNameLocation += "mod_gm_customize_item_tbl.farc";
+                        tempCustoms = Program.IO.ReadCustomFileCSV(file);
+                        List<cstm_item> customs = tempCustoms.ToList();
+                        foreach (cstm_item c in customs)
+                        {
+                            CustItems.Add(c);
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                else if (ofd.FileName != null && ofd.FileName.EndsWith(".csv"))
-                {
-                    string[] split = ofd.FileName.Split('\\');
-                    string newFileNameLocation = ofd.FileName.Remove((ofd.FileName.Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                    newFileNameLocation += "mod_gm_customize_item_tbl.farc";
-                    Program.customPath = newFileNameLocation;
-                    CustItems = Program.IO.ReadCustomFileCSV(ofd.FileName);
-                }
-                else { return; }
             }
             DataGrid.ItemsSource = CustItems;
         }
@@ -247,6 +266,30 @@ namespace Armoire
             {
                 SprEditMain spr = new SprEditMain();
                 spr.Show();
+            }
+            else
+            {
+                Program.NotiBox("This window is already open.", "Friendly Reminder");
+            }
+        }
+        private void Open_TexEditor(object sender, RoutedEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<TexEdit>().Any())
+            {
+                TexEdit texEditor = new TexEdit();
+                texEditor.Show();
+            }
+            else
+            {
+                Program.NotiBox("This window is already open.", "Friendly Reminder");
+            }
+        }
+        private void Open_ObjEditor(object sender, RoutedEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<ObjEditMain>().Any())
+            {
+                ObjEditMain objEditor = new ObjEditMain();
+                objEditor.Show();
             }
             else
             {

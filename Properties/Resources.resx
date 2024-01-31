@@ -118,70 +118,67 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="cmn_attr" xml:space="preserve">
-    <value />
+    <value>Attribute</value>
   </data>
   <data name="cmn_bind" xml:space="preserve">
-    <value />
+    <value>Bound Module</value>
   </data>
   <data name="cmn_button_change" xml:space="preserve">
-    <value />
+    <value>Change</value>
   </data>
   <data name="cmn_button_edit" xml:space="preserve">
-    <value />
+    <value>Edit</value>
   </data>
   <data name="cmn_chara" xml:space="preserve">
-    <value />
+    <value>Character</value>
   </data>
   <data name="cmn_cos" xml:space="preserve">
-    <value />
+    <value>Costume</value>
   </data>
   <data name="cmn_cos_item" xml:space="preserve">
-    <value />
+    <value>Item </value>
   </data>
   <data name="cmn_day" xml:space="preserve">
-    <value />
+    <value>Day</value>
   </data>
   <data name="cmn_details" xml:space="preserve">
-    <value />
+    <value>Details</value>
   </data>
   <data name="cmn_exit" xml:space="preserve">
-    <value />
+    <value>Exit</value>
   </data>
   <data name="cmn_id" xml:space="preserve">
-    <value />
+    <value>ID</value>
   </data>
   <data name="cmn_index" xml:space="preserve">
-    <value />
+    <value>Index</value>
   </data>
   <data name="cmn_item_no" xml:space="preserve">
-    <value />
+    <value>No.</value>
   </data>
   <data name="cmn_month" xml:space="preserve">
-    <value />
+    <value>Month</value>
   </data>
   <data name="cmn_name" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmn_ng" xml:space="preserve">
-    <value />
+    <value>Name</value>
   </data>
   <data name="cmn_objid" xml:space="preserve">
-    <value />
+    <value>Object ID</value>
   </data>
   <data name="cmn_objuid" xml:space="preserve">
-    <value />
+    <value>Object UID</value>
   </data>
   <data name="cmn_parts" xml:space="preserve">
-    <value />
+    <value>Parts</value>
   </data>
   <data name="cmn_preset" xml:space="preserve">
-    <value />
+    <value>Preset</value>
   </data>
   <data name="cmn_price" xml:space="preserve">
-    <value />
+    <value>Price</value>
   </data>
   <data name="cmn_year" xml:space="preserve">
-    <value />
+    <value>Year</value>
   </data>
   <data name="db_edit_obj" xml:space="preserve">
     <value />
@@ -193,22 +190,25 @@
     <value />
   </data>
   <data name="file_csv" xml:space="preserve">
-    <value />
+    <value>To CSV</value>
+  </data>
+  <data name="file_db_clean" xml:space="preserve">
+    <value>Cleaner</value>
   </data>
   <data name="file_open" xml:space="preserve">
-    <value />
+    <value>Open</value>
   </data>
   <data name="file_save" xml:space="preserve">
-    <value />
+    <value>Save</value>
   </data>
   <data name="file_saveas" xml:space="preserve">
-    <value />
+    <value>Save As</value>
   </data>
   <data name="file_title" xml:space="preserve">
-    <value />
+    <value>File</value>
   </data>
   <data name="file_wizard" xml:space="preserve">
-    <value />
+    <value>Wizard</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="info_n" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -233,36 +233,48 @@
     <value>..\Resources\md_dummy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="title_chritm" xml:space="preserve">
-    <value />
+    <value>Armoire (Character Item Tables)</value>
   </data>
   <data name="title_custom" xml:space="preserve">
-    <value />
+    <value>Armoire (Customize Items)</value>
   </data>
   <data name="title_edit_obj" xml:space="preserve">
-    <value />
+    <value>Armoire (Object Database Editor)</value>
   </data>
   <data name="title_edit_spr" xml:space="preserve">
-    <value />
+    <value>Armoire (Sprite Database Editor)</value>
   </data>
   <data name="title_edit_tex" xml:space="preserve">
-    <value />
+    <value>Armoire (Texture Database Editor)</value>
   </data>
   <data name="title_module" xml:space="preserve">
-    <value />
+    <value>Armoire (Modules)</value>
   </data>
   <data name="title_wizard" xml:space="preserve">
-    <value />
+    <value>Armoire (Module Wizard)</value>
   </data>
   <data name="window_chritm" xml:space="preserve">
-    <value />
+    <value>Character Item Editor</value>
   </data>
   <data name="window_custom" xml:space="preserve">
-    <value />
+    <value>Customize Item Editor</value>
+  </data>
+  <data name="window_db_title" xml:space="preserve">
+    <value>DB Editors</value>
   </data>
   <data name="window_module" xml:space="preserve">
-    <value />
+    <value>Module Editor</value>
+  </data>
+  <data name="window_obj" xml:space="preserve">
+    <value>Object DB</value>
   </data>
   <data name="window_preview" xml:space="preserve">
-    <value />
+    <value>Preview</value>
+  </data>
+  <data name="window_spr" xml:space="preserve">
+    <value>Sprite DB</value>
+  </data>
+  <data name="window_tex" xml:space="preserve">
+    <value>Texture DB</value>
   </data>
 </root>

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire"
         mc:Ignorable="d"
         WindowStyle="None"
@@ -46,16 +47,19 @@
             </Grid.ColumnDefinitions>
             <TextBlock Foreground="White" Text="Armoire (Character Item Tables)" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
             <Menu Grid.Row="1" Grid.ColumnSpan="5" Height="20" Background="Transparent" Margin="0,-1.3,0,5">
-                <MenuItem StaysOpenOnClick="True" Width="60" Header="File" Background="Transparent" Style="{StaticResource MenuButton}" Margin="0,0,5,0">
-                    <MenuItem Width="60" Header="Open" Style="{StaticResource SingleButton}" Command="Open"/>
-                    <MenuItem Width="60" Header="Save" Style="{StaticResource SingleButton}" Command="Save"/>
-                    <MenuItem Width="60" Header="Save As" Style="{StaticResource SingleButton}" Command="SaveAs"/>
+                <MenuItem StaysOpenOnClick="True" Width="60" Header="{x:Static p:Resources.file_title}" Background="Transparent" Style="{StaticResource MenuButton}" Margin="0,0,5,0">
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_open}" Style="{StaticResource SingleButton}" Command="Open"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_save}" Style="{StaticResource SingleButton}" Command="Save"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_saveas}" Style="{StaticResource SingleButton}" Command="SaveAs"/>
                 </MenuItem>
-                <MenuItem Width="180" Header="Customise Item Editor" Click="Open_CustEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
-                <MenuItem Width="180" Header="Module Table Editor" Click="Open_MainEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
-                <MenuItem Width="140" Header="Object Database Editor" Click="Open_ObjEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
-                <MenuItem Width="150" Header="Texture Database Editor" Click="Open_TexEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
-                <MenuItem x:Name="Exit" Width="40" Header="Exit" Click="Exit_Click" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="220" Header="{x:Static p:Resources.window_custom}" Click="Open_CustEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
+                <MenuItem Width="220" Header="{x:Static p:Resources.window_module}" Click="Open_MainEditor" Style="{StaticResource SingleButton}" Margin="0,0,5,0"/>
+                <MenuItem StaysOpenOnClick="True" Width="215" Header="{x:Static p:Resources.window_db_title}" Margin="0,0,5,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Width="215" Header="{x:Static p:Resources.window_spr}" Click="Open_SprEditor" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Width="215" Header="{x:Static p:Resources.window_obj}" Click="Open_ObjEditor" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Width="215" Header="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Style="{StaticResource SingleButton}"/>
+                </MenuItem>
+                <MenuItem x:Name="Exit" Width="40" Header="{x:Static p:Resources.cmn_exit}" Click="Exit_Click" Style="{StaticResource SingleButton}"/>
             </Menu>
             <ComboBox x:Name="CharaBox" Grid.Row="2" Grid.ColumnSpan="5" Height="20" Background="#FF292929" Margin="0,0,10,0" Foreground="White" SelectionChanged="CharaBox_SelectionChanged"/>
             <DataGrid x:Name="CosDataGrid"
@@ -91,10 +95,10 @@
                     <DataGridTextColumn x:Name="item3" Header="Item 3" Width="*" Binding="{Binding items[2]}"/>
                     <DataGridTextColumn x:Name="item4" Header="Item 4" Width="*" Binding="{Binding items[3]}"/>
                     <DataGridTextColumn x:Name="item5" Header="Item 5" Width="*" Binding="{Binding items[4]}"/>
-                    <DataGridTemplateColumn Header="List" Width="50">
+                    <DataGridTemplateColumn Header="List" Width="40">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit List" Click="List_Click"/>
+                                <Button Content="{x:Static p:Resources.cmn_button_edit}" Click="List_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -126,20 +130,20 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="No" Width="32" Binding="{Binding no}"/>
-                    <DataGridTextColumn Header="Name" Width="80*" Binding="{Binding name}"/>
-                    <DataGridTextColumn Header="Object UID" Width="80*" Binding="{Binding uid}"/>
-                    <DataGridTemplateColumn Header="Preset" Width="50">
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_item_no}" Width="32" Binding="{Binding no}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="80*" Binding="{Binding name}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_objuid}" Width="80*" Binding="{Binding uid}"/>
+                    <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_preset}" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Change" Click="Change_Click"/>
+                                <Button Content="{x:Static p:Resources.cmn_button_change}" Click="Change_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Details" Width="50">
+                    <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_details}" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" Click="Edit_Click"/>
+                                <Button Content="{x:Static p:Resources.cmn_button_edit}" Click="Edit_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

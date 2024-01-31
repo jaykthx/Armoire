@@ -1,41 +1,26 @@
 ﻿using Armoire.Dialogs;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Microsoft.SqlServer.Server;
-using Microsoft.Win32;
 using MikuMikuLibrary.Archives;
+using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
+using MikuMikuLibrary.Objects;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace Armoire
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
     public partial class MainWindow : Window
     {
         public static ObservableCollection<module> Modules = new ObservableCollection<module>();
@@ -93,23 +78,42 @@ namespace Armoire
         private void OpenFile()
         {
             OpenFileDialog ofd = new OpenFileDialog() { Filter = "Supported files|*.csv;*_module_tbl.farc|Module Table Files|*_module_tbl.farc|Armoire-exported CSV files|*.csv|All files (*.*)|*.*" };
-            if (ofd.ShowDialog() == true)
+            ofd.Multiselect= true;
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (ofd.FileName != null && ofd.FileName.EndsWith(".farc"))
+                Modules.Clear();
+                ObservableCollection<module> tempModules = new ObservableCollection<module>();
+                foreach (string file in ofd.FileNames)
                 {
-                    Program.modulePath = ofd.FileName;
-                    var farc = BinaryFile.Load<FarcArchive>(Program.modulePath);
-                    Modules = Program.IO.ReadModuleFile(farc);
+                    if (file.EndsWith(".farc"))
+                    {
+                        Program.modulePath = ofd.FileNames[0];
+                        var farc = BinaryFile.Load<FarcArchive>(file);
+                        tempModules = Program.IO.ReadModuleFile(farc);
+                        List<module> modules = tempModules.ToList();
+                        foreach (module m in modules)
+                        {
+                            Modules.Add(m);
+                        }
+                    }
+                    else if (file.EndsWith(".csv"))
+                    {
+                        string[] split = file.Split('\\');
+                        Program.modulePath = ofd.FileNames[0];
+                        string newFileNameLocation = ofd.FileNames[0].Remove((ofd.FileName.Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
+                        newFileNameLocation += "mod_gm_module_tbl.farc";
+                        tempModules = Program.IO.ReadModuleFileCSV(file);
+                        List<module> modules = tempModules.ToList();
+                        foreach (module m in modules)
+                        {
+                            Modules.Add(m);
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                else if(ofd.FileName != null && ofd.FileName.EndsWith(".csv"))
-                {
-                    string[] split = ofd.FileName.Split('\\');
-                    string newFileNameLocation = ofd.FileName.Remove((ofd.FileName.Length - split[split.Length-1].Length),split[split.Length-1].Length);
-                    newFileNameLocation += "mod_gm_module_tbl.farc";
-                    Program.modulePath = newFileNameLocation;
-                    Modules = Program.IO.ReadModuleFileCSV(ofd.FileName);
-                }
-                else { return; }
             }
             DataGrid.ItemsSource = Modules;
         }
@@ -125,7 +129,7 @@ namespace Armoire
                 {
                     SaveFileDialog sfd = new SaveFileDialog() { Filter = "FARC files (*.farc)|*.farc" };
                     sfd.FileName = "mod_gm_module_tbl.farc";
-                    if (sfd.ShowDialog() == true)
+                    if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
                         Program.modulePath = sfd.FileName;
                         Program.IO.SaveFile<module>(sfd.FileName, Modules);
@@ -176,9 +180,9 @@ namespace Armoire
             return dummyModule;
         }
 
-        private void DataGrid_Drop(object sender, DragEventArgs e) // Loads drag and dropped items
+        private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
             if (files[0].EndsWith(".farc"))
             {
                 Program.modulePath = files[0];
@@ -216,7 +220,7 @@ namespace Armoire
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.FileName = "gm_module_tbl.csv";
             sfd.Filter = "CSV Files|*.csv";
-            if (sfd.ShowDialog() == true)
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 using (TextWriter writer = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
                 {
@@ -252,10 +256,109 @@ namespace Armoire
                 Program.NotiBox("This window is already open.", "Friendly Reminder");
             }
         }
+        private void Open_TexEditor(object sender, RoutedEventArgs e)
+        {
+            if (!System.Windows.Application.Current.Windows.OfType<TexEdit>().Any())
+            {
+                TexEdit texEditor = new TexEdit();
+                texEditor.Show();
+            }
+            else
+            {
+                Program.NotiBox("This window is already open.", "Friendly Reminder");
+            }
+        }
+        private void Open_ObjEditor(object sender, RoutedEventArgs e)
+        {
+            if (!System.Windows.Application.Current.Windows.OfType<ObjEditMain>().Any())
+            {
+                ObjEditMain objEditor = new ObjEditMain();
+                objEditor.Show();
+            }
+            else
+            {
+                Program.NotiBox("This window is already open.", "Friendly Reminder");
+            }
+        }
         private void Wizard_Click(object sender, RoutedEventArgs e)
         {
             ModuleWizard wiz = new ModuleWizard();
-            wiz.ShowDialog();
+            wiz.Show();
+        }
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Testing DB Cleaner
+            OpenFileDialog ofd = new OpenFileDialog();
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            SaveFileDialog sfd = new SaveFileDialog();
+            fbd.Description = "Pick the mod folder.";
+            List<string> objsetFarcs = new List<string>();
+            List<uint> textureIDs = new List<uint>();
+            if(fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                foreach(string s in Directory.EnumerateFiles(fbd.SelectedPath, "*.farc", SearchOption.AllDirectories))
+                {
+                    if (s.Contains("objset"))
+                    {
+                        objsetFarcs.Add(Path.GetFileName(s));
+                        var farc = BinaryFile.Load<FarcArchive>(s);
+                        foreach (string fileName in farc)
+                        {
+                            if (fileName.EndsWith("_obj.bin"))
+                            {
+                                string mainName = fileName.Remove(fileName.Length - 8, 8);
+                                var stream = new MemoryStream();
+                                var source = farc.Open(fileName, EntryStreamMode.MemoryStream);
+                                var objset = new ObjectSet();
+                                objset.Load(source);
+                                foreach (uint id in objset.TextureIds)
+                                {
+                                    textureIDs.Add(id);
+                                }
+                            }
+                            farc.Dispose();
+                        }
+                    }
+                }
+            }
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) //pick obj_db
+            {
+                ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(ofd.FileName);
+                ObjectDatabase new_obj_db = new ObjectDatabase();
+                foreach(ObjectSetInfo o in obj_db.ObjectSets)
+                {
+                    if (objsetFarcs.Contains(o.ArchiveFileName))
+                    {
+                        new_obj_db.ObjectSets.Add(o);
+                    }
+                }
+                sfd.FileName = "clean_obj_db.bin";
+                sfd.Title = "Please save your new Object Database file.";
+                if(sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    new_obj_db.Save(sfd.FileName);
+                }
+            }
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) //pick tex_db
+            {
+                TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(ofd.FileName);
+                TextureDatabase new_tex_db = new TextureDatabase();
+                tex_db.Load(ofd.FileName);
+                foreach (TextureInfo o in tex_db.Textures)
+                {
+                    if (textureIDs.Contains(o.Id))
+                    {
+                        new_tex_db.Textures.Add(o);
+                    }
+                }
+                sfd.FileName = "clean_tex_db.bin";
+                sfd.Title = "Please save your new Texture Database file.";
+                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    new_tex_db.Save(sfd.FileName);
+                }
+            }
         }
     }
 }

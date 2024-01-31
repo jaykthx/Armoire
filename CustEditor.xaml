@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire"
         mc:Ignorable="d"
         WindowStyle="None"
@@ -44,17 +45,21 @@
             </Grid.ColumnDefinitions>
             <TextBlock Foreground="White" Text="Armoire (Customise Items)" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
             <Menu Grid.ColumnSpan="5" Height="20" Background="Transparent" Margin="0,24,0,5" Grid.RowSpan="2">
-                <MenuItem StaysOpenOnClick="True" Width="60" Header="File" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
-                    <MenuItem Width="60" Header="Open" Style="{StaticResource SingleButton}" Click="Open_Click"/>
-                    <MenuItem Width="60" Header="Save" Style="{StaticResource SingleButton}" Click="Save_Click"/>
-                    <MenuItem Width="60" Header="Save As" Style="{StaticResource SingleButton}" Click="SaveAs_Click"/>
-                    <MenuItem Width="60" Header="To CSV" Style="{StaticResource SingleButton}" Click="Export_Click"/>
+                <MenuItem StaysOpenOnClick="True" Width="60" Header="{x:Static p:Resources.file_title}" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_open}" Style="{StaticResource SingleButton}" Click="Open_Click"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_save}" Style="{StaticResource SingleButton}" Click="Save_Click"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_saveas}" Style="{StaticResource SingleButton}" Click="SaveAs_Click"/>
+                    <MenuItem Width="60" Header="{x:Static p:Resources.file_csv}" Style="{StaticResource SingleButton}" Click="Export_Click"/>
                 </MenuItem>
-                <MenuItem Width="136" Header="Module Table Editor" Margin="6.25,0,6.25,0" Click="Open_MainEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="136" Header="Character Item Editor" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="86" Header="Sprite DB Editor" Margin="6.25,0,6.25,0" Click="Open_SprEditor"  Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="60" Header="Preview" Margin="6.25,0,6.25,0" Click="Preview_Click"  Style="{StaticResource SingleButton}"/>
-                <MenuItem x:Name="Exit" Width="40" Header="Exit" Click="Exit_Click" Margin="6.25,0,6.25,0" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="136" Header="{x:Static p:Resources.window_module}" Margin="6.25,0,6.25,0" Click="Open_MainEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem Width="136" Header="{x:Static p:Resources.window_chritm}" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>
+                <MenuItem StaysOpenOnClick="True" Width="86" Header="{x:Static p:Resources.window_db_title}" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
+                    <MenuItem Width="86" Header="{x:Static p:Resources.window_spr}" Click="Open_SprEditor" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Width="86" Header="{x:Static p:Resources.window_obj}" Click="Open_ObjEditor" Style="{StaticResource SingleButton}"/>
+                    <MenuItem Width="86" Header="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Style="{StaticResource SingleButton}"/>
+                </MenuItem>
+                <MenuItem Width="60" Header="{x:Static p:Resources.window_preview}" Margin="6.25,0,6.25,0" Click="Preview_Click"  Style="{StaticResource SingleButton}"/>
+                <MenuItem x:Name="Exit" Width="40" Header="{x:Static p:Resources.cmn_exit}" Click="Exit_Click" Margin="6.25,0,6.25,0" Style="{StaticResource SingleButton}"/>
             </Menu>
             <DataGrid x:Name="DataGrid"
                       Background="Transparent"

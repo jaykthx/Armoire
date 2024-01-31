@@ -43,7 +43,6 @@ namespace Armoire
                 {
                     DeleteDirectory(dir);
                 }
-
                 Directory.Delete(target_dir, false);
             }
             public static ObservableCollection<chritmFile> ReadCharaFile(FarcArchive farc)
@@ -83,85 +82,91 @@ namespace Armoire
                 foreach (string fileLine in content)
                 {
                     string[] split = fileLine.Split('=');
-                    if (fileLine.Contains("cos.") && fileLine.Contains(".id="))
+                    if (fileLine.Contains("cos."))
                     {
-                        readEntry.id = int.Parse(split[1]);
+                        if (fileLine.Contains(".id="))
+                        {
+                            readEntry.id = int.Parse(split[1]);
+                        }
+                        if (fileLine.Contains("item.") && !fileLine.Contains("length"))
+                        {
+                            tempItems.Add(int.Parse(split[1]));
+                        }
+                        if (fileLine.Contains("item.length"))
+                        {
+                            readEntry.items = new ObservableCollection<int>(tempItems);
+                            tempCosList.Add(readEntry);
+                            readEntry = new cosEntry();
+                            tempItems = new List<int>();
+                        }
                     }
-                    if (fileLine.Contains("cos.") && fileLine.Contains("item.") && !fileLine.Contains("length"))
+                    if (fileLine.Contains("item.") && !fileLine.Contains("cos."))
                     {
-                        tempItems.Add(int.Parse(split[1]));
-                    }
-                    if (fileLine.Contains("cos.") && fileLine.Contains("item.length"))
-                    {
-                        readEntry.items = new ObservableCollection<int>(tempItems);
-                        tempCosList.Add(readEntry);
-                        readEntry = new cosEntry();
-                        tempItems = new List<int>();
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".attr="))
-                    {
-                        itemEntry.attr = Int32.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".data.obj.0.rpk="))
-                    {
-                        itemEntry.rpk = Int32.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".data.obj.0.uid="))
-                    {
-                        itemEntry.uid = split[1];
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".chg="))
-                    {
-                        setTex.chg = split[1];
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".org="))
-                    {
-                        setTex.org = split[1];
-                        itemEntry.flag = 4;
-                        temp.Add(setTex);
-                        setTex = new dataSetTex();
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".des_id="))
-                    {
-                        itemEntry.desID = int.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".face_depth="))
-                    {
-                        itemEntry.face_depth = decimal.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".flag="))
-                    {
-                        itemEntry.flag = Int32.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".name="))
-                    {
-                        itemEntry.name = split[1];
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".no="))
-                    {
-                        itemEntry.no = int.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".objset") && !fileLine.Contains("length"))
-                    {
-                        list.Add(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".org_itm="))
-                    {
-                        itemEntry.orgItm = int.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".sub_id="))
-                    {
-                        itemEntry.subID = int.Parse(split[1]);
-                    }
-                    if (fileLine.Contains("item.") && fileLine.Contains(".type="))
-                    {
-                        itemEntry.objset = list;
-                        itemEntry.type = int.Parse(split[1]);
-                        itemEntry.dataSetTexes = temp;
-                        temp = new ObservableCollection<dataSetTex>();
-                        tempItemList.Add(itemEntry);
-                        list = new List<string>();
-                        itemEntry = new itemEntry();
+                        if (fileLine.Contains(".attr="))
+                        {
+                            itemEntry.attr = Int32.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".data.obj.0.rpk="))
+                        {
+                            itemEntry.rpk = Int32.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".data.obj.0.uid="))
+                        {
+                            itemEntry.uid = split[1];
+                        }
+                        if (fileLine.Contains(".chg="))
+                        {
+                            setTex.chg = split[1];
+                        }
+                        if (fileLine.Contains(".org="))
+                        {
+                            setTex.org = split[1];
+                            itemEntry.flag = 4;
+                            temp.Add(setTex);
+                            setTex = new dataSetTex();
+                        }
+                        if (fileLine.Contains(".des_id="))
+                        {
+                            itemEntry.desID = int.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".face_depth="))
+                        {
+                            itemEntry.face_depth = decimal.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".flag="))
+                        {
+                            itemEntry.flag = Int32.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".name="))
+                        {
+                            itemEntry.name = split[1];
+                        }
+                        if (fileLine.Contains(".no="))
+                        {
+                            itemEntry.no = int.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".objset") && !fileLine.Contains("length"))
+                        {
+                            list.Add(split[1]);
+                        }
+                        if (fileLine.Contains(".org_itm="))
+                        {
+                            itemEntry.orgItm = int.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".sub_id="))
+                        {
+                            itemEntry.subID = int.Parse(split[1]);
+                        }
+                        if (fileLine.Contains(".type="))
+                        {
+                            itemEntry.objset = list;
+                            itemEntry.type = int.Parse(split[1]);
+                            itemEntry.dataSetTexes = temp;
+                            temp = new ObservableCollection<dataSetTex>();
+                            tempItemList.Add(itemEntry);
+                            list = new List<string>();
+                            itemEntry = new itemEntry();
+                        }
                     }
                 }
                 chritmFile x = new chritmFile

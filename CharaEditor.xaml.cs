@@ -1,26 +1,13 @@
 ﻿using Armoire.Dialogs;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Microsoft.Win32;
 using MikuMikuLibrary.Archives;
 using MikuMikuLibrary.IO;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static Armoire.MainWindow;
 
 namespace Armoire
 {
@@ -77,6 +64,18 @@ namespace Armoire
                 Program.NotiBox("This window is already open.", "Friendly Reminder");
             }
         }
+        private void Open_SprEditor(object sender, RoutedEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<SprEditMain>().Any())
+            {
+                SprEditMain spr = new SprEditMain();
+                spr.Show();
+            }
+            else
+            {
+                Program.NotiBox("This window is already open.", "Friendly Reminder");
+            }
+        }
         private void Open_TexEditor(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<TexEdit>().Any())
@@ -103,39 +102,68 @@ namespace Armoire
         }
         private void OpenFile()
         {
+            OpenFileDialog ofd = new OpenFileDialog() { Filter = "Character Item Table files| *chritm_prop.farc|All files (*.*)|*.*", Multiselect = true };
+            if (ofd.ShowDialog() == true)
+            {
+                Program.charaPath = ofd.FileNames[0];
+                OpenProcessNew(ofd.FileNames);
+            }
+        }
+        private void ClearProcess()
+        {
             chritmFiles.Clear();
             CosDataGrid.ItemsSource = null;
             ItemDataGrid.ItemsSource = null;
             CosDataGrid.Items.Clear();
             ItemDataGrid.Items.Clear();
-            OpenFileDialog ofd = new OpenFileDialog() { Filter = "Character Item Table files| *chritm_prop.farc|All files (*.*)|*.*" };
-            if (ofd.ShowDialog() == true)
-            {
-                if (ofd.FileName != null)
-                {
-                    Program.charaPath = ofd.FileName;
-                    OpenProcess();
-                    CharaBox.SelectedIndex = 0;
-                }
-                else { return; }
-            }
-            CharaBox.SelectedIndex = 0;
-        }
-        private void OpenProcess()
-        {
-            CosDataGrid.ItemsSource = null;
-            ItemDataGrid.ItemsSource = null;
-            CosDataGrid.Items.Clear();
-            ItemDataGrid.Items.Clear();
             CharaBox.Items.Clear();
-            var farc = BinaryFile.Load<FarcArchive>(Program.charaPath);
-            chritmFiles = Program.IO.ReadCharaFile(farc);
+        }
+
+        private void OpenProcessNew(string[] fileNames)
+        {
+            ClearProcess();
+            ObservableCollection<chritmFile> fullTemp = new ObservableCollection<chritmFile>();
+            foreach (string file in fileNames)
+            {
+                var farc = BinaryFile.Load<FarcArchive>(file);
+                if (fullTemp.Count == 0)
+                {
+                    ObservableCollection<chritmFile> temp = new ObservableCollection<chritmFile>(Program.IO.ReadCharaFile(farc));
+                    foreach(chritmFile chr in temp)
+                    {
+                        fullTemp.Add(chr);
+                    }
+                }
+                else
+                {
+                    ObservableCollection<chritmFile> temp = new ObservableCollection<chritmFile>(Program.IO.ReadCharaFile(farc));
+                    foreach (chritmFile tempchr in temp)
+                    {
+                        foreach (chritmFile chr in fullTemp)
+                        {
+                            if (tempchr.chara == chr.chara)
+                            {
+                                foreach (cosEntry cos in tempchr.costumes)
+                                {
+                                    chr.costumes.Add(cos);
+                                }
+                                foreach (itemEntry item in tempchr.items)
+                                {
+                                    chr.items.Add(item);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            chritmFiles = fullTemp;
             foreach (chritmFile x in chritmFiles)
             {
                 CharaBox.Items.Add(x.getFullName());
             }
             CosDataGrid.ItemsSource = chritmFiles[0].costumes;
             ItemDataGrid.ItemsSource = chritmFiles[0].items;
+            CharaBox.SelectedIndex = 0;
         }
 
         private void SaveFile(bool isQuickSave)
@@ -209,67 +237,24 @@ namespace Armoire
 
         private void AddCos(object sender, RoutedEventArgs e)
         {
-            try
+            if (chritmFiles.Count > 0)
             {
-                chritmFiles[CharaBox.SelectedIndex].costumes.Insert(CosDataGrid.SelectedIndex + 1, GetDummy());
+                chritmFiles[CharaBox.SelectedIndex].costumes.Insert(CosDataGrid.SelectedIndex + 1, new cosEntry());
                 CosDataGrid.Items.Refresh();
             }
-            catch { }
         }
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            try
+            if (chritmFiles.Count > 0)
             {
-                chritmFiles[CharaBox.SelectedIndex].items.Insert(ItemDataGrid.SelectedIndex + 1, GetDummyItem());
+                chritmFiles[CharaBox.SelectedIndex].items.Insert(ItemDataGrid.SelectedIndex + 1, new itemEntry());
                 ItemDataGrid.Items.Refresh();
             }
-            catch { }
         }
-        private cosEntry GetDummy()
-        {
-            cosEntry dummyCos = new cosEntry();
-            List<int> tempItems = new List<int>
-            {
-                500,
-                1,
-                300
-            };
-            dummyCos.items = new ObservableCollection<int>(tempItems);
-            dummyCos.id = 999;
-            return dummyCos;
-        }
-        private itemEntry GetDummyItem()
-        {
-            itemEntry dummy = new itemEntry();
-            dummy.attr = 0;
-            dummy.desID = 0;
-            ObservableCollection<dataSetTex> setTex = new ObservableCollection<dataSetTex>();
-            dummy.dataSetTexes = setTex;
-            dummy.face_depth = 0;
-            dummy.flag = 0;
-            dummy.name = "DUMMY";
-            dummy.rpk = 0;
-            dummy.type = 0;
-            dummy.objset = new List<string>
-            {
-                "MIKITM001"
-            };
-            dummy.orgItm= 0;
-            dummy.subID = 0;
-            dummy.uid = "DUMMY_DIVSKN";
-            dummy.no = 999;
-            return dummy;
-        }
-
         private void DataGrid_Drop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files[0].EndsWith(".farc"))
-            {
-                Program.charaPath = files[0];
-                OpenProcess();
-            }
-            else { return; }
+            OpenProcessNew(files);
         }
 
         private void MoveWindow(object sender, MouseButtonEventArgs e)
@@ -287,11 +272,16 @@ namespace Armoire
 
         private void CharaBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(chritmFiles.Count > 0)
+            try
             {
-                CosDataGrid.ItemsSource = chritmFiles[CharaBox.SelectedIndex].costumes;
-                ItemDataGrid.ItemsSource = chritmFiles[CharaBox.SelectedIndex].items;
+                if (chritmFiles.Count > 0)
+                {
+                    CosDataGrid.ItemsSource = chritmFiles[CharaBox.SelectedIndex].costumes;
+                    ItemDataGrid.ItemsSource = chritmFiles[CharaBox.SelectedIndex].items;
+                }
             }
+            catch { Program.NotiBox("An error occurred.", "Error"); }
+            
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)

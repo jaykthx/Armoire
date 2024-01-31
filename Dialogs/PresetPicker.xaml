@@ -32,17 +32,17 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Text="Armoire - Select Preset" Foreground="White" FontSize="14" TextAlignment="Center"/>
-            <TextBlock x:Name="holdName" Text="{Binding name}" Grid.Row="2" Grid.ColumnSpan="5" TextAlignment="Center" Foreground="White"/>
             <Separator Grid.Row="1" Grid.ColumnSpan="5"/>
-            <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="auto">
-                <TextBlock Text="Select a Preset" Foreground="White" HorizontalAlignment="Center" FontSize="14"/>
-                <Border Height="5" Background="Transparent"/>
-                <ComboBox x:Name="presetBox" Foreground="White" MinWidth="147.6"/>
-            </StackPanel>
+            <TextBlock x:Name="holdName" Text="{Binding name}" Grid.Row="2" Grid.ColumnSpan="5" TextAlignment="Center" Foreground="White"/>
+            <ComboBox x:Name="presetBox" Foreground="White" MinWidth="147.6" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Border Height="25" Background="Transparent" Grid.Row="4"/>
             <Button Content="Apply &amp; Close" Click="Button_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" Height="20" IsDefault="True"/>
+            <Button Content="Close without Saving" Click="Exit_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" Height="20" IsDefault="False"/>
         </Grid>
     </Border>
 </Window>

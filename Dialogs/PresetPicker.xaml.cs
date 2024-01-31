@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Armoire.Dialogs
 {
@@ -29,6 +18,7 @@ namespace Armoire.Dialogs
             presetBox.SelectedIndex = 0;
             itemCurrent = item;
             holdName.Text = item.name;
+            CheckIsPreset(item);
             presetBox.Focus();
         }
 
@@ -51,14 +41,28 @@ namespace Armoire.Dialogs
             return item;
         }
 
-        // attr,subid,desid,rpk,type,orgitm,flag,face_depth
-
+        private void CheckIsPreset(itemEntry item)
+        {
+            int count = 0;
+            foreach(var preset in Program.itemPresets)
+            {
+                if(item.subID == preset.subid)
+                {
+                    presetBox.SelectedIndex = count;
+                }
+                count++;
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if(presetBox.SelectedIndex > -1)
             {
                 applyPreset(Program.itemPresets[presetBox.SelectedIndex], itemCurrent);
             }
+            this.Close();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }
