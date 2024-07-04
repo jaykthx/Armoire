@@ -93,11 +93,11 @@ namespace Armoire.Dialogs
             if (saveLocation != null && db.SpriteSets.Count > 0)
             {
                 db.Save(saveLocation);
-                Program.NotiBox("Saved successfully.", "Notice");
+                Program.NotiBox(Properties.Resources.exp_6, Properties.Resources.window_notice);
             }
             else
             {
-                Program.NotiBox("Please save your file correctly.", "Error");
+                Program.NotiBox(Properties.Resources.warn_generic, Properties.Resources.cmn_error);
             }
         }
         private void SaveAs()
@@ -110,14 +110,14 @@ namespace Armoire.Dialogs
                 if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     db.Save(sfd.FileName);
-                    Program.NotiBox("Saved successfully.", "Notice");
+                    Program.NotiBox(Properties.Resources.exp_6, Properties.Resources.window_notice);
                 }
                 else
                 {
-                    Program.NotiBox("An error occurred while saving your file.\nPlease try again.", "Error");
+                    Program.NotiBox("An error occurred while saving your file.\nPlease try again.", Properties.Resources.cmn_error);
                 }
             }
-            else { Program.NotiBox("Please save your file correctly.", "Error"); }
+            else { Program.NotiBox(Properties.Resources.warn_generic, Properties.Resources.cmn_error); }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -205,9 +205,9 @@ namespace Armoire.Dialogs
 
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
-            Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items", "Information");
-            TextEntry ti = new TextEntry(false, "Enter the old text");
-            TextEntry ti2 = new TextEntry(false, "Enter the new text");
+            Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items.", Properties.Resources.window_notice);
+            TextEntry ti = new TextEntry(false, Properties.Resources.replace_old);
+            TextEntry ti2 = new TextEntry(false, Properties.Resources.replace_new);
             string detect;
             string number;
             ti.ShowDialog();
@@ -233,10 +233,6 @@ namespace Armoire.Dialogs
                 }
                 Grid1.Items.Refresh();
             }
-        }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

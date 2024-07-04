@@ -7,10 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using System.Windows.Input;
 using Armoire.Dialogs;
 using System.Windows.Forms;
-using MikuMikuLibrary.Archives.CriMw;
 using MikuMikuLibrary.Materials;
 
 namespace Armoire
@@ -51,132 +49,6 @@ namespace Armoire
             ModuleInfo modInfo = new ModuleInfo();
             moduleHost.Children.Add(modInfo);
         }
-
-        private void GetExistingIDs(string gameDirectory, usedIDs usedID)
-        {
-            if (gameDirectory != null)
-            {
-                List<string> obj_dbs;
-                List<string> tex_dbs;
-                List<string> spr_dbs;
-                List<string> module_tbls;
-                List<string> customise_tbls;
-                List<string> chritm_props;
-                CpkArchive cpk = new CpkArchive();
-                string currentFile = "";
-                try
-                {
-                    if (Directory.Exists(gameDirectory + "\\mods"))
-                    {
-                        obj_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*obj_db.bin", SearchOption.AllDirectories));
-                        tex_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*tex_db.bin", SearchOption.AllDirectories));
-                        spr_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*spr_db.bin", SearchOption.AllDirectories));
-                        module_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_module_tbl.farc", SearchOption.AllDirectories));
-                        customise_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_customize_item_tbl.farc", SearchOption.AllDirectories));
-                        chritm_props = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*chritm_prop.farc", SearchOption.AllDirectories));
-                        foreach (string file in module_tbls)
-                        {
-                            currentFile = file;
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                            usedID.get_used_ids(farc, 0);
-                        }
-                        foreach (string file in customise_tbls)
-                        {
-                            currentFile = file;
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                            usedID.get_used_ids(farc, 1);
-                        }
-                        foreach (string file in chritm_props)
-                        {
-                            currentFile = file;
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                            usedID.get_used_ids(farc, 2);
-                        }
-                        foreach (string file in obj_dbs)
-                        {
-                            currentFile = file;
-                            ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(file);
-                            usedID.get_used_ids(obj_db);
-                        }
-                        foreach (string file in tex_dbs)
-                        {
-                            currentFile = file;
-                            TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(file);
-                            usedID.get_used_ids(tex_db);
-                        }
-                        foreach (string file in spr_dbs)
-                        {
-                            currentFile = file;
-                            SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(file);
-                            usedID.get_used_ids(spr_db);
-                        }
-                    }
-                    if (File.Exists((gameDirectory + "\\diva_dlc00_region.cpk")))
-                    {
-                            currentFile = "diva_dlc00_region";
-                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_dlc00_region.cpk");
-                    }
-                    else if (File.Exists((gameDirectory + "\\diva_main_region.cpk")))
-                    {
-                            currentFile = "diva_main_region";
-                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main_region.cpk");
-                    }
-                    else if (File.Exists((gameDirectory + "\\diva_main.cpk")))
-                    {
-                            currentFile = "diva_main";
-                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main.cpk");
-                    }
-                    else
-                    {
-                        Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory.", "Error");
-                    }
-                    foreach (string file in cpk.FileNames)
-                    {
-                        switch (file)
-                        {
-                            case string s when s.Contains("gm_module_tbl.farc"):
-                                FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(farc, 0);
-                                break;
-                            case string s when s.Contains("gm_customize_item_tbl.farc"):
-                                FarcArchive farc2 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(farc2, 1);
-                                break;
-                            case string s when s.Contains("chritm_prop.farc"):
-                                FarcArchive farc3 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(farc3, 2);
-                                break;
-                            case string s when s.Contains("*obj_db.farc"):
-                                ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(obj_db);
-                                break;
-                            case string s when s.Contains("*tex_db.farc"):
-                                TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(tex_db);
-                                break;
-                            case string s when s.Contains("*spr_db.farc"):
-                                SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(spr_db);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                catch { Program.NotiBox("An error occurred while reading the files in your game directory.\nError in: " + currentFile, "Error"); }
-            }
-        }
-
-        private void CreateModConfig(string FolderPath, string ModName)
-        {
-            using (TextWriter tw = new StreamWriter(FolderPath + "/config.toml"))
-            {
-                tw.WriteLine("enabled = true");
-                tw.WriteLine("name = \"" + ModName + "\"");
-                tw.WriteLine("description = \"A mod created using Armoire.\"");
-                tw.WriteLine("include = [\".\"]");
-            }
-        }
         
         private void Create_Click(object sender, RoutedEventArgs e)
         {
@@ -190,7 +62,7 @@ namespace Armoire
                 };
                 if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    GetExistingIDs(fbd.SelectedPath, finalUsedIDs);
+                    Program.GetExistingIDs(fbd.SelectedPath, finalUsedIDs);
                     Properties.Settings.Default.gamePath = fbd.SelectedPath;
                     Properties.Settings.Default.Save();
                     TextEntry textEntry = new TextEntry(false, "Enter MOD Folder Name");
@@ -202,7 +74,7 @@ namespace Armoire
                         Directory.CreateDirectory(exportFolder + "2d");
                         Directory.CreateDirectory(exportFolder + "objset");
                         Directory.CreateDirectory(exportFolder + "lang2");
-                        CreateModConfig(exportFolder.Remove(exportFolder.Length - 5, 5), textEntry.Result);
+                        Program.CreateModConfig(exportFolder.Remove(exportFolder.Length - 5, 5), textEntry.Result);
                         // do the actual making
                         tempModules.Clear();
                         tex_db = new TextureDatabase();
@@ -222,8 +94,8 @@ namespace Armoire
                             if (info.wizMod.chara != null && info.wizMod.name != null && info.wizMod.objects.Count > 0)
                             {
                                 AddToModuleTable(info.wizMod);
-                                Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.name, info.wizMod.id);
-                                Program.GenerateSprite(info.wizMod, exportFolder + "2d", false);
+                                Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.name, info.wizMod.id, true);
+                                Program.GenerateSprite(info.wizMod.bitmap, info.wizMod.id, exportFolder + "2d", false);
                                 foreach (wizObj obj in info.wizMod.objects)
                                 {
                                     if (obj.item.subID == 1)
@@ -237,14 +109,14 @@ namespace Armoire
                                         info.wizMod.localNames.it += info.wizMod.name;
                                         info.wizMod.localNames.tw += info.wizMod.name;
                                         Program.CreateModLocalisation(exportFolder + "/lang2/", info.wizMod.localNames, info.wizMod.id);
-                                        Program.GenerateSprite(info.wizMod, exportFolder + "2d", true);
+                                        Program.GenerateSprite(info.wizMod.bitmap, info.wizMod.id, exportFolder + "2d", true);
                                     }
                                 }
                                 AddToCharaItemTable(info);
                             }
                             else
                             {
-                                Program.NotiBox("Please check your modules, something is not set correctly.", "Error");
+                                Program.NotiBox("Please check your modules, something is not set correctly.", Properties.Resources.cmn_error);
                                 proceed = false;
                                 Program.IO.DeleteDirectory(exportFolder);
                                 return;
@@ -270,20 +142,13 @@ namespace Armoire
                 }
                 else
                 {
-                    Program.NotiBox("You need to give the mod a name.\nNot proceeding.", "Error");
+                    Program.NotiBox("You need to give the mod a name.\nNot proceeding.", Properties.Resources.cmn_error);
                     return;
                 }
             }
             else
             {
-                Program.NotiBox("There are no modules in the wizard.", "Error");
-            }
-        }
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
+                Program.NotiBox("There are no modules in the wizard.", Properties.Resources.cmn_error);
             }
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -315,7 +180,7 @@ namespace Armoire
             }
             else
             {
-                ChoiceWindow win = new ChoiceWindow("This ID is already being used and the resulting module will cause compatibility issues." +
+                ChoiceWindow win = new ChoiceWindow("This Module ID is already being used and the resulting module will cause compatibility issues." +
                     "\nWould you like to use a random, unused ID instead?", "No", "Yes");
                 win.ShowDialog();
                 if (win.isRightClicked)
@@ -347,7 +212,7 @@ namespace Armoire
             temp.shop_st_day = 1;
             temp.shop_st_month = 1;
             temp.shop_st_year = 2009;
-            Program.Databases.AddToSpriteDatabase(spr_db, wizMod, false, finalUsedIDs.spr_db);
+            Program.Databases.AddToSpriteDatabase(spr_db, wizMod.id, false, finalUsedIDs.spr_db);
             tempModules.Add(temp);
         }
         private void AddToCustomiseTable(wizModule wizMod, int item_no)
@@ -372,7 +237,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This ID is already being used and the resulting module will cause compatibility issues.", "Notice");
+                Program.NotiBox("This Customise Item ID is already being used and the resulting item will cause compatibility issues.", Properties.Resources.window_notice);
             }
             
             if (Program.Databases.CheckID(finalUsedIDs.customize_item_tbl_index, wizMod.sort_index) == false)
@@ -381,10 +246,10 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This sortiing index is already being used, the resulting customize item will have sorting issues.", "Warning");
+                Program.NotiBox("This Customise Item sorting index is already being used, the resulting customise item will have sorting issues.", "Warning");
             }
             temp.sort_index = wizMod.sort_index;
-            Program.Databases.AddToSpriteDatabase(spr_db, wizMod, true, finalUsedIDs.spr_db);
+            Program.Databases.AddToSpriteDatabase(spr_db, wizMod.id, true, finalUsedIDs.spr_db);
             tempCustoms.Add(temp);
         }
 
@@ -524,7 +389,7 @@ namespace Armoire
                 {
                     x.objEntry.name
                 };
-                x.item.dataSetTexes = new ObservableCollection<dataSetTex>();
+                //x.item.dataSetTexes = new ObservableCollection<dataSetTex>();
                 int itm_num = GetItemNumber(x.objectFilePath, modInfo.wizMod.chara);
                 if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)], itm_num))
                 {
@@ -559,7 +424,7 @@ namespace Armoire
                         // make code to change mikitm number and resave
                     }*/
                     ChoiceWindow choice = new ChoiceWindow("The item number of the object you selected is already being used with this character.\n" +
-                        "Would you like to use a unused, randomly generated one?", "No", "Yes");
+                        "Would you like to use a unused, randomly generated one? " + "Item: " + final[1], "No", "Yes");
                     choice.ShowDialog();
                     if (choice.isRightClicked)
                     {
@@ -573,13 +438,9 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This file doesn't contain 'itm', you will have to adjust the ID manually.", "Error");
+                Program.NotiBox("This file's name doesn't contain 'itm', you will have to adjust the ID manually.", Properties.Resources.cmn_error);
                 return 5555;
             }
-        }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

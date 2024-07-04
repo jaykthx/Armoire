@@ -1,9 +1,12 @@
 ﻿using Armoire.Dialogs;
 using CsvHelper;
 using MikuMikuLibrary.Archives;
+using MikuMikuLibrary.Archives.CriMw;
 using MikuMikuLibrary.Databases;
+using MikuMikuLibrary.IO;
 using MikuMikuLibrary.Sprites;
 using MikuMikuLibrary.Textures;
+using MikuMikuLibrary.Textures.Processing;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,7 +65,7 @@ namespace Armoire
                     }
                     else
                     {
-                        NotiBox("This file: " + fileName.ToString(), " could not be opened.\nDon't do that again.");
+                        NotiBox(Properties.Resources.exp_5 + fileName.ToString(), Properties.Resources.cmn_error);
                     }
                 }
                 farc.Dispose();
@@ -200,7 +203,7 @@ namespace Armoire
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var records = csv.GetRecords<cstm_item>();
-                    csv.Context.RegisterClassMap<CustEditor.cstm_item_map>();
+                    csv.Context.RegisterClassMap<MainWindow.cstm_item_map>();
                     foreach (cstm_item x in records)
                     {
                         temp.Add(x);
@@ -389,61 +392,64 @@ namespace Armoire
                     }
                     farc.Dispose();
                 }
-                else { NotiBox("That didn't work. Try opening a table first.", "Error"); }
+                else { NotiBox(Properties.Resources.exp_4, Properties.Resources.cmn_error); }
             }
             public static void SaveChr(string path, ObservableCollection<chritmFile> list)
-        {
-            if (path.Length > 0)
             {
-                var farc = new FarcArchive();
-                foreach (chritmFile x in list)
+                if (path.Length > 0)
                 {
-                    if (x.items.Count > 0 && x.costumes.Count > 0)
+                    var farc = new FarcArchive();
+                    foreach (chritmFile x in list)
                     {
-                        MemoryStream outputSource = new MemoryStream();
-                        using (StreamWriter tw = new StreamWriter(outputSource))
+                        if (x.items.Count > 0)
                         {
-                            tw.AutoFlush = true;
-                            int count = 0;
-                            foreach (cosEntry entry in x.costumes)
+                            MemoryStream outputSource = new MemoryStream();
+                            using (StreamWriter tw = new StreamWriter(outputSource))
                             {
-                                entry.entry = count.ToString();
-                                count++;
-                            }
+                                tw.AutoFlush = true;
+                                int count = 0;
+                                if (x.costumes.Count > 0)
+                                {
+                                    foreach (cosEntry entry in x.costumes)
+                                    {
+                                        entry.entry = count.ToString();
+                                        count++;
+                                    }
 
-                            foreach (cosEntry c in x.costumes.OrderBy(o => o.entry))
-                            {
-                                foreach (string w in c.getEntry())
-                                {
-                                    tw.WriteLine(w);
+                                    foreach (cosEntry c in x.costumes.OrderBy(o => o.entry))
+                                    {
+                                        foreach (string w in c.getEntry())
+                                        {
+                                            tw.WriteLine(w);
+                                        }
+                                    }
                                 }
-                            }
-                            tw.WriteLine("cos.length=" + x.costumes.Count);
-                            count = 0;
-                            foreach (itemEntry entry in x.items)
-                            {
-                                entry.entry = count.ToString();
-                                count++;
-                            }
-                            foreach (itemEntry i in x.items.OrderBy(o => o.entry))
-                            {
-                                foreach (string w in i.getEntry())
+                                tw.WriteLine("cos.length=" + x.costumes.Count);
+                                count = 0;
+                                foreach (itemEntry entry in x.items)
                                 {
-                                    tw.WriteLine(w);
+                                    entry.entry = count.ToString();
+                                    count++;
                                 }
+                                foreach (itemEntry i in x.items.OrderBy(o => o.entry))
+                                {
+                                    foreach (string w in i.getEntry())
+                                    {
+                                        tw.WriteLine(w);
+                                    }
+                                }
+                                tw.WriteLine("item.length=" + x.items.Count);
+                                farc.Add(x.getFileName(), outputSource, true, ConflictPolicy.Replace);
+                                farc.IsCompressed = true;
+                                farc.Save(path);
+                                tw.Close();
                             }
-                            tw.WriteLine("item.length=" + x.items.Count);
-                            farc.Add(x.getFileName(), outputSource, true, ConflictPolicy.Replace);
-                            farc.IsCompressed = true;
-                            farc.Save(path);
-                            tw.Close();
                         }
                     }
+                    farc.Dispose();
                 }
-                farc.Dispose();
+                else { NotiBox(Properties.Resources.exp_4, Properties.Resources.cmn_error); }
             }
-            else { NotiBox("That didn't work. Try opening a table first.", "Error"); }
-        }
         }
         public static void NotiBox(string value, string title)
         {
@@ -519,7 +525,7 @@ namespace Armoire
                     return false;
                 }
             }
-            public static void AddToSpriteDatabase(SpriteDatabase spr_db, wizModule wizModule, bool isCustomise, List<uint> used_spr_IDs)
+            public static void AddToSpriteDatabase(SpriteDatabase spr_db, int id, bool isCustomise, List<uint> used_spr_IDs)
             {
                 SpriteSetInfo sprSetInfo = new SpriteSetInfo
                 {
@@ -539,16 +545,16 @@ namespace Armoire
                 used_spr_IDs.Add(sprTexInfo.Id);
                 if (isCustomise)
                 {
-                    sprSetInfo.Name = "SPR_CMNITM_THMB" + GetIDString(wizModule.id.ToString()) + "";
-                    sprSetInfo.FileName = "spr_cmnitm_thmb" + GetIDString(wizModule.id.ToString()) + ".bin";
-                    sprInfo.Name = "SPR_CMNITM_THMB" + GetIDString(wizModule.id.ToString()) + "_ITM_IMG";
+                    sprSetInfo.Name = "SPR_CMNITM_THMB" + GetIDString(id.ToString()) + "";
+                    sprSetInfo.FileName = "spr_cmnitm_thmb" + GetIDString(id.ToString()) + ".bin";
+                    sprInfo.Name = "SPR_CMNITM_THMB" + GetIDString(id.ToString()) + "_ITM_IMG";
 
                 }
                 else
                 {
-                    sprSetInfo.Name = "SPR_SEL_MD" + GetIDString(wizModule.id.ToString()) + "CMN";
-                    sprSetInfo.FileName = "spr_sel_md" + GetIDString(wizModule.id.ToString()) + "cmn.bin";
-                    sprInfo.Name = "SPR_SEL_MD" + GetIDString(wizModule.id.ToString()) + "CMN_MD_IMG";
+                    sprSetInfo.Name = "SPR_SEL_MD" + GetIDString(id.ToString()) + "CMN";
+                    sprSetInfo.FileName = "spr_sel_md" + GetIDString(id.ToString()) + "cmn.bin";
+                    sprInfo.Name = "SPR_SEL_MD" + GetIDString(id.ToString()) + "CMN_MD_IMG";
                 }
                 sprSetInfo.Sprites.Add(sprInfo);
                 sprSetInfo.Textures.Add(sprTexInfo);
@@ -604,10 +610,10 @@ namespace Armoire
             spr.ResolutionMode = ResolutionMode.HDTV1080;
             return spr;
         }
-        public static void GenerateSprite(wizModule wizmod, string outputFolder, bool isCustomise)
+        public static void GenerateSprite(Bitmap bmp, int id, string outputFolder, bool isCustomise)
         {
             Sprite spr = GetSprite(isCustomise);
-            Bitmap newBitmap = new Bitmap(wizmod.bitmap);
+            Bitmap newBitmap = new Bitmap(bmp);
             newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
             MikuMikuLibrary.Textures.Processing.TextureEncoderCore tex = new MikuMikuLibrary.Textures.Processing.TextureEncoderCore();
             Texture text = tex.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
@@ -621,11 +627,11 @@ namespace Armoire
             string fileName = "spr_";
             if (isCustomise)
             {
-                fileName = fileName + "cmnitm_thmb" + wizmod.id;
+                fileName = fileName + "cmnitm_thmb" + id;
             }
             else
             {
-                fileName = fileName + "sel_md" + wizmod.id + "cmn";
+                fileName = fileName + "sel_md" + id + "cmn";
             }
             farc.Add(fileName + ".bin", stream, false, ConflictPolicy.Replace);
             farc.Save(outputFolder + "/" + fileName + ".farc");
@@ -696,18 +702,35 @@ namespace Armoire
             }
         }
 
-        public static void CreateModLocalisation(string FolderPath, string Name, int ItemID)
+        public static void CreateModLocalisation(string FolderPath, string Name, int ItemID, bool isModule)
         {
-            using (TextWriter tw = new StreamWriter(FolderPath + "/mod_str_array.toml", true))
+            if (isModule)
             {
-                tw.WriteLine("cn.module." + ItemID + " = " + "\""+ Name + "\"");
-                tw.WriteLine("en.module." + ItemID + " = " + "\"" + Name + "\"");
-                tw.WriteLine("fr.module." + ItemID + " = " + "\"" + Name + "\"");
-                tw.WriteLine("ge.module." + ItemID + " = " + "\"" + Name + "\"");
-                tw.WriteLine("it.module." + ItemID + " = " + "\"" + Name + "\"");
-                tw.WriteLine("kr.module." + ItemID + " = " + "\"" + Name + "\"");
-                tw.WriteLine("sp.module." + ItemID + " = " + "\"" + Name + "\"");
-                tw.WriteLine("tw.module." + ItemID + " = " + "\"" + Name + "\"");
+                using (TextWriter tw = new StreamWriter(FolderPath + "/mod_str_array.toml", true))
+                {
+                    tw.WriteLine("cn.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("en.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("fr.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("ge.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("it.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("kr.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("sp.module." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("tw.module." + ItemID + " = " + "\"" + Name + "\"");
+                }
+            }
+            else
+            {
+                using (TextWriter tw = new StreamWriter(FolderPath + "/mod_str_array.toml", true))
+                {
+                    tw.WriteLine("cn.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("en.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("fr.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("ge.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("it.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("kr.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("sp.customize." + ItemID + " = " + "\"" + Name + "\"");
+                    tw.WriteLine("tw.customize." + ItemID + " = " + "\"" + Name + "\"");
+                }
             }
         }
         public static void CreateModLocalisation(string FolderPath, localisedNames LocalNames, int ItemID)
@@ -723,6 +746,145 @@ namespace Armoire
                 tw.WriteLine("sp.customize." + ItemID + " = " + "\"" + LocalNames.sp + "\"");
                 tw.WriteLine("tw.customize." + ItemID + " = " + "\"" + LocalNames.tw + "\"");
             }
+        }
+
+        public static void GetExistingIDs(string gameDirectory, usedIDs usedID)
+        {
+            if (gameDirectory != null)
+            {
+                List<string> obj_dbs;
+                List<string> tex_dbs;
+                List<string> spr_dbs;
+                List<string> module_tbls;
+                List<string> customise_tbls;
+                List<string> chritm_props;
+                CpkArchive cpk = new CpkArchive();
+                string currentFile = "";
+                try
+                {
+                    if (Directory.Exists(gameDirectory + "\\mods"))
+                    {
+                        obj_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*obj_db.bin", SearchOption.AllDirectories));
+                        tex_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*tex_db.bin", SearchOption.AllDirectories));
+                        spr_dbs = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*spr_db.bin", SearchOption.AllDirectories));
+                        module_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_module_tbl.farc", SearchOption.AllDirectories));
+                        customise_tbls = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*gm_customize_item_tbl.farc", SearchOption.AllDirectories));
+                        chritm_props = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*chritm_prop.farc", SearchOption.AllDirectories));
+                        foreach (string file in module_tbls)
+                        {
+                            currentFile = file;
+                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                            usedID.get_used_ids(farc, 0);
+                        }
+                        foreach (string file in customise_tbls)
+                        {
+                            currentFile = file;
+                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                            usedID.get_used_ids(farc, 1);
+                        }
+                        foreach (string file in chritm_props)
+                        {
+                            currentFile = file;
+                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                            usedID.get_used_ids(farc, 2);
+                        }
+                        foreach (string file in obj_dbs)
+                        {
+                            currentFile = file;
+                            ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(file);
+                            usedID.get_used_ids(obj_db);
+                        }
+                        foreach (string file in tex_dbs)
+                        {
+                            currentFile = file;
+                            TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(file);
+                            usedID.get_used_ids(tex_db);
+                        }
+                        foreach (string file in spr_dbs)
+                        {
+                            currentFile = file;
+                            SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(file);
+                            usedID.get_used_ids(spr_db);
+                        }
+                    }
+                    if (File.Exists((gameDirectory + "\\diva_dlc00_region.cpk")))
+                    {
+                        currentFile = "diva_dlc00_region";
+                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_dlc00_region.cpk");
+                    }
+                    else if (File.Exists((gameDirectory + "\\diva_main_region.cpk")))
+                    {
+                        currentFile = "diva_main_region";
+                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main_region.cpk");
+                    }
+                    else if (File.Exists((gameDirectory + "\\diva_main.cpk")))
+                    {
+                        currentFile = "diva_main";
+                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main.cpk");
+                    }
+                    else
+                    {
+                        Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory.", Properties.Resources.cmn_error);
+                    }
+                    foreach (string file in cpk.FileNames)
+                    {
+                        switch (file)
+                        {
+                            case string s when s.Contains("gm_module_tbl.farc"):
+                                FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(farc, 0);
+                                break;
+                            case string s when s.Contains("gm_customize_item_tbl.farc"):
+                                FarcArchive farc2 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(farc2, 1);
+                                break;
+                            case string s when s.Contains("chritm_prop.farc"):
+                                FarcArchive farc3 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(farc3, 2);
+                                break;
+                            case string s when s.Contains("*obj_db.farc"):
+                                ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(obj_db);
+                                break;
+                            case string s when s.Contains("*tex_db.farc"):
+                                TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(tex_db);
+                                break;
+                            case string s when s.Contains("*spr_db.farc"):
+                                SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                                usedID.get_used_ids(spr_db);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                catch { Program.NotiBox("An error occurred while reading the files in your game directory.\nError in: " + currentFile, Properties.Resources.cmn_error); }
+            }
+        }
+        public static void CreateModConfig(string FolderPath, string ModName) //Simple
+        {
+            using (TextWriter tw = new StreamWriter(FolderPath + "/config.toml"))
+            {
+                tw.WriteLine("enabled = true");
+                tw.WriteLine("name = \"" + ModName + "\"");
+                tw.WriteLine("description = \"A mod created using Armoire.\"");
+                tw.WriteLine("include = [\".\"]");
+            }
+        }
+        public static BitmapImage GetImage(Bitmap pngFile)
+        {
+            Sprite spr = Program.GetSprite(false);
+            SpriteSet sprite = new SpriteSet();
+            sprite.Sprites.Add(spr);
+            Bitmap newBitmap = new Bitmap(pngFile);
+            newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
+            TextureEncoderCore tex = new TextureEncoderCore();
+            Texture text = tex.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
+            sprite.TextureSet.Textures.Add(text);
+            Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
+            BitmapImage img = Program.ToBitmapImage(cropSprite);
+            return img;
         }
     }
 }

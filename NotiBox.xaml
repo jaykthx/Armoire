@@ -3,49 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire"
         mc:Ignorable="d"
-        WindowStyle="None"
+        WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        AllowsTransparency="True"
-        Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="Notice" Height="75" Width="200" FontFamily="Meiryo UI">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border BorderThickness="2" CornerRadius="4" Background="#FF252525" BorderBrush="White">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
-            <TextBlock x:Name="titleBox" Foreground="White" Text="Message" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="14" TextAlignment="Center"/>
-            <Separator Grid.Row="1" Grid.ColumnSpan="3" Background="White" VerticalAlignment="Top">
-                <Separator.RenderTransform>
-                    <ScaleTransform ScaleY="2.5" />
-                </Separator.RenderTransform>
-            </Separator>
-            <TextBlock x:Name="textBox" Foreground="White" Grid.Row="2" Grid.Column="1" Text="" TextAlignment="Center" FontSize="13" TextWrapping="Wrap" MinHeight="20" Margin="0,1,0,0"/>
-            <Separator Grid.Row="3" Grid.ColumnSpan="3" Background="Transparent" VerticalAlignment="Bottom">
-                <Separator.RenderTransform>
-                    <ScaleTransform ScaleY="2.5" />
-                </Separator.RenderTransform>
-            </Separator>
-            <Button x:Name="okButton" VerticalAlignment="Top" Content="OK" IsDefault="True" Grid.Row="4" Grid.Column="1" Height="20" Click="Button_Click" Margin="0,-4,0,0"/>
-        </Grid>
-    </Border>
+        Title="{x:Static p:Resources.window_notice}" Height="75" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="35"/>
+            <RowDefinition MinHeight="15"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="textBox" Grid.Row="0" Text="Test Message" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Button x:Name="okButton" Content="OK" IsDefault="True" Grid.Row="1" Click="Button_Click"/>
+    </Grid>
 </Window>

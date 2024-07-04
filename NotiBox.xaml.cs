@@ -11,7 +11,7 @@ namespace Armoire
         {
             InitializeComponent();
             textBox.Text = textValue;
-            titleBox.Text = title;
+            this.Title = title;
             okButton.Focus();
         }
 

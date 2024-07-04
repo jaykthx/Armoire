@@ -26,7 +26,7 @@ namespace Armoire.Dialogs
                 numBox.SelectAll();
                 numBox.Focus();
             }
-            TopTitle.Text = topTitle;
+            win1.Title = topTitle;
         }
 
         public string Result

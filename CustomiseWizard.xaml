@@ -1,4 +1,4 @@
-﻿<Window x:Class="Armoire.ModuleWizard"
+﻿<Window x:Class="Armoire.CustomiseWizard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Armoire"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="{x:Static p:Resources.title_wizard}" Height="600" Width="550">
+        Title="{x:Static p:Resources.title_wizard_custom}" Height="600" Width="550">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -24,7 +24,7 @@
             <Button Content="{x:Static p:Resources.cmn_finish}" Click="Create_Click"/>
         </UniformGrid>
         <ScrollViewer Background="#FFF0F0F0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" CanContentScroll="True" Grid.Row="1" Grid.ColumnSpan="4">
-            <StackPanel x:Name="moduleHost"/>
+            <StackPanel x:Name="itemHost"/>
         </ScrollViewer>
     </Grid>
 </Window>

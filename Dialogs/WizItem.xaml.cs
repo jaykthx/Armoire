@@ -19,7 +19,7 @@ namespace Armoire.Dialogs
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "FARC files|*.farc";
-            ofd.Title = "Select your model's farc file.";
+            ofd.Title = Armoire.Properties.Resources.exp_1;
             if(ofd.ShowDialog() == true)
             {
                 curObj.objectFilePath = ofd.FileName;
@@ -33,8 +33,8 @@ namespace Armoire.Dialogs
             {
                 curObj.item = new itemEntry();
             }
-            curObj.item.name = "TEMP ITEM";
-            PresetPicker picker = new PresetPicker(curObj.item);
+            curObj.item.name = Armoire.Properties.Resources.cmn_temp;
+            PresetPicker picker = new PresetPicker(curObj.item, curObj.objectFilePath);
             picker.ShowDialog();
             curObj.item = picker.itemCurrent;
         }

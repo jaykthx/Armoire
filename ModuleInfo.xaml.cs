@@ -46,9 +46,9 @@ namespace Armoire
         {
             TextEntry tex = new TextEntry(false, "Enter Module Name");
             tex.ShowDialog();
-            if (tex.Result != "ENTER VALUE HERE" && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result))
+            if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result))
             {
-                nameText.Text = "Name: " + tex.Result;
+                nameText.Text = Properties.Resources.cmn_name + ": " + tex.Result;
                 wizMod.name = tex.Result;
             }
             else { return; }
@@ -58,10 +58,10 @@ namespace Armoire
         {
             TextEntry tex = new TextEntry(true, "Enter Module ID Value");
             tex.ShowDialog();
-            if (tex.Result != "ENTER VALUE HERE" && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
+            if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
                 wizMod.id = int.Parse(tex.Result);
-                idText.Text = "ID: " + wizMod.id;
+                idText.Text = Properties.Resources.cmn_id + ": " + wizMod.id;
             }
             else { return; }
         }
@@ -70,10 +70,10 @@ namespace Armoire
         {
             TextEntry tex = new TextEntry(true, "Enter Module Sorting Index Value");
             tex.ShowDialog();
-            if (tex.Result != "ENTER VALUE HERE" && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
+            if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
                 wizMod.sort_index = int.Parse(tex.Result);
-                indexText.Text = "Sorting Index: " + tex.Result;
+                indexText.Text = Properties.Resources.cmn_index + ": " + tex.Result;
             }
             else { return; }
         }
@@ -113,7 +113,7 @@ namespace Armoire
                 }
                 else
                 {
-                    Program.NotiBox("Your image must be a 512px x 512px PNG format file.", "Error");
+                    Program.NotiBox(Properties.Resources.exp_3, Properties.Resources.cmn_error);
                 }
             }
         }

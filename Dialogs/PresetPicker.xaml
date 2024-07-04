@@ -3,46 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire.Dialogs"
         mc:Ignorable="d"
-        WindowStyle="None"
         ResizeMode="NoResize"
-        AllowsTransparency="True"
-        Background="Transparent"
         WindowStartupLocation="CenterOwner"
-        Title="Preset Picker" Height="140" Width="250" FontFamily="Meiryo UI">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Theme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border BorderThickness="2" CornerRadius="4" Background="#FF252525">
+        Title="{x:Static p:Resources.window_preset}" Height="140" Width="250">
+    <Border>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Text="Armoire - Select Preset" Foreground="White" FontSize="14" TextAlignment="Center"/>
-            <Separator Grid.Row="1" Grid.ColumnSpan="5"/>
-            <TextBlock x:Name="holdName" Text="{Binding name}" Grid.Row="2" Grid.ColumnSpan="5" TextAlignment="Center" Foreground="White"/>
-            <ComboBox x:Name="presetBox" Foreground="White" MinWidth="147.6" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"/>
-            <Border Height="25" Background="Transparent" Grid.Row="4"/>
-            <Button Content="Apply &amp; Close" Click="Button_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" Height="20" IsDefault="True"/>
-            <Button Content="Close without Saving" Click="Exit_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" Height="20" IsDefault="False"/>
+            <TextBlock x:Name="holdName" Text="{Binding name}" TextAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox x:Name="presetBox" MinWidth="150" Grid.Row="1"/>
+            <StackPanel Grid.Row="2" MinHeight="40">
+                <Button Content="{x:Static p:Resources.cmn_apply}" Click="Button_Click" Height="20" IsDefault="True"/>
+                <Button Content="{x:Static p:Resources.cmn_close_n}" Click="Exit_Click" Height="20" IsDefault="False"/>
+            </StackPanel>
+            
         </Grid>
     </Border>
 </Window>

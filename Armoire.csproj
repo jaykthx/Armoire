@@ -61,7 +61,8 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
@@ -250,14 +251,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CharaEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\ChoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -294,23 +287,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\TexturePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\WizItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EntryDisplay.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="CustomInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ModuleInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ModuleWizard.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="CustomiseWizard.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="PreviewWindow.xaml">
+    <Page Include="ModuleWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -327,13 +324,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs" />
-    <Compile Include="CharaEditor.xaml.cs">
-      <DependentUpon>CharaEditor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes.cs" />
-    <Compile Include="CustEditor.xaml.cs">
-      <DependentUpon>CustEditor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
     </Compile>
@@ -361,20 +352,23 @@
     <Compile Include="Dialogs\TexEdit.xaml.cs">
       <DependentUpon>TexEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\TexturePicker.xaml.cs">
+      <DependentUpon>TexturePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\WizItem.xaml.cs">
       <DependentUpon>WizItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EntryDisplay.xaml.cs">
-      <DependentUpon>EntryDisplay.xaml</DependentUpon>
+    <Compile Include="CustomInfo.xaml.cs">
+      <DependentUpon>CustomInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModuleInfo.xaml.cs">
       <DependentUpon>ModuleInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomiseWizard.xaml.cs">
+      <DependentUpon>CustomiseWizard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModuleWizard.xaml.cs">
       <DependentUpon>ModuleWizard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PreviewWindow.xaml.cs">
-      <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TexListEdit.xaml.cs">
       <DependentUpon>TexListEdit.xaml</DependentUpon>
@@ -387,10 +381,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NotiBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -416,6 +406,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -437,27 +428,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\info_n.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\info_p.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\item_ct.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\item_fs.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\item_n.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\md_dummy.png" />

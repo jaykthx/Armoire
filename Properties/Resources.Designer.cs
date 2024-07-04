@@ -61,6 +61,24 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string cmn_add {
+            get {
+                return ResourceManager.GetString("cmn_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply &amp; Close.
+        /// </summary>
+        public static string cmn_apply {
+            get {
+                return ResourceManager.GetString("cmn_apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attribute.
         /// </summary>
         public static string cmn_attr {
@@ -106,6 +124,15 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close without Saving.
+        /// </summary>
+        public static string cmn_close_n {
+            get {
+                return ResourceManager.GetString("cmn_close_n", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Costume.
         /// </summary>
         public static string cmn_cos {
@@ -142,11 +169,47 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ENTER VALUE HERE.
+        /// </summary>
+        public static string cmn_enter_value {
+            get {
+                return ResourceManager.GetString("cmn_enter_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string cmn_error {
+            get {
+                return ResourceManager.GetString("cmn_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string cmn_exit {
             get {
                 return ResourceManager.GetString("cmn_exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finalise.
+        /// </summary>
+        public static string cmn_finish {
+            get {
+                return ResourceManager.GetString("cmn_finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Hair Swapping.
+        /// </summary>
+        public static string cmn_hair_swap {
+            get {
+                return ResourceManager.GetString("cmn_hair_swap", resourceCulture);
             }
         }
         
@@ -169,11 +232,29 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items.
+        /// </summary>
+        public static string cmn_item_list {
+            get {
+                return ResourceManager.GetString("cmn_item_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No..
         /// </summary>
         public static string cmn_item_no {
             get {
                 return ResourceManager.GetString("cmn_item_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Item Type.
+        /// </summary>
+        public static string cmn_item_type {
+            get {
+                return ResourceManager.GetString("cmn_item_type", resourceCulture);
             }
         }
         
@@ -196,6 +277,24 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string cmn_no {
+            get {
+                return ResourceManager.GetString("cmn_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objset Entries.
+        /// </summary>
+        public static string cmn_obj_entry {
+            get {
+                return ResourceManager.GetString("cmn_obj_entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Object ID.
         /// </summary>
         public static string cmn_objid {
@@ -205,11 +304,29 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Objects.
+        /// </summary>
+        public static string cmn_objs {
+            get {
+                return ResourceManager.GetString("cmn_objs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Object UID.
         /// </summary>
         public static string cmn_objuid {
             get {
                 return ResourceManager.GetString("cmn_objuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Item.
+        /// </summary>
+        public static string cmn_org_itm {
+            get {
+                return ResourceManager.GetString("cmn_org_itm", resourceCulture);
             }
         }
         
@@ -232,11 +349,92 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview Image.
+        /// </summary>
+        public static string cmn_preview_img {
+            get {
+                return ResourceManager.GetString("cmn_preview_img", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string cmn_price {
             get {
                 return ResourceManager.GetString("cmn_price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string cmn_remove {
+            get {
+                return ResourceManager.GetString("cmn_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace All.
+        /// </summary>
+        public static string cmn_replace {
+            get {
+                return ResourceManager.GetString("cmn_replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string cmn_sel {
+            get {
+                return ResourceManager.GetString("cmn_sel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Short File Name.
+        /// </summary>
+        public static string cmn_short_name {
+            get {
+                return ResourceManager.GetString("cmn_short_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprites.
+        /// </summary>
+        public static string cmn_sprs {
+            get {
+                return ResourceManager.GetString("cmn_sprs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary.
+        /// </summary>
+        public static string cmn_temp {
+            get {
+                return ResourceManager.GetString("cmn_temp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texture Entries.
+        /// </summary>
+        public static string cmn_tex_entry {
+            get {
+                return ResourceManager.GetString("cmn_tex_entry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Textures.
+        /// </summary>
+        public static string cmn_texs {
+            get {
+                return ResourceManager.GetString("cmn_texs", resourceCulture);
             }
         }
         
@@ -250,29 +448,137 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Yes.
         /// </summary>
-        public static string db_edit_obj {
+        public static string cmn_yes {
             get {
-                return ResourceManager.GetString("db_edit_obj", resourceCulture);
+                return ResourceManager.GetString("cmn_yes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Add Accessory.
         /// </summary>
-        public static string db_edit_spr {
+        public static string cxt_acc_add {
             get {
-                return ResourceManager.GetString("db_edit_spr", resourceCulture);
+                return ResourceManager.GetString("cxt_acc_add", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Remove Accessory.
         /// </summary>
-        public static string db_edit_tex {
+        public static string cxt_acc_remove {
             get {
-                return ResourceManager.GetString("db_edit_tex", resourceCulture);
+                return ResourceManager.GetString("cxt_acc_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Costume.
+        /// </summary>
+        public static string cxt_cos_add {
+            get {
+                return ResourceManager.GetString("cxt_cos_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Costume.
+        /// </summary>
+        public static string cxt_cos_remove {
+            get {
+                return ResourceManager.GetString("cxt_cos_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Item.
+        /// </summary>
+        public static string cxt_item_add {
+            get {
+                return ResourceManager.GetString("cxt_item_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Item.
+        /// </summary>
+        public static string cxt_item_remove {
+            get {
+                return ResourceManager.GetString("cxt_item_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Module.
+        /// </summary>
+        public static string cxt_module_add {
+            get {
+                return ResourceManager.GetString("cxt_module_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Module.
+        /// </summary>
+        public static string cxt_module_remove {
+            get {
+                return ResourceManager.GetString("cxt_module_remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your model&apos;s FARC file..
+        /// </summary>
+        public static string exp_1 {
+            get {
+                return ResourceManager.GetString("exp_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your desired value..
+        /// </summary>
+        public static string exp_2 {
+            get {
+                return ResourceManager.GetString("exp_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your image must be a 512px x 512px PNG format file..
+        /// </summary>
+        public static string exp_3 {
+            get {
+                return ResourceManager.GetString("exp_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That didn&apos;t work. Try opening a file first..
+        /// </summary>
+        public static string exp_4 {
+            get {
+                return ResourceManager.GetString("exp_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred with this file: .
+        /// </summary>
+        public static string exp_5 {
+            get {
+                return ResourceManager.GetString("exp_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved successfully..
+        /// </summary>
+        public static string exp_6 {
+            get {
+                return ResourceManager.GetString("exp_6", resourceCulture);
             }
         }
         
@@ -342,66 +648,6 @@ namespace Armoire.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap info_n {
-            get {
-                object obj = ResourceManager.GetObject("info_n", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap info_p {
-            get {
-                object obj = ResourceManager.GetObject("info_p", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap item {
-            get {
-                object obj = ResourceManager.GetObject("item", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap item_ct {
-            get {
-                object obj = ResourceManager.GetObject("item_ct", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap item_fs {
-            get {
-                object obj = ResourceManager.GetObject("item_fs", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap item_n {
-            get {
-                object obj = ResourceManager.GetObject("item_n", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap md_dummy {
             get {
                 object obj = ResourceManager.GetObject("md_dummy", resourceCulture);
@@ -410,25 +656,214 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armoire (Character Item Tables).
+        ///   Looks up a localized string similar to Add Object.
         /// </summary>
-        public static string title_chritm {
+        public static string obj_add {
             get {
-                return ResourceManager.GetString("title_chritm", resourceCulture);
+                return ResourceManager.GetString("obj_add", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armoire (Customize Items).
+        ///   Looks up a localized string similar to Archive File Name.
         /// </summary>
-        public static string title_custom {
+        public static string obj_arch {
             get {
-                return ResourceManager.GetString("title_custom", resourceCulture);
+                return ResourceManager.GetString("obj_arch", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armoire (Object Database Editor).
+        ///   Looks up a localized string similar to Delete Object(s).
+        /// </summary>
+        public static string obj_del {
+            get {
+                return ResourceManager.GetString("obj_del", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Object(s).
+        /// </summary>
+        public static string obj_dupe {
+            get {
+                return ResourceManager.GetString("obj_dupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Name.
+        /// </summary>
+        public static string obj_file {
+            get {
+                return ResourceManager.GetString("obj_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texture File Name.
+        /// </summary>
+        public static string obj_texture {
+            get {
+                return ResourceManager.GetString("obj_texture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the new text..
+        /// </summary>
+        public static string replace_new {
+            get {
+                return ResourceManager.GetString("replace_new", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the old text..
+        /// </summary>
+        public static string replace_old {
+            get {
+                return ResourceManager.GetString("replace_old", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select PNG File.
+        /// </summary>
+        public static string select_png {
+            get {
+                return ResourceManager.GetString("select_png", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Sprite.
+        /// </summary>
+        public static string spr_add {
+            get {
+                return ResourceManager.GetString("spr_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Sprite(s).
+        /// </summary>
+        public static string spr_del {
+            get {
+                return ResourceManager.GetString("spr_del", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Sprite(s).
+        /// </summary>
+        public static string spr_dupe {
+            get {
+                return ResourceManager.GetString("spr_dupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Items.
+        /// </summary>
+        public static string tab_chritm {
+            get {
+                return ResourceManager.GetString("tab_chritm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accessories &amp; Hair.
+        /// </summary>
+        public static string tab_custom {
+            get {
+                return ResourceManager.GetString("tab_custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DB Editors.
+        /// </summary>
+        public static string tab_db {
+            get {
+                return ResourceManager.GetString("tab_db", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modules.
+        /// </summary>
+        public static string tab_module {
+            get {
+                return ResourceManager.GetString("tab_module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Texture.
+        /// </summary>
+        public static string tex_add {
+            get {
+                return ResourceManager.GetString("tex_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Texture.
+        /// </summary>
+        public static string tex_chg {
+            get {
+                return ResourceManager.GetString("tex_chg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Replacement.
+        /// </summary>
+        public static string tex_chg_add {
+            get {
+                return ResourceManager.GetString("tex_chg_add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Replacement.
+        /// </summary>
+        public static string tex_chg_del {
+            get {
+                return ResourceManager.GetString("tex_chg_del", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Texture(s).
+        /// </summary>
+        public static string tex_del {
+            get {
+                return ResourceManager.GetString("tex_del", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Texture(s).
+        /// </summary>
+        public static string tex_dupe {
+            get {
+                return ResourceManager.GetString("tex_dupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Texture.
+        /// </summary>
+        public static string tex_org {
+            get {
+                return ResourceManager.GetString("tex_org", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object Database Editor.
         /// </summary>
         public static string title_edit_obj {
             get {
@@ -437,7 +872,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armoire (Sprite Database Editor).
+        ///   Looks up a localized string similar to Sprite Database Editor.
         /// </summary>
         public static string title_edit_spr {
             get {
@@ -446,7 +881,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armoire (Texture Database Editor).
+        ///   Looks up a localized string similar to Texture Database Editor.
         /// </summary>
         public static string title_edit_tex {
             get {
@@ -455,16 +890,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armoire (Modules).
-        /// </summary>
-        public static string title_module {
-            get {
-                return ResourceManager.GetString("title_module", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Armoire (Module Wizard).
+        ///   Looks up a localized string similar to Module Wizard.
         /// </summary>
         public static string title_wizard {
             get {
@@ -473,38 +899,47 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Character Item Editor.
+        ///   Looks up a localized string similar to Customise Item Wizard.
         /// </summary>
-        public static string window_chritm {
+        public static string title_wizard_custom {
             get {
-                return ResourceManager.GetString("window_chritm", resourceCulture);
+                return ResourceManager.GetString("title_wizard_custom", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customize Item Editor.
+        ///   Looks up a localized string similar to A generic error occurred..
         /// </summary>
-        public static string window_custom {
+        public static string warn_generic {
             get {
-                return ResourceManager.GetString("window_custom", resourceCulture);
+                return ResourceManager.GetString("warn_generic", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DB Editors.
+        ///   Looks up a localized string similar to Item Properties.
         /// </summary>
-        public static string window_db_title {
+        public static string window_item {
             get {
-                return ResourceManager.GetString("window_db_title", resourceCulture);
+                return ResourceManager.GetString("window_item", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Module Editor.
+        ///   Looks up a localized string similar to Item List.
         /// </summary>
-        public static string window_module {
+        public static string window_list_item {
             get {
-                return ResourceManager.GetString("window_module", resourceCulture);
+                return ResourceManager.GetString("window_list_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notice.
+        /// </summary>
+        public static string window_notice {
+            get {
+                return ResourceManager.GetString("window_notice", resourceCulture);
             }
         }
         
@@ -518,11 +953,20 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preview.
+        ///   Looks up a localized string similar to Object Entry Editor.
         /// </summary>
-        public static string window_preview {
+        public static string window_obj_edit {
             get {
-                return ResourceManager.GetString("window_preview", resourceCulture);
+                return ResourceManager.GetString("window_obj_edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Preset.
+        /// </summary>
+        public static string window_preset {
+            get {
+                return ResourceManager.GetString("window_preset", resourceCulture);
             }
         }
         
@@ -536,11 +980,29 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sprite Entry Editor.
+        /// </summary>
+        public static string window_spr_edit {
+            get {
+                return ResourceManager.GetString("window_spr_edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Texture DB.
         /// </summary>
         public static string window_tex {
             get {
                 return ResourceManager.GetString("window_tex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texture Replacement Editor.
+        /// </summary>
+        public static string window_tex_chg {
+            get {
+                return ResourceManager.GetString("window_tex_chg", resourceCulture);
             }
         }
     }

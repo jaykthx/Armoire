@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Security.RightsManagement;
 
 namespace Armoire
 {
@@ -19,7 +20,7 @@ namespace Armoire
         public List<int> customize_item_tbl_index = new List<int>();
         public Dictionary<string, List<int>> chritm_prop_cos = new Dictionary<string, List<int>>();
         public Dictionary<string, List<int>> chritm_prop_item = new Dictionary<string, List<int>>();
-        public void get_used_ids (SpriteDatabase s_db)
+        public void get_used_ids(SpriteDatabase s_db)
         {
             foreach (SpriteSetInfo spr in s_db.SpriteSets)
             {
@@ -122,7 +123,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("Don't play with me right now.", "You messed up");
+                Program.NotiBox(Properties.Resources.warn_generic, Properties.Resources.cmn_error);
             }
         }
     }
@@ -360,19 +361,30 @@ namespace Armoire
     public class wizObj
     {
         public string objectFilePath; // file path
-        public wizObjEntry objEntry; // add after assigning for better follow-up
-        public itemEntry item;
+        public wizObjEntry objEntry = new wizObjEntry(); // add after assigning for better follow-up
+        public itemEntry item = new itemEntry();
     }
     public class wizModule
     {
         public List<wizObj> objects = new List<wizObj>();
         public localisedNames localNames = new localisedNames();
         public bool hairNG;
-        public string name;
+        public string name = Properties.Resources.cmn_temp;
         public int id = -1; //default to a number
         public string chara;
         public int sort_index = 999;
         public Bitmap bitmap = Properties.Resources.md_dummy;
+    }
+    public class wizCustom
+    {
+        public wizObj obj = new wizObj();
+        public string parts;
+        public localisedNames localNames = new localisedNames();
+        public string name;
+        public int id = -1;
+        public int sort_index = 999;
+        public Bitmap bitmap = Properties.Resources.md_dummy;
+
     }
 
     public class localisedNames

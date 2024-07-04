@@ -13,7 +13,7 @@ namespace Armoire.Dialogs
             InitializeComponent();
             this.DataContext = cos;
             cosCxt = cos;
-            nameHold.Text = "Costume: " + cos.id;
+            idBox.Text = "ID: " + cos.id;
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -32,7 +32,7 @@ namespace Armoire.Dialogs
                     cosCxt.items.Add(int.Parse(win.Result));
                     itemList.Items.Refresh();
                 }
-                else { Program.NotiBox("Enter a value.", "Error"); }
+                else { Program.NotiBox("Enter a value.", Properties.Resources.cmn_error); }
             }
         }
 
@@ -44,12 +44,20 @@ namespace Armoire.Dialogs
             }
             else if(cosCxt.items.Count == 1)
             {
-                Program.NotiBox("Costumes must not be empty.", "Error");
+                Program.NotiBox("Costumes must not be empty.", Properties.Resources.cmn_error);
             }
             else
             {
-                Program.NotiBox("You must select an item first.", "Error");
+                Program.NotiBox("You must select an item first.", Properties.Resources.cmn_error);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TextEntry tex = new TextEntry(true, Properties.Resources.cmn_enter_value);
+            tex.ShowDialog();
+            cosCxt.id = int.Parse(tex.Result);
+            idBox.Text = "ID: " + cosCxt.id;
         }
     }
 }

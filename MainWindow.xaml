@@ -4,102 +4,170 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:Armoire.Properties"
+        xmlns:src="clr-namespace:Armoire"
         mc:Ignorable="d"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        AllowsTransparency="True"
-        Background="Transparent"
+        WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
-        Title="{x:Static p:Resources.title_module}" Height="615" Width="610" FontFamily="Meiryo UI">
+        Title="Armoire" Height="600" Width="800">
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="Open"/>
         <KeyBinding Gesture="Ctrl+S" Command="Save"/>
-        <KeyBinding Gesture="Ctrl+Shift+S" Command="SaveAs"/>
+        <KeyBinding Command="SaveAs" Modifiers="Ctrl+Shift" Key="S"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="Open" Executed="OpenCommandBinding_Executed"/>
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
     </Window.CommandBindings>
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border BorderBrush="#FF252525" BorderThickness="8" CornerRadius="8">
-        <Grid Background="#FF252525">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="23"/>
-                <RowDefinition Height="550"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Foreground="White" Text="{x:Static p:Resources.title_module}" Grid.ColumnSpan="5" VerticalAlignment="Top" MouseDown="MoveWindow" FontSize="15" TextAlignment="Center"/>
-            <Menu Grid.Row="1" Grid.ColumnSpan="5" Height="20" Background="Transparent" Margin="0,-1.3,0,5">
-                <MenuItem StaysOpenOnClick="True" Width="60" Header="{x:Static p:Resources.file_title}" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
-                    <MenuItem Width="60" Header="{x:Static p:Resources.file_open}" Style="{StaticResource SingleButton}" Command="Open"/>
-                    <MenuItem Width="60" Header="{x:Static p:Resources.file_save}" Style="{StaticResource SingleButton}" Command="Save"/>
-                    <MenuItem Width="60" Header="{x:Static p:Resources.file_saveas}" Style="{StaticResource SingleButton}" Command="SaveAs"/>
-                    <MenuItem Width="60" Header="{x:Static p:Resources.file_csv}" Style="{StaticResource SingleButton}" Click="Export_Click"/>
-                    <MenuItem Width="60" Header="{x:Static p:Resources.file_wizard}" Style="{StaticResource SingleButton}" Click="Wizard_Click"/>
-                    <MenuItem Width="60" Header="{x:Static p:Resources.file_db_clean}" Style="{StaticResource SingleButton}" Click="Test_Click"/>
-                </MenuItem>
-                <MenuItem Width="136" Header="{x:Static p:Resources.window_custom}" Margin="6.25,0,6.25,0" Click="Open_CustEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem Width="136" Header="{x:Static p:Resources.window_chritm}" Margin="6.25,0,6.25,0" Click="Open_CharaEditor" Style="{StaticResource SingleButton}"/>
-                <MenuItem StaysOpenOnClick="True" Width="86" Header="{x:Static p:Resources.window_db_title}" Margin="6.25,0,6.25,0" Background="Transparent" Style="{StaticResource MenuButton}">
-                    <MenuItem Width="86" Header="{x:Static p:Resources.window_spr}" Click="Open_SprEditor" Style="{StaticResource SingleButton}"/>
-                    <MenuItem Width="86" Header="{x:Static p:Resources.window_obj}" Click="Open_ObjEditor" Style="{StaticResource SingleButton}"/>
-                    <MenuItem Width="86" Header="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Style="{StaticResource SingleButton}"/>
-                </MenuItem>
-                <MenuItem Width="60" Header="{x:Static p:Resources.window_preview}" Margin="6.25,0,6.25,0" Click="Preview_Click"  Style="{StaticResource SingleButton}"/>
-                <MenuItem x:Name="Exit" Width="40" Header="Exit" Click="Exit_Click" Margin="6.25,0,6.25,0" Style="{StaticResource SingleButton}"/>
-            </Menu>
-            <DataGrid x:Name="DataGrid"
-                      Background="Transparent"
-                      BorderThickness="2"
-                      AlternationCount="2"
-                      AlternatingRowBackground="#FF303030"
-                      FontSize="10"
-                      Grid.Row="2"
-                      Grid.ColumnSpan="5"
-                      HeadersVisibility="Column"
-                      ItemsSource="{Binding Modules}"
-                      CanUserAddRows="False"
-                      CanUserResizeRows="False"
-                      VerticalScrollBarVisibility="Visible"
-                      HorizontalScrollBarVisibility="Disabled"
-                      Drop="DataGrid_Drop"
-                      AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" BorderBrush="White">
-                <DataGrid.ContextMenu>
-                    <ContextMenu Width="auto">
-                        <MenuItem Header="Add Module (At Sel.)" Style="{StaticResource SingleButton}" Click="AddButton_Click"/>
-                        <MenuItem Header="Add Module (At End)" Style="{StaticResource SingleButton}" Click="AddButton2_Click"/>
-                        <Separator Background="Transparent" Foreground="Transparent" BorderBrush="Transparent"/>
-                        <MenuItem Header="Remove Module(s)" Click="DeleteEntry" Style="{StaticResource SingleButton}"/>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="idRow" Header="{x:Static p:Resources.cmn_id}" Width="30" Binding="{Binding id}"/>
-                    <DataGridComboBoxColumn x:Name="attrBox" Header="{x:Static p:Resources.cmn_attr}" Width="70" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridComboBoxColumn x:Name="charaBox" Width="55" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="160*" Binding="{Binding name}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" Width="35" Binding="{Binding shop_price}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" Width="35" Binding="{Binding sort_index}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_cos}" Width="55" Binding="{Binding cos}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" Width="25" Binding="{Binding shop_st_day}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" Width="35" Binding="{Binding shop_st_month}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" Width="36" Binding="{Binding shop_st_year}"/>
-                    <!-- DataGridCheckBoxColumn Header="Ignore" Width="45" Binding="{Binding ng}"/ -->
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-    </Border>
+    <TabControl x:Name="TabControl1">
+        <TabItem Header="{x:Static p:Resources.tab_module}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Menu Grid.Row="0" Grid.ColumnSpan="5" Height="20" Foreground="Black">
+                    <MenuItem StaysOpenOnClick="True" Width="auto" Header="{x:Static p:Resources.file_title}">
+                        <MenuItem Header="{x:Static p:Resources.file_open}" Command="Open"/>
+                        <MenuItem Header="{x:Static p:Resources.file_save}"  Command="Save"/>
+                        <MenuItem Header="{x:Static p:Resources.file_saveas}"  Command="SaveAs" InputGestureText="Ctrl+Shift+S"/>
+                        <MenuItem Header="{x:Static p:Resources.file_csv}"  Click="Export_Click"/>
+                        <MenuItem Header="{x:Static p:Resources.file_db_clean}"  Click="Test_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click"/>
+                </Menu>
+                <DataGrid x:Name="DataGrid_Modules" Background="LightGray" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding Modules}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" BorderBrush="White">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Resources.cxt_module_add}"  Click="AddButton_Click"/>
+                            <!--<MenuItem Header="Add Module (At End)"  Click="AddButton2_Click"/>-->
+                            <MenuItem Header="{x:Static p:Resources.cxt_module_remove}" Click="DeleteEntry"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="idRow_Modules" Header="{x:Static p:Resources.cmn_id}" Width="40" Binding="{Binding id}"/>
+                        <DataGridComboBoxColumn x:Name="attrBox" Header="{x:Static p:Resources.cmn_attr}" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridComboBoxColumn x:Name="charaBox_Modules" Width="70" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="160*" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" Width="50" Binding="{Binding shop_price}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" Width="50" Binding="{Binding sort_index}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_cos}" Width="80" Binding="{Binding cos}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" Width="50" Binding="{Binding shop_st_day}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" Width="50" Binding="{Binding shop_st_month}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" Width="50" Binding="{Binding shop_st_year}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static p:Resources.tab_custom}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Menu Height="20">
+                    <MenuItem StaysOpenOnClick="True" Header="{x:Static p:Resources.file_title}">
+                        <MenuItem Header="{x:Static p:Resources.file_open}" Command="Open" Click="Open_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.file_save}" Command="Save" Click="Save_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.file_saveas}" Command="SaveAs" InputGestureText="Ctrl+Shift+S" Click="SaveAs_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.file_csv}"  Click="Export_Click_Customize"/>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click_Customize"/>
+                </Menu>
+                <DataGrid x:Name="DataGrid_Customize" Background="LightGray" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding CustItems}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Customize" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Resources.cxt_acc_add}"  Click="AddButton_Click_Customize"/>
+                            <!--<MenuItem Header="Add Item (At End)"  Click="AddButton2_Click_Customize"/>-->
+                            <MenuItem Header="{x:Static p:Resources.cxt_acc_remove}" Click="DeleteEntry_Customize"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="idRow_Customize" Header="{x:Static p:Resources.cmn_id}" Width="35" Binding="{Binding id}"/>
+                        <DataGridComboBoxColumn x:Name="partBox" Header="{x:Static p:Resources.cmn_parts}" Width="50" ItemsSource="{Binding partslist}" SelectedValueBinding="{Binding parts, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridComboBoxColumn x:Name="charaBox_Customize" Width="65" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="160*" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" Width="40" Binding="{Binding shop_price}"/>
+                        <DataGridTextColumn Header= "{x:Static p:Resources.cmn_index}" Width="40" Binding="{Binding sort_index}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_objid}" Width="70" Binding="{Binding obj_id}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_bind}" Width="100" Binding="{Binding bind_module}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" Width="40" Binding="{Binding shop_st_day}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" Width="45" Binding="{Binding shop_st_month}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" Width="40" Binding="{Binding shop_st_year}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static p:Resources.tab_chritm}">
+            <Grid>
+                <Grid.Resources>
+                    <HierarchicalDataTemplate DataType = "{x:Type src:cosEntry}" ItemsSource = "{Binding Path=items}">
+                        <TextBlock Text="{Binding Path=id, StringFormat='COS: {0}'}"/>
+                    </HierarchicalDataTemplate>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Menu Grid.Row="0" Height="20">
+                    <MenuItem StaysOpenOnClick="True" Header="{x:Static p:Resources.file_title}">
+                        <MenuItem Header="{x:Static p:Resources.file_open}"  Command="Open"/>
+                        <MenuItem Header="{x:Static p:Resources.file_save}"  Command="Save"/>
+                        <MenuItem Header="{x:Static p:Resources.file_saveas}"  Command="SaveAs"/>
+                    </MenuItem>
+                </Menu>
+                    <TreeView x:Name="CosListBox" ItemsSource="{Binding costumes, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2">
+                        <TreeView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{x:Static p:Resources.cxt_cos_add}"  Click="AddCos"/>
+                                <MenuItem Header="{x:Static p:Resources.cmn_button_edit}"  Click="EditCos"/>
+                                <MenuItem Header="{x:Static p:Resources.cxt_cos_remove}"  Click="DelCos"/>
+                            </ContextMenu>
+                        </TreeView.ContextMenu>
+                    </TreeView>
+                <ComboBox x:Name="CharaBox" Grid.Row="1" Height="20" SelectionChanged="CharaBox_SelectionChanged"/>
+                <DataGrid x:Name="ItemDataGrid"  Background="LightGray" Grid.Row="3" HeadersVisibility="Column" ItemsSource="{Binding items, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Chara" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Resources.cxt_item_add}"  Click="AddItem"/>
+                            <MenuItem Header="{x:Static p:Resources.cxt_item_remove}" Click="DelItem"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_item_no}" Width="32" Binding="{Binding no}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="80*" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_objuid}" Width="80*" Binding="{Binding uid}"/>
+                        <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_preset}" Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{x:Static p:Resources.cmn_button_change}" Click="Change_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_details}" Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{x:Static p:Resources.cmn_button_edit}" Click="Edit_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static p:Resources.tab_db}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Content="{x:Static p:Resources.window_spr}" Click="Open_SprEditor"/>
+                <Button Content="{x:Static p:Resources.window_obj}" Click="Open_ObjEditor" Grid.Row="1"/>
+                <Button Content="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Grid.Row="2"/>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

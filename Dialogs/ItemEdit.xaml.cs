@@ -35,7 +35,7 @@ namespace Armoire.Dialogs
                         itemCxt.objset.Add(win.Result);
                         ObjsetBox.Items.Refresh();
                     }
-                    else { Program.NotiBox("Enter a value.", "Error"); }
+                    else { Program.NotiBox("Enter a value.", Properties.Resources.cmn_error); }
                 }
             }
             else

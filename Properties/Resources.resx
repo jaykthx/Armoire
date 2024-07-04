@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cmn_add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="cmn_apply" xml:space="preserve">
+    <value>Apply &amp; Close</value>
+  </data>
   <data name="cmn_attr" xml:space="preserve">
     <value>Attribute</value>
   </data>
@@ -132,6 +138,9 @@
   <data name="cmn_chara" xml:space="preserve">
     <value>Character</value>
   </data>
+  <data name="cmn_close_n" xml:space="preserve">
+    <value>Close without Saving</value>
+  </data>
   <data name="cmn_cos" xml:space="preserve">
     <value>Costume</value>
   </data>
@@ -144,8 +153,20 @@
   <data name="cmn_details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="cmn_enter_value" xml:space="preserve">
+    <value>ENTER VALUE HERE</value>
+  </data>
+  <data name="cmn_error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="cmn_exit" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="cmn_finish" xml:space="preserve">
+    <value>Finalise</value>
+  </data>
+  <data name="cmn_hair_swap" xml:space="preserve">
+    <value>Disable Hair Swapping</value>
   </data>
   <data name="cmn_id" xml:space="preserve">
     <value>ID</value>
@@ -153,8 +174,14 @@
   <data name="cmn_index" xml:space="preserve">
     <value>Index</value>
   </data>
+  <data name="cmn_item_list" xml:space="preserve">
+    <value>Items</value>
+  </data>
   <data name="cmn_item_no" xml:space="preserve">
     <value>No.</value>
+  </data>
+  <data name="cmn_item_type" xml:space="preserve">
+    <value>Set Item Type</value>
   </data>
   <data name="cmn_month" xml:space="preserve">
     <value>Month</value>
@@ -162,11 +189,23 @@
   <data name="cmn_name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="cmn_no" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="cmn_objid" xml:space="preserve">
     <value>Object ID</value>
   </data>
+  <data name="cmn_objs" xml:space="preserve">
+    <value>Objects</value>
+  </data>
   <data name="cmn_objuid" xml:space="preserve">
     <value>Object UID</value>
+  </data>
+  <data name="cmn_obj_entry" xml:space="preserve">
+    <value>Objset Entries</value>
+  </data>
+  <data name="cmn_org_itm" xml:space="preserve">
+    <value>Original Item</value>
   </data>
   <data name="cmn_parts" xml:space="preserve">
     <value>Parts</value>
@@ -174,20 +213,83 @@
   <data name="cmn_preset" xml:space="preserve">
     <value>Preset</value>
   </data>
+  <data name="cmn_preview_img" xml:space="preserve">
+    <value>Preview Image</value>
+  </data>
   <data name="cmn_price" xml:space="preserve">
     <value>Price</value>
+  </data>
+  <data name="cmn_remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="cmn_replace" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="cmn_sel" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="cmn_short_name" xml:space="preserve">
+    <value>Short File Name</value>
+  </data>
+  <data name="cmn_sprs" xml:space="preserve">
+    <value>Sprites</value>
+  </data>
+  <data name="cmn_temp" xml:space="preserve">
+    <value>Temporary</value>
+  </data>
+  <data name="cmn_texs" xml:space="preserve">
+    <value>Textures</value>
+  </data>
+  <data name="cmn_tex_entry" xml:space="preserve">
+    <value>Texture Entries</value>
   </data>
   <data name="cmn_year" xml:space="preserve">
     <value>Year</value>
   </data>
-  <data name="db_edit_obj" xml:space="preserve">
-    <value />
+  <data name="cmn_yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
-  <data name="db_edit_spr" xml:space="preserve">
-    <value />
+  <data name="cxt_acc_add" xml:space="preserve">
+    <value>Add Accessory</value>
   </data>
-  <data name="db_edit_tex" xml:space="preserve">
-    <value />
+  <data name="cxt_acc_remove" xml:space="preserve">
+    <value>Remove Accessory</value>
+  </data>
+  <data name="cxt_cos_add" xml:space="preserve">
+    <value>Add Costume</value>
+  </data>
+  <data name="cxt_cos_remove" xml:space="preserve">
+    <value>Remove Costume</value>
+  </data>
+  <data name="cxt_item_add" xml:space="preserve">
+    <value>Add Item</value>
+  </data>
+  <data name="cxt_item_remove" xml:space="preserve">
+    <value>Remove Item</value>
+  </data>
+  <data name="cxt_module_add" xml:space="preserve">
+    <value>Add Module</value>
+  </data>
+  <data name="cxt_module_remove" xml:space="preserve">
+    <value>Remove Module</value>
+  </data>
+  <data name="exp_1" xml:space="preserve">
+    <value>Select your model's FARC file.</value>
+  </data>
+  <data name="exp_2" xml:space="preserve">
+    <value>Enter your desired value.</value>
+  </data>
+  <data name="exp_3" xml:space="preserve">
+    <value>Your image must be a 512px x 512px PNG format file.</value>
+  </data>
+  <data name="exp_4" xml:space="preserve">
+    <value>That didn't work. Try opening a file first.</value>
+  </data>
+  <data name="exp_5" xml:space="preserve">
+    <value>An error occurred with this file: </value>
+  </data>
+  <data name="exp_6" xml:space="preserve">
+    <value>Saved successfully.</value>
   </data>
   <data name="file_csv" xml:space="preserve">
     <value>To CSV</value>
@@ -211,70 +313,124 @@
     <value>Wizard</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="info_n" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\info_n.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="info_p" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\info_p.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="item" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="item_ct" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\item_ct.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="item_fs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\item_fs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="item_n" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\item_n.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="md_dummy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\md_dummy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="title_chritm" xml:space="preserve">
-    <value>Armoire (Character Item Tables)</value>
+  <data name="obj_add" xml:space="preserve">
+    <value>Add Object</value>
   </data>
-  <data name="title_custom" xml:space="preserve">
-    <value>Armoire (Customize Items)</value>
+  <data name="obj_arch" xml:space="preserve">
+    <value>Archive File Name</value>
   </data>
-  <data name="title_edit_obj" xml:space="preserve">
-    <value>Armoire (Object Database Editor)</value>
+  <data name="obj_del" xml:space="preserve">
+    <value>Delete Object(s)</value>
   </data>
-  <data name="title_edit_spr" xml:space="preserve">
-    <value>Armoire (Sprite Database Editor)</value>
+  <data name="obj_dupe" xml:space="preserve">
+    <value>Duplicate Object(s)</value>
   </data>
-  <data name="title_edit_tex" xml:space="preserve">
-    <value>Armoire (Texture Database Editor)</value>
+  <data name="obj_file" xml:space="preserve">
+    <value>File Name</value>
   </data>
-  <data name="title_module" xml:space="preserve">
-    <value>Armoire (Modules)</value>
+  <data name="obj_texture" xml:space="preserve">
+    <value>Texture File Name</value>
   </data>
-  <data name="title_wizard" xml:space="preserve">
-    <value>Armoire (Module Wizard)</value>
+  <data name="replace_new" xml:space="preserve">
+    <value>Enter the new text.</value>
   </data>
-  <data name="window_chritm" xml:space="preserve">
-    <value>Character Item Editor</value>
+  <data name="replace_old" xml:space="preserve">
+    <value>Enter the old text.</value>
   </data>
-  <data name="window_custom" xml:space="preserve">
-    <value>Customize Item Editor</value>
+  <data name="select_png" xml:space="preserve">
+    <value>Select PNG File</value>
   </data>
-  <data name="window_db_title" xml:space="preserve">
+  <data name="spr_add" xml:space="preserve">
+    <value>Add Sprite</value>
+  </data>
+  <data name="spr_del" xml:space="preserve">
+    <value>Delete Sprite(s)</value>
+  </data>
+  <data name="spr_dupe" xml:space="preserve">
+    <value>Duplicate Sprite(s)</value>
+  </data>
+  <data name="tab_chritm" xml:space="preserve">
+    <value>Character Items</value>
+  </data>
+  <data name="tab_custom" xml:space="preserve">
+    <value>Accessories &amp; Hair</value>
+  </data>
+  <data name="tab_db" xml:space="preserve">
     <value>DB Editors</value>
   </data>
-  <data name="window_module" xml:space="preserve">
-    <value>Module Editor</value>
+  <data name="tab_module" xml:space="preserve">
+    <value>Modules</value>
+  </data>
+  <data name="tex_add" xml:space="preserve">
+    <value>Add Texture</value>
+  </data>
+  <data name="tex_chg" xml:space="preserve">
+    <value>New Texture</value>
+  </data>
+  <data name="tex_chg_add" xml:space="preserve">
+    <value>Add Replacement</value>
+  </data>
+  <data name="tex_chg_del" xml:space="preserve">
+    <value>Remove Replacement</value>
+  </data>
+  <data name="tex_del" xml:space="preserve">
+    <value>Delete Texture(s)</value>
+  </data>
+  <data name="tex_dupe" xml:space="preserve">
+    <value>Duplicate Texture(s)</value>
+  </data>
+  <data name="tex_org" xml:space="preserve">
+    <value>Original Texture</value>
+  </data>
+  <data name="title_edit_obj" xml:space="preserve">
+    <value>Object Database Editor</value>
+  </data>
+  <data name="title_edit_spr" xml:space="preserve">
+    <value>Sprite Database Editor</value>
+  </data>
+  <data name="title_edit_tex" xml:space="preserve">
+    <value>Texture Database Editor</value>
+  </data>
+  <data name="title_wizard" xml:space="preserve">
+    <value>Module Wizard</value>
+  </data>
+  <data name="title_wizard_custom" xml:space="preserve">
+    <value>Customise Item Wizard</value>
+  </data>
+  <data name="warn_generic" xml:space="preserve">
+    <value>A generic error occurred.</value>
+  </data>
+  <data name="window_item" xml:space="preserve">
+    <value>Item Properties</value>
+  </data>
+  <data name="window_list_item" xml:space="preserve">
+    <value>Item List</value>
+  </data>
+  <data name="window_notice" xml:space="preserve">
+    <value>Notice</value>
   </data>
   <data name="window_obj" xml:space="preserve">
     <value>Object DB</value>
   </data>
-  <data name="window_preview" xml:space="preserve">
-    <value>Preview</value>
+  <data name="window_obj_edit" xml:space="preserve">
+    <value>Object Entry Editor</value>
+  </data>
+  <data name="window_preset" xml:space="preserve">
+    <value>Select Preset</value>
   </data>
   <data name="window_spr" xml:space="preserve">
     <value>Sprite DB</value>
   </data>
+  <data name="window_spr_edit" xml:space="preserve">
+    <value>Sprite Entry Editor</value>
+  </data>
   <data name="window_tex" xml:space="preserve">
     <value>Texture DB</value>
+  </data>
+  <data name="window_tex_chg" xml:space="preserve">
+    <value>Texture Replacement Editor</value>
   </data>
 </root>
