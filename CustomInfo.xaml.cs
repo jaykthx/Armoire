@@ -102,7 +102,7 @@ namespace Armoire
         private void Preset_Click(object sender, RoutedEventArgs e)
         {
             wizCus.obj.item.name = Properties.Resources.cmn_temp;
-            PresetPicker picker = new PresetPicker(wizCus.obj.item, wizCus.obj.objectFilePath);
+            PresetPicker picker = new PresetPicker(wizCus.obj.item, wizCus.obj.objectFilePath, "ALL", false);
             picker.ShowDialog();
             wizCus.obj.item = picker.itemCurrent;
         }

@@ -756,7 +756,7 @@ namespace Armoire
             itemEntry item = ((FrameworkElement)sender).DataContext as itemEntry;
             if (chritmFiles.Count > 0 && item != null)
             {
-                PresetPicker ppcker = new PresetPicker(item);
+                PresetPicker ppcker = new PresetPicker(item, chritmFiles[CharaBox.SelectedIndex].chara.ToUpper(), true);
                 ppcker.ShowDialog();
             }
         }

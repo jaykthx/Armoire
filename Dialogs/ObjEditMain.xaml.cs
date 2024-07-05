@@ -3,6 +3,7 @@ using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
 
@@ -230,6 +231,22 @@ namespace Armoire.Dialogs
                 }
             }
             Grid1.Items.Refresh();
+        }
+        private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
+        {
+            string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+            if (db.ObjectSets != null)
+            {
+                saveLocation = files[0];
+                Grid1.ItemsSource = null;
+                Grid1.Items.Clear();
+                db.ObjectSets.Clear();
+            }
+            if (files[0].EndsWith("obj_db.bin"))
+            {
+                db = BinaryFile.Load<ObjectDatabase>(files[0]);
+                Grid1.ItemsSource = db.ObjectSets;
+            }
         }
     }
 }

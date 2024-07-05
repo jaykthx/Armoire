@@ -40,6 +40,7 @@ namespace Armoire.Dialogs
         List<ListBoxItemImage> listItems = new List<ListBoxItemImage>();
         private void mainProcess(string farc_path)
         {
+            temp_item.dataSetTexes = new System.Collections.ObjectModel.ObservableCollection<dataSetTex>();
             FarcArchive farc = BinaryFile.Load<FarcArchive>(farc_path);
             foreach (string fileName in farc.FileNames)
             {
@@ -72,24 +73,28 @@ namespace Armoire.Dialogs
             string first = "F_DIVA_" + chara;
             return new string[5] { first+"000_EYEBROW", first+"000_EYELASHES", first+ "000_EYE_LEFT", first+ "000_EYE_RIGHT", first+ "000_FACE" };
         }
-        public TexturePicker(itemEntry item) // other
+        public TexturePicker(itemEntry item, string chara) // other
         {
             InitializeComponent();
             charaBox.ItemsSource = short_charas;
+            charaBox.SelectedValue = chara;
             temp_item = item;
             OpenFileDialog ofd = new OpenFileDialog();
             if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (ofd.FileName.EndsWith(".farc"))
                 {
+                    selectedFileAutoGen = Path.GetFileNameWithoutExtension(ofd.FileName);
                     mainProcess(ofd.FileName);
                 }
             }
+            else { this.Close(); }
         }
-        public TexturePicker(itemEntry item, string file_path) // wizard moment
+        public TexturePicker(itemEntry item, string file_path, string chara) // wizard moment
         {
             InitializeComponent();
             charaBox.ItemsSource = short_charas;
+            charaBox.SelectedValue = chara;
             temp_item = item;
             if (file_path.EndsWith(".farc"))
             {
@@ -99,6 +104,7 @@ namespace Armoire.Dialogs
             else
             {
                 Program.NotiBox("Something is wrong with the file you selected for this item.\nIt doesn't look like a .farc format file.", Properties.Resources.cmn_error);
+                this.Close();
             }
         }
 

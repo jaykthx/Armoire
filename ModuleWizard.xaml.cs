@@ -181,7 +181,7 @@ namespace Armoire
             else
             {
                 ChoiceWindow win = new ChoiceWindow("This Module ID is already being used and the resulting module will cause compatibility issues." +
-                    "\nWould you like to use a random, unused ID instead?", "No", "Yes");
+                    "\nWould you like to use a random, unused ID instead?", Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
                 win.ShowDialog();
                 if (win.isRightClicked)
                 {
@@ -199,7 +199,7 @@ namespace Armoire
             else
             {
                 ChoiceWindow win = new ChoiceWindow("This sorting index is already being used and the resulting module will cause minor issues." +
-                    "\nWould you like to use a random, unused sorting index instead?", "No", "Yes");
+                    "\nWould you like to use a random, unused sorting index instead?", Properties.Resources.cmn_item_no, Properties.Resources.cmn_yes);
                 win.ShowDialog();
                 if (win.isRightClicked)
                 {
@@ -246,7 +246,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This Customise Item sorting index is already being used, the resulting customise item will have sorting issues.", "Warning");
+                Program.NotiBox("This Customise Item sorting index is already being used, the resulting customise item will have sorting issues.", Properties.Resources.window_notice);
             }
             temp.sort_index = wizMod.sort_index;
             Program.Databases.AddToSpriteDatabase(spr_db, wizMod.id, true, finalUsedIDs.spr_db);

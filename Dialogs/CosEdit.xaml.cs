@@ -27,7 +27,7 @@ namespace Armoire.Dialogs
             TextEntry win = new TextEntry(true, "Enter item number");
             if (win.ShowDialog() == true)
             {
-                if (win.Result != "ENTER VALUE HERE")
+                if (win.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrEmpty(win.Result))
                 {
                     cosCxt.items.Add(int.Parse(win.Result));
                     itemList.Items.Refresh();
@@ -56,8 +56,11 @@ namespace Armoire.Dialogs
         {
             TextEntry tex = new TextEntry(true, Properties.Resources.cmn_enter_value);
             tex.ShowDialog();
-            cosCxt.id = int.Parse(tex.Result);
-            idBox.Text = "ID: " + cosCxt.id;
+            if(!string.IsNullOrEmpty(tex.Result))
+            {
+                cosCxt.id = int.Parse(tex.Result);
+                idBox.Text = "ID: " + cosCxt.id;
+            }
         }
     }
 }

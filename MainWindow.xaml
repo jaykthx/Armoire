@@ -32,7 +32,7 @@
                         <MenuItem Header="{x:Static p:Resources.file_save}"  Command="Save"/>
                         <MenuItem Header="{x:Static p:Resources.file_saveas}"  Command="SaveAs" InputGestureText="Ctrl+Shift+S"/>
                         <MenuItem Header="{x:Static p:Resources.file_csv}"  Click="Export_Click"/>
-                        <MenuItem Header="{x:Static p:Resources.file_db_clean}"  Click="Test_Click"/>
+                        <!--<MenuItem Header="{x:Static p:Resources.file_db_clean}"  Click="Test_Click"/>-->
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click"/>
                 </Menu>

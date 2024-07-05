@@ -772,21 +772,45 @@ namespace Armoire
                         chritm_props = new List<string>(Directory.EnumerateFiles(gameDirectory + "\\mods", "*chritm_prop.farc", SearchOption.AllDirectories));
                         foreach (string file in module_tbls)
                         {
-                            currentFile = file;
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                            usedID.get_used_ids(farc, 0);
+                            if (file.Contains("eden") || file.Contains("Eden") || file.Contains("EDEN"))
+                            {
+                                Program.NotiBox("Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.", Properties.Resources.cmn_error);
+                                continue;
+                            }
+                            else
+                            {
+                                currentFile = file;
+                                FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                                usedID.get_used_ids(farc, 0);
+                            }
                         }
                         foreach (string file in customise_tbls)
                         {
-                            currentFile = file;
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                            usedID.get_used_ids(farc, 1);
+                            if (file.Contains("eden") || file.Contains("Eden") || file.Contains("EDEN"))
+                            {
+                                Program.NotiBox("Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.", Properties.Resources.cmn_error);
+                                continue;
+                            }
+                            else
+                            {
+                                currentFile = file;
+                                FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                                usedID.get_used_ids(farc, 1);
+                            }
                         }
                         foreach (string file in chritm_props)
                         {
-                            currentFile = file;
-                            FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
-                            usedID.get_used_ids(farc, 2);
+                            if (file.Contains("eden") || file.Contains("Eden") || file.Contains("EDEN"))
+                            {
+                                Program.NotiBox("Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.", Properties.Resources.cmn_error);
+                                continue;
+                            }
+                            else
+                            {
+                                currentFile = file;
+                                FarcArchive farc = BinaryFile.Load<FarcArchive>(file);
+                                usedID.get_used_ids(farc, 2);
+                            }
                         }
                         foreach (string file in obj_dbs)
                         {
@@ -868,6 +892,7 @@ namespace Armoire
             {
                 tw.WriteLine("enabled = true");
                 tw.WriteLine("name = \"" + ModName + "\"");
+                tw.WriteLine("author = \"" + "Armoire" + "\"");
                 tw.WriteLine("description = \"A mod created using Armoire.\"");
                 tw.WriteLine("include = [\".\"]");
             }

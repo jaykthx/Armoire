@@ -29,6 +29,7 @@ namespace Armoire
         {
             WizItem itm = new WizItem();
             itemPanel.Children.Add(itm);
+            itm.parentModInfo = this;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

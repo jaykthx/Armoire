@@ -8,31 +8,49 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class PresetPicker : Window
     {
-        public List<string> presets = new List<string> { "Eye Texture Swap", "Contact Lenses", "Hair", "Body", "Hands", "Head Accessory", "Face Accessory", "Chest Accessory", "Back Accessory"};
+        public List<string> presets = new List<string> { "Eye Texture Swap", "Contact Lenses", "Hair", "Body", "Hands", "Head Accessory", "Face Accessory", "Chest Accessory", "Back Accessory" };
+        public List<string> presets_item = new List<string> { "Head Accessory", "Face Accessory", "Chest Accessory", "Back Accessory" };
         public itemEntry itemCurrent;
+        string setChara;
         string currentFarcPath;
-        public PresetPicker(itemEntry item)
+        public PresetPicker(itemEntry item, string chara, bool isModule)
         {
             InitializeComponent();
+            setChara = chara;
             Program.CreatePresetList();
-            presetBox.ItemsSource = presets;
-            presetBox.SelectedIndex = 0;
+            if (isModule)
+            {
+                presetBox.ItemsSource = presets;
+            }
+            else
+            {
+                presetBox.ItemsSource = presets_item;
+            }
             itemCurrent = item;
             holdName.Text = item.name;
             CheckIsPreset(item);
+            presetBox.SelectedIndex = 0;
             presetBox.Focus();
         }
 
-        public PresetPicker(itemEntry item, string farcPath)
+        public PresetPicker(itemEntry item, string farcPath, string chara, bool isModule)
         {
             InitializeComponent();
+            setChara = chara;
             Program.CreatePresetList();
-            presetBox.ItemsSource = presets;
-            presetBox.SelectedIndex = 0;
+            if (isModule)
+            {
+                presetBox.ItemsSource = presets;
+            }
+            else
+            {
+                presetBox.ItemsSource = presets_item;
+            }
             itemCurrent = item;
             holdName.Text = item.name;
             CheckIsPreset(item);
             presetBox.Focus();
+            presetBox.SelectedIndex = 0;
             currentFarcPath = farcPath;
         }
 
@@ -40,18 +58,15 @@ namespace Armoire.Dialogs
         {
             if (preset.subid == 6 || preset.subid == 24)
             {
-                Program.NotiBox("You have selected a preset related to texture swapping." +
-                    "\nYou will need to add the texture swaps within the Item Edit window of the Character Item Editor, as the program cannot do this automatically." +
-                    "\nIf you do not do this, the texture swaps will not be applied and the item will not appear in-game.", Properties.Resources.window_notice);
                 if (currentFarcPath != null)
                 {
-                    TexturePicker tp = new TexturePicker(item, currentFarcPath);
+                    TexturePicker tp = new TexturePicker(item, currentFarcPath, setChara);
                     tp.ShowDialog();
                     itemCurrent = tp.temp_item;
                 }
                 else
                 {
-                    TexturePicker tp = new TexturePicker(item);
+                    TexturePicker tp = new TexturePicker(item, setChara);
                     tp.ShowDialog();
                     itemCurrent = tp.temp_item;
                 }

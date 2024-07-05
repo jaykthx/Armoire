@@ -234,5 +234,23 @@ namespace Armoire.Dialogs
                 Grid1.Items.Refresh();
             }
         }
+        private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
+        {
+            string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+            if (db.SpriteSets != null)
+            {
+                Grid1.ItemsSource = null;
+                Grid1.Items.Clear();
+                db.SpriteSets.Clear();
+            }
+            if (files[0].EndsWith("spr_db.bin"))
+            {
+                saveLocation = files[0];
+                db = BinaryFile.Load<SpriteDatabase>(files[0]);
+                //spriteSets = new ObservableCollection<SpriteSetInfo>(db.SpriteSets);
+                Grid1.ItemsSource = db.SpriteSets;
+            }
+            Grid1.DataContext = db.SpriteSets;
+        }
     }
 }
