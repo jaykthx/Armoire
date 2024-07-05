@@ -349,7 +349,7 @@ namespace Armoire
                 case "tet":
                     return "Kasane Teto";
                 default:
-                    return chara;
+                    return "Kasane Teto";
             }
         }
         public string getFileName()

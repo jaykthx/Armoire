@@ -145,19 +145,36 @@ namespace Armoire.Dialogs
             {
                 Title = "Please select your Object Database", //"データベースを選択してください。";
                 Filter = "Object Database files|*obj_db.bin", //"データベースファイル |*_db.bin"; 
+                Multiselect = true,
             };
             if (ofd.ShowDialog() == true)
             {
-                if (db.ObjectSets != null)
-                {
-                    saveLocation = ofd.FileName;
-                    Grid1.ItemsSource = null;
-                    Grid1.Items.Clear();
-                    db.ObjectSets.Clear();
-                }
-                db = BinaryFile.Load<ObjectDatabase>(ofd.FileName);
-                Grid1.ItemsSource = db.ObjectSets;
+                Open(ofd.FileNames);
             }
+        }
+
+        private void Open(string[] files)
+        {
+            if (db.ObjectSets != null)
+            {
+                saveLocation = files[0];
+                Grid1.ItemsSource = null;
+                Grid1.Items.Clear();
+                db.ObjectSets.Clear();
+            }
+            foreach(string file in files)
+            {
+                if (file.EndsWith("obj_db.bin"))
+                {
+                    ObjectDatabase temp_db = new ObjectDatabase();
+                    temp_db = BinaryFile.Load<ObjectDatabase>(file);
+                    foreach (ObjectSetInfo objsetinfo in temp_db.ObjectSets)
+                    {
+                        db.ObjectSets.Add(objsetinfo);
+                    }
+                }
+            }
+            Grid1.ItemsSource = db.ObjectSets;
         }
         private void Save()
         {
@@ -235,18 +252,7 @@ namespace Armoire.Dialogs
         private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
             string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
-            if (db.ObjectSets != null)
-            {
-                saveLocation = files[0];
-                Grid1.ItemsSource = null;
-                Grid1.Items.Clear();
-                db.ObjectSets.Clear();
-            }
-            if (files[0].EndsWith("obj_db.bin"))
-            {
-                db = BinaryFile.Load<ObjectDatabase>(files[0]);
-                Grid1.ItemsSource = db.ObjectSets;
-            }
+            Open(files);
         }
     }
 }

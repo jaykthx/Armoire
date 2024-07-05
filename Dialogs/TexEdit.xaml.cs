@@ -110,21 +110,37 @@ namespace Armoire.Dialogs
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
-                Title = "Please select your Texture Database", //"データベースを選択してください。";
-                Filter = "Texture Database files|*tex_db.bin", //"データベースファイル |*_db.bin"; 
+                Title = "Please select your Texture Database",
+                Filter = "Texture Database files|*tex_db.bin",
+                Multiselect = true,
             };
             if (ofd.ShowDialog() == true)
             {
-                if (db.Textures != null)
-                {
-                    saveLocation = ofd.FileName;
-                    Grid1.ItemsSource = null;
-                    Grid1.Items.Clear();
-                    db.Textures.Clear();
-                }
-                db = BinaryFile.Load<TextureDatabase>(ofd.FileName);
-                Grid1.ItemsSource = db.Textures;
+                Open(ofd.FileNames);
             }
+        }
+        private void Open(string[] files)
+        {
+            if (db.Textures != null)
+            {
+                saveLocation = files[0];
+                Grid1.ItemsSource = null;
+                Grid1.Items.Clear();
+                db.Textures.Clear();
+            }
+            foreach (string file in files)
+            {
+                if (file.EndsWith("tex_db.bin"))
+                {
+                    TextureDatabase temp_db = new TextureDatabase();
+                    temp_db = BinaryFile.Load<TextureDatabase>(file);
+                    foreach (TextureInfo tex in temp_db.Textures)
+                    {
+                        db.Textures.Add(tex);
+                    }
+                }
+            }
+            Grid1.ItemsSource = db.Textures;
         }
 
         private void Save()
@@ -184,18 +200,7 @@ namespace Armoire.Dialogs
         private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
             string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
-            if (db.Textures != null)
-            {
-                saveLocation = files[0];
-                Grid1.ItemsSource = null;
-                Grid1.Items.Clear();
-                db.Textures.Clear();
-            }
-            if (files[0].EndsWith("tex_db.bin"))
-            {
-                db = BinaryFile.Load<TextureDatabase>(files[0]);
-                Grid1.ItemsSource = db.Textures;
-            }
+            Open(files);
         }
     }
 }

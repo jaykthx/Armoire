@@ -18,11 +18,11 @@
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
     </Window.CommandBindings>
-    <Grid Drop="DataGrid_Drop">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="23"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <Grid Drop="DataGrid_Drop" AllowDrop="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Menu Height="20">
             <MenuItem StaysOpenOnClick="True" Header="{x:Static p:Resources.file_title}">
                 <MenuItem Header="{x:Static p:Resources.file_open}" Click="Open_Click"/>
@@ -32,20 +32,20 @@
             <MenuItem Header="{x:Static p:Resources.cmn_replace}" Click="Replace_Click"/>
         </Menu>
         <DataGrid CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" HeadersVisibility="Column" DataContext="db" x:Name="Grid1" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False">
-                <DataGrid.InputBindings>
-                    <KeyBinding Gesture="Ctrl+A" Command="ApplicationCommands.NotACommand"/>
-                </DataGrid.InputBindings>
-                <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Add Texture" Click="Add_Click"/>
-                        <MenuItem Header="Duplicate Texture(s)" Click="Dupe_Click"/>
-                        <MenuItem Header="Delete Texture(s)" Click="Delete_Click"/>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-                <DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <KeyBinding Gesture="Ctrl+A" Command="ApplicationCommands.NotACommand"/>
+            </DataGrid.InputBindings>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add Texture" Click="Add_Click"/>
+                    <MenuItem Header="Duplicate Texture(s)" Click="Dupe_Click"/>
+                    <MenuItem Header="Delete Texture(s)" Click="Delete_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
                 <DataGridTextColumn x:Name="nameColumn" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </Window>

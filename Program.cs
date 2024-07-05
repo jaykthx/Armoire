@@ -585,7 +585,7 @@ namespace Armoire
                     case "TETO":
                         return "tet";
                     default:
-                        return "mik";
+                        return "tet";
                 }
             }
         }

@@ -18,7 +18,7 @@
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
     </Window.CommandBindings>
-    <Grid Drop="DataGrid_Drop">
+    <Grid Drop="DataGrid_Drop" AllowDrop="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="23"/>
             <RowDefinition Height="*"/>

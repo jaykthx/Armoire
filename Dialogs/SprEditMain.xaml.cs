@@ -41,24 +41,41 @@ namespace Armoire.Dialogs
 
         private void OpenFile()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Please select a Sprite Database"; //"データベースを選択してください。";
-            ofd.Filter = "Sprite Database files|*spr_db.bin"; //"データベースファイル |*_db.bin"; 
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Title = "Please select a Sprite Database",
+                Filter = "Sprite Database files|*spr_db.bin",
+                Multiselect = true
+            };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (db.SpriteSets != null)
-                {
-                    Grid1.ItemsSource = null;
-                    Grid1.Items.Clear();
-                    db.SpriteSets.Clear();
-                }
-                saveLocation = ofd.FileName;
-                db = BinaryFile.Load<SpriteDatabase>(ofd.FileName);
-                //spriteSets = new ObservableCollection<SpriteSetInfo>(db.SpriteSets);
-                Grid1.ItemsSource = db.SpriteSets;
+                Open(ofd.FileNames);
             }
-            Grid1.DataContext = db.SpriteSets;
         }
+        private void Open(string[] files)
+        {
+            if (db.SpriteSets != null)
+            {
+                saveLocation = files[0];
+                Grid1.ItemsSource = null;
+                Grid1.Items.Clear();
+                db.SpriteSets.Clear();
+            }
+            foreach (string file in files)
+            {
+                if (file.EndsWith("spr_db.bin"))
+                {
+                    SpriteDatabase temp_db = new SpriteDatabase();
+                    temp_db = BinaryFile.Load<SpriteDatabase>(file);
+                    foreach (SpriteSetInfo sprsetinfo in temp_db.SpriteSets)
+                    {
+                        db.SpriteSets.Add(sprsetinfo);
+                    }
+                }
+            }
+            Grid1.ItemsSource = db.SpriteSets;
+        }
+
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
@@ -237,20 +254,7 @@ namespace Armoire.Dialogs
         private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
             string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
-            if (db.SpriteSets != null)
-            {
-                Grid1.ItemsSource = null;
-                Grid1.Items.Clear();
-                db.SpriteSets.Clear();
-            }
-            if (files[0].EndsWith("spr_db.bin"))
-            {
-                saveLocation = files[0];
-                db = BinaryFile.Load<SpriteDatabase>(files[0]);
-                //spriteSets = new ObservableCollection<SpriteSetInfo>(db.SpriteSets);
-                Grid1.ItemsSource = db.SpriteSets;
-            }
-            Grid1.DataContext = db.SpriteSets;
+            Open(files);
         }
     }
 }

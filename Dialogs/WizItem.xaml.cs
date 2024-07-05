@@ -35,7 +35,6 @@ namespace Armoire.Dialogs
                 curObj.item = new itemEntry();
             }
             curObj.item.name = Armoire.Properties.Resources.cmn_temp;
-            MessageBox.Show(Program.Databases.GetChritmName(parentModInfo.charBox.SelectedValue as string));
             PresetPicker picker = new PresetPicker(curObj.item, curObj.objectFilePath, Program.Databases.GetChritmName(parentModInfo.charBox.SelectedValue as string).ToUpper(), true);
             picker.ShowDialog();
             curObj.item = picker.itemCurrent;
