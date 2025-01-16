@@ -394,6 +394,9 @@
   <data name="title_edit_tex" xml:space="preserve">
     <value>Texture Database Editor</value>
   </data>
+  <data name="title_texture" xml:space="preserve">
+    <value>Texture Picker</value>
+  </data>
   <data name="title_wizard" xml:space="preserve">
     <value>Module Wizard</value>
   </data>

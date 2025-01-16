@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cmn_add" xml:space="preserve">
+    <value>追加する</value>
+  </data>
+  <data name="cmn_apply" xml:space="preserve">
+    <value>保存して閉じる</value>
+  </data>
+  <data name="cmn_attr" xml:space="preserve">
+    <value>アトリビュート</value>
+  </data>
+  <data name="cmn_bind" xml:space="preserve">
+    <value>関連モジュール</value>
+  </data>
+  <data name="cmn_button_change" xml:space="preserve">
+    <value>変更する</value>
+  </data>
+  <data name="cmn_button_edit" xml:space="preserve">
+    <value>エディット</value>
+  </data>
+  <data name="cmn_chara" xml:space="preserve">
+    <value>キャラ</value>
+  </data>
+  <data name="cmn_close_n" xml:space="preserve">
+    <value>保存せずに閉じる</value>
+  </data>
+  <data name="cmn_cos" xml:space="preserve">
+    <value>コスチューム</value>
+  </data>
+  <data name="cmn_cos_item" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="cmn_day" xml:space="preserve">
+    <value>日</value>
+  </data>
+  <data name="cmn_details" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="cmn_enter_value" xml:space="preserve">
+    <value>ENTER VALUE HERE</value>
+  </data>
+  <data name="cmn_error" xml:space="preserve">
+    <value>エラーが発生しました</value>
+  </data>
+  <data name="cmn_exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="cmn_finish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="cmn_hair_swap" xml:space="preserve">
+    <value>髪型カスタマイズ防止</value>
+  </data>
+  <data name="cmn_id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="cmn_index" xml:space="preserve">
+    <value>索引</value>
+  </data>
+  <data name="cmn_item_list" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="cmn_item_no" xml:space="preserve">
+    <value>番号</value>
+  </data>
+  <data name="cmn_item_type" xml:space="preserve">
+    <value>Set Item Type</value>
+  </data>
+  <data name="cmn_month" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="cmn_name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="cmn_no" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="cmn_objid" xml:space="preserve">
+    <value>オブジェクトID</value>
+  </data>
+  <data name="cmn_objs" xml:space="preserve">
+    <value>オブジェクト</value>
+  </data>
+  <data name="cmn_objuid" xml:space="preserve">
+    <value>オブジェクトUID</value>
+  </data>
+  <data name="cmn_obj_entry" xml:space="preserve">
+    <value>オブジェクトのエントリー</value>
+  </data>
+  <data name="cmn_org_itm" xml:space="preserve">
+    <value>オリジナルアイテム</value>
+  </data>
+  <data name="cmn_parts" xml:space="preserve">
+    <value>パーツ</value>
+  </data>
+  <data name="cmn_preset" xml:space="preserve">
+    <value>プリセット</value>
+  </data>
+  <data name="cmn_preview_img" xml:space="preserve">
+    <value>プレビュー画像</value>
+  </data>
+  <data name="cmn_price" xml:space="preserve">
+    <value>価格</value>
+  </data>
+  <data name="cmn_remove" xml:space="preserve">
+    <value>取り除く</value>
+  </data>
+  <data name="cmn_replace" xml:space="preserve">
+    <value>全体の取り替え</value>
+  </data>
+  <data name="cmn_sel" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="cmn_short_name" xml:space="preserve">
+    <value>省略した名前</value>
+  </data>
+  <data name="cmn_sprs" xml:space="preserve">
+    <value>スプライト</value>
+  </data>
+  <data name="cmn_temp" xml:space="preserve">
+    <value>仮</value>
+  </data>
+  <data name="cmn_texs" xml:space="preserve">
+    <value>テクスチャ</value>
+  </data>
+  <data name="cmn_tex_entry" xml:space="preserve">
+    <value>テクスチャのエントリー</value>
+  </data>
+  <data name="cmn_year" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="cmn_yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="cxt_acc_add" xml:space="preserve">
+    <value>アクセサリーを追加する</value>
+  </data>
+  <data name="cxt_acc_remove" xml:space="preserve">
+    <value>アクセサリーを取り除く</value>
+  </data>
+  <data name="cxt_cos_add" xml:space="preserve">
+    <value>コスチュームを追加する</value>
+  </data>
+  <data name="cxt_cos_remove" xml:space="preserve">
+    <value>コスチュームを取り除く</value>
+  </data>
+  <data name="cxt_item_add" xml:space="preserve">
+    <value>アイテムを追加する</value>
+  </data>
+  <data name="cxt_item_remove" xml:space="preserve">
+    <value>アイテムを取り除く</value>
+  </data>
+  <data name="cxt_module_add" xml:space="preserve">
+    <value>モジュールを追加する</value>
+  </data>
+  <data name="cxt_module_remove" xml:space="preserve">
+    <value>モジュールを取り除く</value>
+  </data>
+  <data name="exp_1" xml:space="preserve">
+    <value>モデルのFARCファイルを選択してください。</value>
+  </data>
+  <data name="exp_2" xml:space="preserve">
+    <value>希望する値を入力してください。</value>
+  </data>
+  <data name="exp_3" xml:space="preserve">
+    <value>PNGフォーマットのプレビュー画像は512px x 512pxになるの必要があります。</value>
+  </data>
+  <data name="exp_4" xml:space="preserve">
+    <value>まずはファイルを開いてください。</value>
+  </data>
+  <data name="exp_5" xml:space="preserve">
+    <value>エラーが発生しました。関連ファイル：</value>
+  </data>
+  <data name="exp_6" xml:space="preserve">
+    <value>保存が無事に成功しました。</value>
+  </data>
+  <data name="file_db_clean" xml:space="preserve">
+    <value>クリーナー</value>
+  </data>
+  <data name="file_open" xml:space="preserve">
+    <value>ファイルを開く</value>
+  </data>
+  <data name="file_save" xml:space="preserve">
+    <value>保存する</value>
+  </data>
+  <data name="file_saveas" xml:space="preserve">
+    <value>名前を付けて保存する</value>
+  </data>
+  <data name="file_title" xml:space="preserve">
+    <value>ファイル</value>
+  </data>
+  <data name="file_wizard" xml:space="preserve">
+    <value>ウイザード</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="md_dummy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\md_dummy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="obj_add" xml:space="preserve">
+    <value>オブジェクトを追加する</value>
+  </data>
+  <data name="obj_arch" xml:space="preserve">
+    <value>アーカイブファイル名</value>
+  </data>
+  <data name="obj_del" xml:space="preserve">
+    <value>オブジェクトを削除する</value>
+  </data>
+  <data name="obj_dupe" xml:space="preserve">
+    <value>オブジェクトを模倣する</value>
+  </data>
+  <data name="obj_file" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="obj_texture" xml:space="preserve">
+    <value>テクスチャファイル名</value>
+  </data>
+  <data name="replace_new" xml:space="preserve">
+    <value>新しいテキストを入力してください。</value>
+  </data>
+  <data name="replace_old" xml:space="preserve">
+    <value>現在のテキストを入力してください。</value>
+  </data>
+  <data name="select_png" xml:space="preserve">
+    <value>PNGファイルを選択してください。</value>
+  </data>
+  <data name="spr_add" xml:space="preserve">
+    <value>スプライトを追加する</value>
+  </data>
+  <data name="spr_del" xml:space="preserve">
+    <value>スプライトを削除する</value>
+  </data>
+  <data name="spr_dupe" xml:space="preserve">
+    <value>スプライトを模倣する</value>
+  </data>
+  <data name="tab_chritm" xml:space="preserve">
+    <value>キャラクターアイテム</value>
+  </data>
+  <data name="tab_custom" xml:space="preserve">
+    <value>アクセサリー・髪形</value>
+  </data>
+  <data name="tab_db" xml:space="preserve">
+    <value>データベースエディター</value>
+  </data>
+  <data name="tab_module" xml:space="preserve">
+    <value>モジュール</value>
+  </data>
+  <data name="tex_add" xml:space="preserve">
+    <value>テクスチャを追加する</value>
+  </data>
+  <data name="tex_chg" xml:space="preserve">
+    <value>新テクスチャ</value>
+  </data>
+  <data name="tex_chg_add" xml:space="preserve">
+    <value>取り替えを追加する</value>
+  </data>
+  <data name="tex_chg_del" xml:space="preserve">
+    <value>取り替えを削除する</value>
+  </data>
+  <data name="tex_del" xml:space="preserve">
+    <value>テクスチャを削除する</value>
+  </data>
+  <data name="tex_dupe" xml:space="preserve">
+    <value>テクスチャを模倣する</value>
+  </data>
+  <data name="tex_org" xml:space="preserve">
+    <value>元テクスチャ</value>
+  </data>
+  <data name="title_edit_obj" xml:space="preserve">
+    <value>Object Database Editor</value>
+  </data>
+  <data name="title_edit_spr" xml:space="preserve">
+    <value>Sprite Database Editor</value>
+  </data>
+  <data name="title_edit_tex" xml:space="preserve">
+    <value>Texture Database Editor</value>
+  </data>
+  <data name="title_texture" xml:space="preserve">
+    <value>テクスチャを選んでください</value>
+  </data>
+  <data name="title_wizard" xml:space="preserve">
+    <value>モジュールウィザード</value>
+  </data>
+  <data name="title_wizard_custom" xml:space="preserve">
+    <value>カスタマイズアイテムウィザード</value>
+  </data>
+  <data name="warn_generic" xml:space="preserve">
+    <value>エラーが発生しました。</value>
+  </data>
+  <data name="window_item" xml:space="preserve">
+    <value>アイテム詳細</value>
+  </data>
+  <data name="window_list_item" xml:space="preserve">
+    <value>アイテムリスト</value>
+  </data>
+  <data name="window_notice" xml:space="preserve">
+    <value>お知らせ</value>
+  </data>
+  <data name="window_obj" xml:space="preserve">
+    <value>オブジェクトデータベース</value>
+  </data>
+  <data name="window_obj_edit" xml:space="preserve">
+    <value>Object Entry Editor</value>
+  </data>
+  <data name="window_preset" xml:space="preserve">
+    <value>プリセットを選択する</value>
+  </data>
+  <data name="window_spr" xml:space="preserve">
+    <value>スプライトデータベース</value>
+  </data>
+  <data name="window_spr_edit" xml:space="preserve">
+    <value>Sprite Entry Editor</value>
+  </data>
+  <data name="window_tex" xml:space="preserve">
+    <value>テクスチャデータベース</value>
+  </data>
+  <data name="window_tex_chg" xml:space="preserve">
+    <value>テクスチャ取り替えエディター</value>
+  </data>
+</root>

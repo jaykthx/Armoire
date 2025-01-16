@@ -44,7 +44,7 @@ namespace Armoire.Dialogs
 
         private void CheckNumbers(object sender, TextCompositionEventArgs e) // Taken from stackoverflow
         {
-            Regex regex = new Regex("[^0-9]+");
+            Regex regex = new("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
     }

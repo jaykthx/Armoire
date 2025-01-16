@@ -48,7 +48,7 @@ namespace Armoire.Dialogs
         {
             if (spriteMode)
             {
-                SpriteInfo sprite = new SpriteInfo();
+                SpriteInfo sprite = new();
                 sprite.Index = 0;
                 sprite.Name = "NEW SPR ENTRY";
                 sprite.Id = 0;
@@ -58,7 +58,7 @@ namespace Armoire.Dialogs
             }
             else
             {
-                SpriteTextureInfo texture = new SpriteTextureInfo();
+                SpriteTextureInfo texture = new();
                 texture.Index = 0;
                 texture.Name = "NEW TEX ENTRY";
                 texture.Id = 0;

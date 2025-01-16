@@ -4,21 +4,12 @@ using MikuMikuLibrary.Textures;
 using MikuMikuLibrary.Textures.Processing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Xml.Linq;
 using Path = System.IO.Path;
 
 namespace Armoire.Dialogs
@@ -28,27 +19,31 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class TexturePicker : Window
     {
-        string[] short_charas = new string[] { "MIK", "RIN", "LEN", "LUK", "KAI", "MEI", "HAK", "NER", "SAK", "TET" };
         public itemEntry temp_item;
         string selectedFileAutoGen = null;
-        List<int> textureList = new List<int>();
+        string selChara;
+        List<int> textureList = new();
         public class ListBoxItemImage
         {
             public string Name { get; set; }
             public BitmapImage Image { get; set; }
         }
-        List<ListBoxItemImage> listItems = new List<ListBoxItemImage>();
+        List<ListBoxItemImage> listItems = new();
         private void mainProcess(string farc_path)
         {
             temp_item.dataSetTexes = new System.Collections.ObjectModel.ObservableCollection<dataSetTex>();
             FarcArchive farc = BinaryFile.Load<FarcArchive>(farc_path);
+            foreach(string filename in farc.FileNames)
+            {
+                Console.WriteLine(filename);
+            }
             foreach (string fileName in farc.FileNames)
             {
                 if (fileName.Contains("_tex"))
                 {
                     var source = farc.Open(fileName, EntryStreamMode.MemoryStream);
-                    TextureSet texset = new TextureSet();
-                    texset.Load(source);
+                    TextureSet texset = new();
+                    texset.Load(source, true);
                     int count = 0;
                     foreach (Texture tex in texset.Textures)
                     {
@@ -59,12 +54,11 @@ namespace Armoire.Dialogs
                         listItems.Add(new ListBoxItemImage() { Name = count.ToString(), Image = bmpImg });
                         count++;
                     }
-                    imageListBox.ItemsSource = listItems;
-                    eyebrowCombo.ItemsSource = textureList;
-                    eyelashCombo.ItemsSource = textureList;
-                    eyeLCombo.ItemsSource = textureList;
-                    eyeRCombo.ItemsSource = textureList;
-                    faceCombo.ItemsSource = textureList;
+                    eyebrowCombo.ItemsSource = listItems;
+                    eyelashCombo.ItemsSource = listItems;
+                    eyeLCombo.ItemsSource = listItems;
+                    eyeRCombo.ItemsSource = listItems;
+                    faceCombo.ItemsSource = listItems;
                 }
             }
         }
@@ -76,11 +70,10 @@ namespace Armoire.Dialogs
         public TexturePicker(itemEntry item, string chara) // other
         {
             InitializeComponent();
-            charaBox.ItemsSource = short_charas;
-            charaBox.SelectedValue = chara;
+            selChara = chara;
             temp_item = item;
-            OpenFileDialog ofd = new OpenFileDialog();
-            if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            OpenFileDialog ofd = new();
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (ofd.FileName.EndsWith(".farc"))
                 {
@@ -93,8 +86,7 @@ namespace Armoire.Dialogs
         public TexturePicker(itemEntry item, string file_path, string chara) // wizard moment
         {
             InitializeComponent();
-            charaBox.ItemsSource = short_charas;
-            charaBox.SelectedValue = chara;
+            selChara = chara;
             temp_item = item;
             if (file_path.EndsWith(".farc"))
             {
@@ -110,41 +102,41 @@ namespace Armoire.Dialogs
 
         private void Button_Click(object sender, RoutedEventArgs e) // Apply changes
         {
-            string[] orgs = getStrings(charaBox.SelectedValue as string);
+            string[] orgs = getStrings(selChara);
             string mid = selectedFileAutoGen.ToUpper() + "_AUTO_TEXTURE_";
             if (eyeLCombo.SelectedIndex > -1)
             {
-                dataSetTex eye_l = new dataSetTex();
+                dataSetTex eye_l = new();
                 eye_l.org = orgs[2];
-                eye_l.chg = mid + eyeLCombo.SelectedValue as string;
+                eye_l.chg = mid + (eyeLCombo.SelectedValue as ListBoxItemImage).Name;
                 temp_item.dataSetTexes.Add(eye_l);
             }
             if (eyeRCombo.SelectedIndex > -1)
             {
-                dataSetTex eye_r = new dataSetTex();
+                dataSetTex eye_r = new();
                 eye_r.org = orgs[3];
-                eye_r.chg = mid + eyeRCombo.SelectedValue as string;
+                eye_r.chg = mid + (eyeRCombo.SelectedValue as ListBoxItemImage).Name;
                 temp_item.dataSetTexes.Add(eye_r);
             }
             if (eyelashCombo.SelectedIndex > -1)
             {
-                dataSetTex eyelash = new dataSetTex();
+                dataSetTex eyelash = new();
                 eyelash.org = orgs[1];
-                eyelash.chg = mid + eyelashCombo.SelectedValue as string;
+                eyelash.chg = mid + (eyelashCombo.SelectedValue as ListBoxItemImage).Name;
                 temp_item.dataSetTexes.Add(eyelash);
             }
             if (eyebrowCombo.SelectedIndex > -1)
             {
-                dataSetTex eyebrow = new dataSetTex();
+                dataSetTex eyebrow = new();
                 eyebrow.org = orgs[0];
-                eyebrow.chg = mid + eyebrowCombo.SelectedValue as string;
+                eyebrow.chg = mid + (eyebrowCombo.SelectedValue as ListBoxItemImage).Name;
                 temp_item.dataSetTexes.Add(eyebrow);
             }
             if (faceCombo.SelectedIndex > -1)
             {
-                dataSetTex face = new dataSetTex();
+                dataSetTex face = new();
                 face.org = orgs[4];
-                face.chg = mid + faceCombo.SelectedValue as string;
+                face.chg = mid + (faceCombo.SelectedValue as ListBoxItemImage).Name;
                 temp_item.dataSetTexes.Add(face);
             }
             this.Close();

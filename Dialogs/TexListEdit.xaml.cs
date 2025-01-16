@@ -27,7 +27,7 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            dataSetTex tex = new dataSetTex();
+            dataSetTex tex = new();
             tex.chg = "New Texture Name";
             tex.org = "Original Texture Name";
             temp.Add(tex);

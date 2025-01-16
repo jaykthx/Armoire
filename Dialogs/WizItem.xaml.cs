@@ -9,7 +9,7 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class WizItem : UserControl
     {
-        public wizObj curObj = new wizObj();
+        public wizObj curObj = new();
         public ModuleInfo parentModInfo;
         public WizItem()
         {
@@ -18,7 +18,7 @@ namespace Armoire.Dialogs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new();
             ofd.Filter = "FARC files|*.farc";
             ofd.Title = Armoire.Properties.Resources.exp_1;
             if(ofd.ShowDialog() == true)
@@ -35,7 +35,7 @@ namespace Armoire.Dialogs
                 curObj.item = new itemEntry();
             }
             curObj.item.name = Armoire.Properties.Resources.cmn_temp;
-            PresetPicker picker = new PresetPicker(curObj.item, curObj.objectFilePath, Program.Databases.GetChritmName(parentModInfo.charBox.SelectedValue as string).ToUpper(), true);
+            PresetPicker picker = new(curObj.item, curObj.objectFilePath, Program.Databases.GetChritmName(parentModInfo.charBox.SelectedValue as string).ToUpper(), true, true);
             picker.ShowDialog();
             curObj.item = picker.itemCurrent;
         }

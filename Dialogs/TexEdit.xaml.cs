@@ -18,7 +18,7 @@ namespace Armoire.Dialogs
         {
             InitializeComponent();
         }
-        TextureDatabase db = new TextureDatabase();
+        TextureDatabase db = new();
         string saveLocation = null;
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
@@ -57,7 +57,7 @@ namespace Armoire.Dialogs
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            SortDescription sort = new SortDescription();
+            SortDescription sort = new();
             if (Grid1.Items.SortDescriptions.Count > 0)
             {
                 sort = Grid1.Items.SortDescriptions[0];
@@ -79,7 +79,7 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            TextureInfo texInfo = new TextureInfo
+            TextureInfo texInfo = new()
             {
                 Id = 0,
                 Name = "NEW TEXTURE ENTRY"
@@ -89,7 +89,7 @@ namespace Armoire.Dialogs
         }
         private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE item
         {
-            List<ObjectSetInfo> objColle = new List<ObjectSetInfo>();
+            List<ObjectSetInfo> objColle = new();
             foreach (var x in Grid1.SelectedItems)
             {
                 objColle.Add(TexDupe(Grid1.Items.IndexOf(x)));
@@ -99,7 +99,7 @@ namespace Armoire.Dialogs
 
         private ObjectSetInfo TexDupe(int index) // return ObjectSetInfo
         {
-            ObjectSetInfo newObjInfo = new ObjectSetInfo
+            ObjectSetInfo newObjInfo = new()
             {
                 Name = db.Textures[index].Name,
                 Id = db.Textures[index].Id
@@ -108,7 +108,7 @@ namespace Armoire.Dialogs
         }
         private void OpenFile()
         {
-            OpenFileDialog ofd = new OpenFileDialog
+            OpenFileDialog ofd = new()
             {
                 Title = "Please select your Texture Database",
                 Filter = "Texture Database files|*tex_db.bin",
@@ -132,7 +132,7 @@ namespace Armoire.Dialogs
             {
                 if (file.EndsWith("tex_db.bin"))
                 {
-                    TextureDatabase temp_db = new TextureDatabase();
+                    TextureDatabase temp_db = new();
                     temp_db = BinaryFile.Load<TextureDatabase>(file);
                     foreach (TextureInfo tex in temp_db.Textures)
                     {
@@ -157,7 +157,7 @@ namespace Armoire.Dialogs
         }
         private void SaveAs()
         {
-            SaveFileDialog sfd = new SaveFileDialog
+            SaveFileDialog sfd = new()
             {
                 Filter = "Texture Database files|*tex_db.bin",
                 FileName = "mod_tex_db.bin"
@@ -180,8 +180,8 @@ namespace Armoire.Dialogs
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
             Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items", Properties.Resources.window_notice);
-            TextEntry ti = new TextEntry(false, "Enter the old text");
-            TextEntry ti2 = new TextEntry(false, "Enter the new text");
+            TextEntry ti = new(false, "Enter the old text");
+            TextEntry ti2 = new(false, "Enter the new text");
             string detect;
             string number;
             ti.ShowDialog();

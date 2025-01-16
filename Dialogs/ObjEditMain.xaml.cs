@@ -14,7 +14,7 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class ObjEditMain : Window
     {
-        ObjectDatabase db = new ObjectDatabase();
+        ObjectDatabase db = new();
         string saveLocation = null;
         public ObjEditMain()
         {
@@ -46,7 +46,7 @@ namespace Armoire.Dialogs
         private void Object_Click(object sender, RoutedEventArgs e) // Object sub-editor
         {
             ObjectSetInfo obj = ((FrameworkElement)sender).DataContext as ObjectSetInfo;
-            ObjEditSub win = new ObjEditSub(obj);
+            ObjEditSub win = new(obj);
             win.ShowDialog();
         }
 
@@ -62,7 +62,7 @@ namespace Armoire.Dialogs
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            SortDescription sort = new SortDescription();
+            SortDescription sort = new();
             if (Grid1.Items.SortDescriptions.Count > 0)
             {
                 sort = Grid1.Items.SortDescriptions[0];
@@ -84,7 +84,7 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            ObjectSetInfo objSet = new ObjectSetInfo
+            ObjectSetInfo objSet = new()
             {
                 Id = 0,
                 Name = "NEW OBJECT SET ENTRY",
@@ -92,7 +92,7 @@ namespace Armoire.Dialogs
                 FileName = "dummy_obj.bin",
                 ArchiveFileName = "dummy.farc"
             };
-            ObjectInfo newObj = new ObjectInfo
+            ObjectInfo newObj = new()
             {
                 Id = 0,
                 Name = "NEW OBJECT ENTRY"
@@ -104,7 +104,7 @@ namespace Armoire.Dialogs
         private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE item
         {
             int index = 0;
-            List<ObjectSetInfo> objColle = new List<ObjectSetInfo>();
+            List<ObjectSetInfo> objColle = new();
             foreach (var x in Grid1.SelectedItems)
             {
                 index = Grid1.Items.IndexOf(x);
@@ -120,7 +120,7 @@ namespace Armoire.Dialogs
 
         private ObjectSetInfo ObjDupe(int index) // return ObjectSetInfo
         {
-            ObjectSetInfo newObjInfo = new ObjectSetInfo
+            ObjectSetInfo newObjInfo = new()
             {
                 FileName = db.ObjectSets[index].FileName,
                 ArchiveFileName = db.ObjectSets[index].ArchiveFileName,
@@ -130,7 +130,7 @@ namespace Armoire.Dialogs
             };
             foreach (ObjectInfo obj in db.ObjectSets[index].Objects)
             {
-                ObjectInfo newObj = new ObjectInfo
+                ObjectInfo newObj = new()
                 {
                     Id = obj.Id,
                     Name = obj.Name
@@ -141,7 +141,7 @@ namespace Armoire.Dialogs
         }
         private void OpenFile()
         {
-            OpenFileDialog ofd = new OpenFileDialog
+            OpenFileDialog ofd = new()
             {
                 Title = "Please select your Object Database", //"データベースを選択してください。";
                 Filter = "Object Database files|*obj_db.bin", //"データベースファイル |*_db.bin"; 
@@ -166,7 +166,7 @@ namespace Armoire.Dialogs
             {
                 if (file.EndsWith("obj_db.bin"))
                 {
-                    ObjectDatabase temp_db = new ObjectDatabase();
+                    ObjectDatabase temp_db = new();
                     temp_db = BinaryFile.Load<ObjectDatabase>(file);
                     foreach (ObjectSetInfo objsetinfo in temp_db.ObjectSets)
                     {
@@ -190,7 +190,7 @@ namespace Armoire.Dialogs
         }
         private void SaveAs()
         {
-            SaveFileDialog sfd = new SaveFileDialog
+            SaveFileDialog sfd = new()
             {
                 Filter = "Object Database files|*obj_db.bin",
                 FileName = "mod_obj_db.bin"
@@ -213,8 +213,8 @@ namespace Armoire.Dialogs
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
             Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items", Properties.Resources.window_notice);
-            TextEntry ti = new TextEntry(false, "Enter the old text");
-            TextEntry ti2 = new TextEntry(false, "Enter the new text");
+            TextEntry ti = new(false, "Enter the old text");
+            TextEntry ti2 = new(false, "Enter the new text");
             string detect;
             string number;
             ti.ShowDialog();

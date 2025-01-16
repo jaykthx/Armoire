@@ -14,8 +14,8 @@ namespace Armoire
     /// </summary>
     public partial class CustomInfo : System.Windows.Controls.UserControl
     {
-        public wizCustom wizCus = new wizCustom();
-        public List<string> partsList = new List<string> { "ZUJO", "FACE", "NECK",  "BACK" };
+        public wizCustom wizCus = new();
+        public List<string> partsList = new() { "ZUJO", "FACE", "NECK",  "BACK" };
         public CustomInfo()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace Armoire
 
         private void nameButton_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(false, "Enter Item Name");
+            TextEntry tex = new(false, "Enter Item Name");
             tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result))
             {
@@ -38,7 +38,7 @@ namespace Armoire
 
         private void idButton_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(true, "Enter Item ID Value");
+            TextEntry tex = new(true, "Enter Item ID Value");
             tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
@@ -50,7 +50,7 @@ namespace Armoire
 
         private void indexButton_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(true, "Enter Item Sorting Index Value");
+            TextEntry tex = new(true, "Enter Item Sorting Index Value");
             tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
@@ -62,11 +62,11 @@ namespace Armoire
 
         private void Button_Click_2(object sender, RoutedEventArgs e) // Select PNG Code - Also sets image box source to the PNG using Program.GetImage()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new();
             ofd.Filter = "PNG Files|*.png";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Bitmap pngImage = new Bitmap(ofd.FileName);
+                Bitmap pngImage = new(ofd.FileName);
                 if (pngImage.Width == 512 && pngImage.Height == 512)
                 {
                     moduleImage.Source = Program.GetImage(pngImage);
@@ -89,7 +89,7 @@ namespace Armoire
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new();
             ofd.Filter = "FARC files|*.farc";
             ofd.Title = Properties.Resources.exp_1;
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -102,7 +102,7 @@ namespace Armoire
         private void Preset_Click(object sender, RoutedEventArgs e)
         {
             wizCus.obj.item.name = Properties.Resources.cmn_temp;
-            PresetPicker picker = new PresetPicker(wizCus.obj.item, wizCus.obj.objectFilePath, "ALL", false);
+            PresetPicker picker = new(wizCus.obj.item, wizCus.obj.objectFilePath, "ALL", false, true);
             picker.ShowDialog();
             wizCus.obj.item = picker.itemCurrent;
         }

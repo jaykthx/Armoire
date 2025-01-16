@@ -1,6 +1,5 @@
 ﻿using Armoire.Dialogs;
-using CsvHelper;
-using CsvHelper.Configuration;
+using Armoire.Properties;
 using MikuMikuLibrary.Archives;
 using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
@@ -13,6 +12,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,14 +28,14 @@ namespace Armoire
     public partial class MainWindow : Window
     {
         //module
-        public static ObservableCollection<module> Modules = new ObservableCollection<module>();
+        public static ObservableCollection<module> Modules = new();
         //cust
-        public static ObservableCollection<cstm_item> CustItems = new ObservableCollection<cstm_item>();
+        public static ObservableCollection<cstm_item> CustItems = new();
         //chara
-        public static ObservableCollection<chritmFile> chritmFiles = new ObservableCollection<chritmFile>();
+        public static ObservableCollection<chritmFile> chritmFiles = new();
 
-        public List<string> charas_Customize = new List<string> { "MIKU", "RIN", "LEN", "LUKA", "KAITO", "MEIKO", "NERU", "HAKU", "SAKINE", "TETO", "ALL" };
-        public List<string> partsList = new List<string> { "KAMI", "FACE", "NECK", "ZUJO", "BACK" };
+        public List<string> charas_Customize = new() { "MIKU", "RIN", "LEN", "LUKA", "KAITO", "MEIKO", "NERU", "HAKU", "SAKINE", "TETO", "ALL" };
+        public List<string> partsList = new() { "KAMI", "FACE", "NECK", "ZUJO", "BACK" };
         public MainWindow()
         {
             InitializeComponent();
@@ -119,12 +119,12 @@ namespace Armoire
         }
         private void OpenFile_Module()
         {
-            OpenFileDialog ofd = new OpenFileDialog() { Filter = "Supported files|*.csv;*_module_tbl.farc|Module Table Files|*_module_tbl.farc|Armoire-exported CSV files|*.csv|All files (*.*)|*.*" };
+            OpenFileDialog ofd = new() { Filter = "Supported files|*_module_tbl.farc|Module Table Files|*_module_tbl.farc|All files (*.*)|*.*" };
             ofd.Multiselect= true;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Modules.Clear();
-                ObservableCollection<module> tempModules = new ObservableCollection<module>();
+                ObservableCollection<module> tempModules = new();
                 foreach (string file in ofd.FileNames)
                 {
                     if (file.EndsWith(".farc"))
@@ -132,19 +132,6 @@ namespace Armoire
                         Program.modulePath = ofd.FileNames[0];
                         var farc = BinaryFile.Load<FarcArchive>(file);
                         tempModules = Program.IO.ReadModuleFile(farc);
-                        List<module> modules = tempModules.ToList();
-                        foreach (module m in modules)
-                        {
-                            Modules.Add(m);
-                        }
-                    }
-                    else if (file.EndsWith(".csv"))
-                    {
-                        string[] split = file.Split('\\');
-                        Program.modulePath = ofd.FileNames[0];
-                        string newFileNameLocation = ofd.FileNames[0].Remove((ofd.FileName.Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                        newFileNameLocation += "mod_gm_module_tbl.farc";
-                        tempModules = Program.IO.ReadModuleFileCSV(file);
                         List<module> modules = tempModules.ToList();
                         foreach (module m in modules)
                         {
@@ -169,7 +156,7 @@ namespace Armoire
                 }
                 else
                 {
-                    SaveFileDialog sfd = new SaveFileDialog() { Filter = "FARC files (*.farc)|*.farc" };
+                    SaveFileDialog sfd = new() { Filter = "FARC files (*.farc)|*.farc" };
                     sfd.FileName = "mod_gm_module_tbl.farc";
                     if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
@@ -185,7 +172,7 @@ namespace Armoire
         {
             if (Modules.Count > 1)
             {
-                List<module> sel = new List<module>();
+                List<module> sel = new();
                 foreach (module x in DataGrid_Modules.SelectedItems)
                 {
                     sel.Add(x);
@@ -212,7 +199,7 @@ namespace Armoire
         }
         private module GetDummy_Module() // Dummy module that can be added to the list
         {
-            module dummyModule = new module();
+            module dummyModule = new();
             dummyModule.name = "ダミー";
             dummyModule.chara = "MIKU";
             dummyModule.id = 999;
@@ -232,45 +219,13 @@ namespace Armoire
                 Modules = Program.IO.ReadModuleFile(farc);
                 DataGrid_Modules.ItemsSource = Modules;
             }
-            else if (files[0].EndsWith(".csv"))
-            {
-                Modules = Program.IO.ReadModuleFileCSV(files[0]);
-                DataGrid_Modules.ItemsSource = Modules;
-                string[] split = files[0].Split('\\');
-                string newFileNameLocation = files[0].Remove((files[0].Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                newFileNameLocation += "mod_gm_module_tbl.farc";
-                Program.modulePath = newFileNameLocation;
-            }
             else { return; }
-        }
-        private void Export_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = "gm_module_tbl.csv";
-            sfd.Filter = "CSV Files|*.csv";
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                using (TextWriter writer = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
-                {
-                    var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                    csv.Context.RegisterClassMap<moduleMap>();
-                    csv.WriteRecords(Modules); // where values implements IEnumerable
-                }
-            }
-        }
-        public sealed class moduleMap : ClassMap<module>
-        {
-            public moduleMap()
-            {
-                AutoMap(CultureInfo.InvariantCulture);
-                Map(m => m.entry).Ignore();
-            }
         }
         private void Open_SprEditor(object sender, RoutedEventArgs e)
         {
             if (!System.Windows.Application.Current.Windows.OfType<SprEditMain>().Any())
             {
-                SprEditMain spr = new SprEditMain();
+                SprEditMain spr = new();
                 spr.Show();
             }
             else
@@ -282,7 +237,7 @@ namespace Armoire
         {
             if (!System.Windows.Application.Current.Windows.OfType<TexEdit>().Any())
             {
-                TexEdit texEditor = new TexEdit();
+                TexEdit texEditor = new();
                 texEditor.Show();
             }
             else
@@ -294,7 +249,7 @@ namespace Armoire
         {
             if (!System.Windows.Application.Current.Windows.OfType<ObjEditMain>().Any())
             {
-                ObjEditMain objEditor = new ObjEditMain();
+                ObjEditMain objEditor = new();
                 objEditor.Show();
             }
             else
@@ -304,23 +259,23 @@ namespace Armoire
         }
         private void Wizard_Click(object sender, RoutedEventArgs e)
         {
-            ModuleWizard wiz = new ModuleWizard();
+            ModuleWizard wiz = new();
             wiz.Show();
         }
         private void Wizard_Click_Customize(object sender, RoutedEventArgs e)
         {
-            CustomiseWizard wiz = new CustomiseWizard();
+            CustomiseWizard wiz = new();
             wiz.Show();
         }
         private void Test_Click(object sender, RoutedEventArgs e)
         {
             // Testing DB Cleaner - DISABLED for now!!
-            OpenFileDialog ofd = new OpenFileDialog();
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            SaveFileDialog sfd = new SaveFileDialog();
+            OpenFileDialog ofd = new();
+            FolderBrowserDialog fbd = new();
+            SaveFileDialog sfd = new();
             fbd.Description = "Pick the mod folder.";
-            List<string> objsetFarcs = new List<string>();
-            List<uint> textureIDs = new List<uint>();
+            List<string> objsetFarcs = new();
+            List<uint> textureIDs = new();
             if(fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 foreach(string s in Directory.EnumerateFiles(fbd.SelectedPath, "*.farc", SearchOption.AllDirectories))
@@ -351,7 +306,7 @@ namespace Armoire
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) //pick obj_db
             {
                 ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(ofd.FileName);
-                ObjectDatabase new_obj_db = new ObjectDatabase();
+                ObjectDatabase new_obj_db = new();
                 foreach(ObjectSetInfo o in obj_db.ObjectSets)
                 {
                     if (objsetFarcs.Contains(o.ArchiveFileName))
@@ -369,7 +324,7 @@ namespace Armoire
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) //pick tex_db
             {
                 TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(ofd.FileName);
-                TextureDatabase new_tex_db = new TextureDatabase();
+                TextureDatabase new_tex_db = new();
                 tex_db.Load(ofd.FileName);
                 foreach (TextureInfo o in tex_db.Textures)
                 {
@@ -398,25 +353,16 @@ namespace Armoire
                 CustItems = Program.IO.ReadCustomFile(farc);
                 DataGrid_Customize.ItemsSource = CustItems;
             }
-            else if (files[0].EndsWith(".csv"))
-            {
-                CustItems = Program.IO.ReadCustomFileCSV(files[0]);
-                DataGrid_Customize.ItemsSource = CustItems;
-                string[] split = files[0].Split('\\');
-                string newFileNameLocation = files[0].Remove((files[0].Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                newFileNameLocation += "mod_gm_customize_item_tbl.farc";
-                Program.customPath = newFileNameLocation;
-            }
             else { return; }
         }
         private void OpenFile_Customize()
         {
-            OpenFileDialog ofd = new OpenFileDialog() { Filter = "Supported files|*.csv;*customize_item_tbl.farc|Customize Item Table files|*customize_item_tbl.farc|Armoire-exported CSV files|*.csv|All files (*.*)|*.*" };
+            OpenFileDialog ofd = new() { Filter = "Supported files|*customize_item_tbl.farc|Customize Item Table files|*customize_item_tbl.farc|All files (*.*)|*.*" };
             ofd.Multiselect = true;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 CustItems.Clear();
-                ObservableCollection<cstm_item> tempCustoms = new ObservableCollection<cstm_item>();
+                ObservableCollection<cstm_item> tempCustoms = new();
                 foreach (string file in ofd.FileNames)
                 {
                     if (file.EndsWith(".farc"))
@@ -426,19 +372,6 @@ namespace Armoire
                         tempCustoms = Program.IO.ReadCustomFile(farc);
                         List<cstm_item> customs = tempCustoms.ToList();
                         foreach (cstm_item c in tempCustoms)
-                        {
-                            CustItems.Add(c);
-                        }
-                    }
-                    else if (file.EndsWith(".csv"))
-                    {
-                        string[] split = file.Split('\\');
-                        Program.customPath = ofd.FileNames[0];
-                        string newFileNameLocation = ofd.FileNames[0].Remove((ofd.FileName.Length - split[split.Length - 1].Length), split[split.Length - 1].Length);
-                        newFileNameLocation += "mod_gm_customize_item_tbl.farc";
-                        tempCustoms = Program.IO.ReadCustomFileCSV(file);
-                        List<cstm_item> customs = tempCustoms.ToList();
-                        foreach (cstm_item c in customs)
                         {
                             CustItems.Add(c);
                         }
@@ -461,7 +394,7 @@ namespace Armoire
                 }
                 else
                 {
-                    SaveFileDialog sfd = new SaveFileDialog() { Filter = "FARC files (*.farc)|*.farc" };
+                    SaveFileDialog sfd = new() { Filter = "FARC files (*.farc)|*.farc" };
                     sfd.FileName = "mod_gm_customize_item_tbl.farc";
                     if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
@@ -476,7 +409,7 @@ namespace Armoire
         {
             if (CustItems.Count > 1)
             {
-                List<cstm_item> sel = new List<cstm_item>();
+                List<cstm_item> sel = new();
                 foreach (cstm_item x in DataGrid_Customize.SelectedItems)
                 {
                     sel.Add(x);
@@ -502,7 +435,7 @@ namespace Armoire
         }
         private cstm_item GetDummy_Customize()
         {
-            cstm_item dummyModule = new cstm_item();
+            cstm_item dummyModule = new();
             dummyModule.name = "ダミー";
             dummyModule.chara = "ALL";
             dummyModule.id = 999;
@@ -513,29 +446,6 @@ namespace Armoire
             return dummyModule;
         }
 
-        public sealed class cstm_item_map : ClassMap<cstm_item>
-        {
-            public cstm_item_map()
-            {
-                AutoMap(CultureInfo.InvariantCulture);
-                Map(m => m.entry).Ignore();
-            }
-        }
-        private void Export_Click_Customize(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = "gm_customize_item_tbl.csv";
-            sfd.Filter = "CSV Files|*.csv";
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                using (TextWriter writer = new StreamWriter(sfd.FileName, false, System.Text.Encoding.UTF8))
-                {
-                    var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-                    csv.Context.RegisterClassMap<cstm_item_map>();
-                    csv.WriteRecords(CustItems); // where values implements IEnumerable
-                }
-            }
-        }
         private void Open_Click_Customize(object sender, RoutedEventArgs e)
         {
             OpenFile_Customize();
@@ -558,7 +468,7 @@ namespace Armoire
         }
         private void OpenFile_Chara()
         {
-            OpenFileDialog ofd = new OpenFileDialog() { Filter = "Character Item Table files| *chritm_prop.farc|All files (*.*)|*.*", Multiselect = true };
+            OpenFileDialog ofd = new() { Filter = "Character Item Table files| *chritm_prop.farc|All files (*.*)|*.*", Multiselect = true };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Program.charaPath = ofd.FileNames[0];
@@ -578,13 +488,13 @@ namespace Armoire
         private void OpenProcessNew(string[] fileNames)
         {
             ClearProcess_Chara();
-            ObservableCollection<chritmFile> fullTemp = new ObservableCollection<chritmFile>();
+            ObservableCollection<chritmFile> fullTemp = new();
             foreach (string file in fileNames)
             {
                 var farc = BinaryFile.Load<FarcArchive>(file);
                 if (fullTemp.Count == 0)
                 {
-                    ObservableCollection<chritmFile> temp = new ObservableCollection<chritmFile>(Program.IO.ReadCharaFile(farc));
+                    ObservableCollection<chritmFile> temp = new(Program.IO.ReadCharaFile(farc));
                     foreach (chritmFile chr in temp)
                     {
                         fullTemp.Add(chr);
@@ -592,7 +502,7 @@ namespace Armoire
                 }
                 else
                 {
-                    ObservableCollection<chritmFile> temp = new ObservableCollection<chritmFile>(Program.IO.ReadCharaFile(farc));
+                    ObservableCollection<chritmFile> temp = new(Program.IO.ReadCharaFile(farc));
                     foreach (chritmFile tempchr in temp)
                     {
                         foreach (chritmFile chr in fullTemp)
@@ -632,7 +542,7 @@ namespace Armoire
                 }
                 else
                 {
-                    SaveFileDialog sfd = new SaveFileDialog
+                    SaveFileDialog sfd = new()
                     {
                         Filter = "FARC files (*.farc)|*.farc",
                         FileName = "mod_chritm_prop.farc"
@@ -666,7 +576,7 @@ namespace Armoire
         {
             try
             {
-                List<itemEntry> sel = new List<itemEntry>();
+                List<itemEntry> sel = new();
                 foreach (itemEntry x in ItemDataGrid.SelectedItems)
                 {
                     sel.Add(x);
@@ -693,14 +603,22 @@ namespace Armoire
         }
         private void EditCos(object sender, RoutedEventArgs e)
         {
-            if(chritmFiles.Count > 0 && CharaBox.SelectedIndex > -1)
+            try
             {
-                int index = chritmFiles[CharaBox.SelectedIndex].costumes.IndexOf(CosListBox.SelectedItem as cosEntry);
-                cosEntry cos = chritmFiles[CharaBox.SelectedIndex].costumes[index];
-                CosEdit cosEdit = new CosEdit(cos);
-                cosEdit.ShowDialog();
-                CosListBox.Items.Refresh();
+                if (chritmFiles.Count > 0 && CharaBox.SelectedIndex > -1)
+                {
+                    int index = chritmFiles[CharaBox.SelectedIndex].costumes.IndexOf(CosListBox.SelectedItem as cosEntry);
+                    cosEntry cos = chritmFiles[CharaBox.SelectedIndex].costumes[index];
+                    CosEdit cosEdit = new(cos);
+                    cosEdit.ShowDialog();
+                    CosListBox.Items.Refresh();
+                }
             }
+            catch (Exception)
+            {
+                Program.NotiBox(Properties.Resources.warn_generic, Armoire.Properties.Resources.cmn_error);
+            }
+            
         }
 
         private void AddItem(object sender, RoutedEventArgs e)
@@ -727,7 +645,7 @@ namespace Armoire
                     ItemDataGrid.ItemsSource = chritmFiles[CharaBox.SelectedIndex].items;
                 }
             }
-            catch { Program.NotiBox("An error occurred.", Properties.Resources.cmn_error); }
+            catch { Program.NotiBox(Properties.Resources.warn_generic, Properties.Resources.cmn_error); }
 
         }
 
@@ -736,7 +654,7 @@ namespace Armoire
             itemEntry item = ((FrameworkElement)sender).DataContext as itemEntry;
             if (chritmFiles.Count > 0 && item != null)
             {
-                ItemEdit itemEdit = new ItemEdit(item);
+                ItemEdit itemEdit = new(item);
                 itemEdit.ShowDialog();
             }
         }
@@ -746,7 +664,7 @@ namespace Armoire
             cosEntry cos = ((FrameworkElement)sender).DataContext as cosEntry;
             if (chritmFiles.Count > 0 && cos != null)
             {
-                CosEdit cosEdit = new CosEdit(cos);
+                CosEdit cosEdit = new(cos);
                 cosEdit.ShowDialog();
             }
         }
@@ -756,14 +674,9 @@ namespace Armoire
             itemEntry item = ((FrameworkElement)sender).DataContext as itemEntry;
             if (chritmFiles.Count > 0 && item != null)
             {
-                PresetPicker ppcker = new PresetPicker(item, chritmFiles[CharaBox.SelectedIndex].chara.ToUpper(), true);
+                PresetPicker ppcker = new(item, chritmFiles[CharaBox.SelectedIndex].chara.ToUpper(), true, false);
                 ppcker.ShowDialog();
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

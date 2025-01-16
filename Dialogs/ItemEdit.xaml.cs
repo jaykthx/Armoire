@@ -27,7 +27,7 @@ namespace Armoire.Dialogs
         {
             if(ObjsetBox.Items.Count < 2)
             {
-                TextEntry win = new TextEntry(false, "Enter object name");
+                TextEntry win = new(false, "Enter object name");
                 if(win.ShowDialog() == true)
                 {
                     if (win.Result != "ENTER VALUE HERE")
@@ -66,7 +66,7 @@ namespace Armoire.Dialogs
             {
                 itemCxt.dataSetTexes = new System.Collections.ObjectModel.ObservableCollection<dataSetTex>();
             }
-            TexListEdit texEdit = new TexListEdit(itemCxt.dataSetTexes);
+            TexListEdit texEdit = new(itemCxt.dataSetTexes);
             texEdit.ShowDialog();
         }
         private void textChangedEventHandler(object sender, TextChangedEventArgs e)

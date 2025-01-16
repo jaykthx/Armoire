@@ -17,7 +17,7 @@ namespace Armoire.Dialogs
         {
             InitializeComponent();
         }
-        SpriteDatabase db = new SpriteDatabase();
+        SpriteDatabase db = new();
         string saveLocation = null;
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
@@ -41,7 +41,7 @@ namespace Armoire.Dialogs
 
         private void OpenFile()
         {
-            OpenFileDialog ofd = new OpenFileDialog
+            OpenFileDialog ofd = new()
             {
                 Title = "Please select a Sprite Database",
                 Filter = "Sprite Database files|*spr_db.bin",
@@ -65,7 +65,7 @@ namespace Armoire.Dialogs
             {
                 if (file.EndsWith("spr_db.bin"))
                 {
-                    SpriteDatabase temp_db = new SpriteDatabase();
+                    SpriteDatabase temp_db = new();
                     temp_db = BinaryFile.Load<SpriteDatabase>(file);
                     foreach (SpriteSetInfo sprsetinfo in temp_db.SpriteSets)
                     {
@@ -84,14 +84,14 @@ namespace Armoire.Dialogs
         private void Spr_Click(object sender, RoutedEventArgs e) // Sprite editor
         {
             SpriteSetInfo spr = ((FrameworkElement)sender).DataContext as SpriteSetInfo;
-            SprEditSub win = new SprEditSub(spr, true);
+            SprEditSub win = new(spr, true);
             win.ShowDialog();
         }
 
         private void Tex_Click(object sender, RoutedEventArgs e) // Texture editor
         {
             SpriteSetInfo spr = ((FrameworkElement)sender).DataContext as SpriteSetInfo;
-            SprEditSub win = new SprEditSub(spr, false);
+            SprEditSub win = new(spr, false);
             win.ShowDialog();
         }
 
@@ -119,7 +119,7 @@ namespace Armoire.Dialogs
         }
         private void SaveAs()
         {
-            SaveFileDialog sfd = new SaveFileDialog();
+            SaveFileDialog sfd = new();
             sfd.Filter = "Sprite Database files|*spr_db.bin|All files|*.*";
             sfd.FileName = "mod_spr_db.bin";
             if (db.SpriteSets.Count != 0)
@@ -139,7 +139,7 @@ namespace Armoire.Dialogs
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            SortDescription sort = new SortDescription();
+            SortDescription sort = new();
             if (Grid1.Items.SortDescriptions.Count > 0)
             {
                 sort = Grid1.Items.SortDescriptions[0];
@@ -161,15 +161,15 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            SpriteInfo newSpr = new SpriteInfo();
+            SpriteInfo newSpr = new();
             newSpr.Id = 0;
             newSpr.Name = "NEW SPR ENTRY";
             newSpr.Index = 0;
-            SpriteTextureInfo newTex = new SpriteTextureInfo();
+            SpriteTextureInfo newTex = new();
             newTex.Id = 0;
             newTex.Name = "NEW TEX ENTRY";
             newTex.Index = 0;
-            SpriteSetInfo newSprInfo = new SpriteSetInfo();
+            SpriteSetInfo newSprInfo = new();
             newSprInfo.FileName = "DUMMY.farc";
             newSprInfo.Name = "NEW SPR ENTRY";
             newSprInfo.Id = 0;
@@ -181,38 +181,55 @@ namespace Armoire.Dialogs
         private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE sprite
         {
             int index = 0;
-            List<SpriteSetInfo> spriteColle = new List<SpriteSetInfo>();
+            List<SpriteSetInfo> spriteColle = new();
             foreach (var x in Grid1.SelectedItems)
             {
-                index = Grid1.Items.IndexOf(x);
-                spriteColle.Add(spriteDupe(index));
+                TextEntry tex = new TextEntry(true, "Please enter increment for ID value.");
+                if (tex.ShowDialog() == true && tex.Result.Length > 0)
+                {
+                    index = db.SpriteSets.IndexOf(x as SpriteSetInfo);
+                    spriteColle.Add(spriteDupe(index, uint.Parse(tex.Result)));
+                    foreach (SpriteSetInfo spr in spriteColle)
+                    {
+                        db.SpriteSets.Insert(index + 1, spr);
+                        index++;
+                    }
+                }
+                else
+                {
+                    spriteColle.Add(spriteDupe(index, 0));
+                    foreach (SpriteSetInfo spr in spriteColle)
+                    {
+                        db.SpriteSets.Insert(index + 1, spr);
+                        index++;
+                    }
+                }
             }
-            foreach (SpriteSetInfo spr in spriteColle)
-            {
-                db.SpriteSets.Insert(index + 1, spr);
-                index++;
-            }
+            Grid1.ItemsSource = db.SpriteSets;
+            SortDescription sort = Grid1.Items.SortDescriptions[0];
+            Grid1.Items.SortDescriptions.Add(sort);
+            Grid1.Items.SortDescriptions.RemoveAt(0);
             Grid1.Items.Refresh();
         }
 
-        private SpriteSetInfo spriteDupe(int index)
+        private SpriteSetInfo spriteDupe(int index, uint increment)
         {
-            SpriteSetInfo newSprInfo = new SpriteSetInfo();
+            SpriteSetInfo newSprInfo = new();
             newSprInfo.FileName = db.SpriteSets[index].FileName;
-            newSprInfo.Name = db.SpriteSets[index].Name;
-            newSprInfo.Id = db.SpriteSets[index].Id;
+            newSprInfo.Name = db.SpriteSets[index].Name + "_DUPE";
+            newSprInfo.Id = db.SpriteSets[index].Id + increment;
             foreach (SpriteInfo spr in db.SpriteSets[index].Sprites)
             {
-                SpriteInfo newSpr = new SpriteInfo();
-                newSpr.Id = spr.Id;
+                SpriteInfo newSpr = new();
+                newSpr.Id = spr.Id + increment;
                 newSpr.Name = spr.Name;
                 newSpr.Index = spr.Index;
                 newSprInfo.Sprites.Add(newSpr);
             }
             foreach (SpriteTextureInfo tex in db.SpriteSets[index].Textures)
             {
-                SpriteTextureInfo newTex = new SpriteTextureInfo();
-                newTex.Id = tex.Id;
+                SpriteTextureInfo newTex = new();
+                newTex.Id = tex.Id + increment;
                 newTex.Name = tex.Name;
                 newTex.Index = tex.Index;
                 newSprInfo.Textures.Add(newTex);
@@ -223,8 +240,8 @@ namespace Armoire.Dialogs
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
             Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items.", Properties.Resources.window_notice);
-            TextEntry ti = new TextEntry(false, Properties.Resources.replace_old);
-            TextEntry ti2 = new TextEntry(false, Properties.Resources.replace_new);
+            TextEntry ti = new(false, Properties.Resources.replace_old);
+            TextEntry ti2 = new(false, Properties.Resources.replace_new);
             string detect;
             string number;
             ti.ShowDialog();

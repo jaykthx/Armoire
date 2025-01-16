@@ -1,6 +1,8 @@
 ﻿using Armoire.Dialogs;
 using MikuMikuLibrary.Sprites;
+using MikuMikuLibrary.Textures;
 using MikuMikuLibrary.Textures.Processing;
+using MikuMikuLibrary.Textures.Processing.Interfaces;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace Armoire
     /// </summary>
     public partial class ModuleInfo : System.Windows.Controls.UserControl
     {
-        public wizModule wizMod = new wizModule();
+        public wizModule wizMod = new();
         public ModuleInfo()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace Armoire
 
         private void Button_Click(object sender, RoutedEventArgs e) //add
         {
-            WizItem itm = new WizItem();
+            WizItem itm = new();
             itemPanel.Children.Add(itm);
             itm.parentModInfo = this;
         }
@@ -45,7 +47,7 @@ namespace Armoire
 
         private void nameButton_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(false, "Enter Module Name");
+            TextEntry tex = new(false, "Enter Module Name");
             tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result))
             {
@@ -57,7 +59,7 @@ namespace Armoire
 
         private void idButton_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(true, "Enter Module ID Value");
+            TextEntry tex = new(true, "Enter Module ID Value");
             tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
@@ -69,7 +71,7 @@ namespace Armoire
 
         private void indexButton_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(true, "Enter Module Sorting Index Value");
+            TextEntry tex = new(true, "Enter Module Sorting Index Value");
             tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && tex.Result.Length > 0 && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
@@ -101,12 +103,12 @@ namespace Armoire
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            System.Windows.Forms.OpenFileDialog ofd = new();
             ofd.Filter = "PNG Files|*.png";
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Bitmap pngImage = new Bitmap(ofd.FileName);
+                Bitmap pngImage = new(ofd.FileName);
                 if (pngImage.Width == 512 && pngImage.Height == 512)
                 {
                     setModuleImage(pngImage);
@@ -121,12 +123,12 @@ namespace Armoire
         private void setModuleImage(Bitmap pngFile)
         {
             Sprite spr = Program.GetSprite(false);
-            SpriteSet sprite = new SpriteSet();
+            SpriteSet sprite = new();
             sprite.Sprites.Add(spr);
-            Bitmap newBitmap = new Bitmap(pngFile);
+            Bitmap newBitmap = new(pngFile);
             newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-            TextureEncoderCore tex = new TextureEncoderCore();
-            MikuMikuLibrary.Textures.Texture text = tex.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
+            Texture text = TextureEncoder.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
+            //MikuMikuLibrary.Textures.Texture text = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
             sprite.TextureSet.Textures.Add(text);
             Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
             BitmapImage img = Program.ToBitmapImage(cropSprite);

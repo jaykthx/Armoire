@@ -31,7 +31,7 @@ namespace Armoire.Dialogs
 
         private void MenuItem_Click(object sender, RoutedEventArgs e) //Add
         {
-            ObjectInfo objectInfo = new ObjectInfo();
+            ObjectInfo objectInfo = new();
             objectInfo.Name = "NEW OBJ ENTRY";
             objectInfo.Id = 0;
             thisObj.Objects.Add(objectInfo);

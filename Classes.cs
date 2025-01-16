@@ -11,15 +11,15 @@ namespace Armoire
 {
     public class usedIDs
     {
-        public List<uint> spr_db = new List<uint>();
-        public List<uint> obj_db = new List<uint>();
-        public List<uint> tex_db = new List<uint>();
-        public List<int> module_tbl = new List<int>();
-        public List<int> module_tbl_index = new List<int>();
-        public List<int> customize_item_tbl = new List<int>();
-        public List<int> customize_item_tbl_index = new List<int>();
-        public Dictionary<string, List<int>> chritm_prop_cos = new Dictionary<string, List<int>>();
-        public Dictionary<string, List<int>> chritm_prop_item = new Dictionary<string, List<int>>();
+        public List<uint> spr_db = new();
+        public List<uint> obj_db = new();
+        public List<uint> tex_db = new();
+        public List<int> module_tbl = new();
+        public List<int> module_tbl_index = new();
+        public List<int> customize_item_tbl = new();
+        public List<int> customize_item_tbl_index = new();
+        public Dictionary<string, List<int>> chritm_prop_cos = new();
+        public Dictionary<string, List<int>> chritm_prop_item = new();
         public void get_used_ids(SpriteDatabase s_db)
         {
             foreach (SpriteSetInfo spr in s_db.SpriteSets)
@@ -92,8 +92,8 @@ namespace Armoire
                 ObservableCollection<chritmFile> chritms = Program.IO.ReadCharaFile(farc);
                 foreach (chritmFile chrFile in chritms)
                 {
-                    List<int> costumes = new List<int>();
-                    List<int> items = new List<int>();
+                    List<int> costumes = new();
+                    List<int> items = new();
                     foreach (cosEntry cos in chrFile.costumes)
                     {
                         costumes.Add(cos.id);
@@ -148,7 +148,7 @@ namespace Armoire
     {
         public string entry { get; set; }
         public string chara { get; set; }
-        public int id { get; set; }
+        public int id { get; set; } = 1;
         public string name { get; set; }
         public bool ng { get; set; }
         public string shop_price { get; set; }
@@ -158,7 +158,7 @@ namespace Armoire
         public int sort_index { get; set; }
         public virtual List<string> getEntry()
         {
-            List<string> x = new List<string>();
+            List<string> x = new();
             return x;
         }
     }
@@ -170,7 +170,7 @@ namespace Armoire
         public string cos { get; set; }
         public override List<string> getEntry()
         {
-            List<string> x = new List<string>();
+            List<string> x = new();
             string a = "module." + entry + ".";
             x.Add(a + "attr=" + (int)attr);
             x.Add(a + "chara=" + chara);
@@ -199,7 +199,7 @@ namespace Armoire
         public bool sell_type { get; set; }
         public override List<string> getEntry()
         {
-            List<string> x = new List<string>();
+            List<string> x = new();
             string a = "cstm_item." + entry + ".";
             x.Add(a + "bind_module=" + bind_module);
             x.Add(a + "chara=" + chara);
@@ -228,7 +228,7 @@ namespace Armoire
         public ObservableCollection<int> items { get; set; } = new ObservableCollection<int> { 500, 1, 300 };
         public List<string> getEntry()
         {
-            List<string> x = new List<string>();
+            List<string> x = new();
             string a = "cos." + entry + ".";
             x.Add("cos." + entry + ".id=" + id);
             int count = 0;
@@ -273,7 +273,7 @@ namespace Armoire
             {
                 rpk = 1;
             }
-            List<string> x = new List<string>
+            List<string> x = new()
             {
                 a + "attr=" + attr,
                 a + "data.obj.0.rpk=" + rpk,
@@ -361,13 +361,13 @@ namespace Armoire
     public class wizObj
     {
         public string objectFilePath; // file path
-        public wizObjEntry objEntry = new wizObjEntry(); // add after assigning for better follow-up
-        public itemEntry item = new itemEntry();
+        public wizObjEntry objEntry = new(); // add after assigning for better follow-up
+        public itemEntry item = new();
     }
     public class wizModule
     {
-        public List<wizObj> objects = new List<wizObj>();
-        public localisedNames localNames = new localisedNames();
+        public List<wizObj> objects = new();
+        public localisedNames localNames = new();
         public bool hairNG;
         public string name = Properties.Resources.cmn_temp;
         public int id = -1; //default to a number
@@ -377,9 +377,9 @@ namespace Armoire
     }
     public class wizCustom
     {
-        public wizObj obj = new wizObj();
+        public wizObj obj = new();
         public string parts;
-        public localisedNames localNames = new localisedNames();
+        public localisedNames localNames = new();
         public string name;
         public int id = -1;
         public int sort_index = 999;

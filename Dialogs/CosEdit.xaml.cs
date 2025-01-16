@@ -24,7 +24,7 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry win = new TextEntry(true, "Enter item number");
+            TextEntry win = new(true, "Enter item number");
             if (win.ShowDialog() == true)
             {
                 if (win.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrEmpty(win.Result))
@@ -54,7 +54,7 @@ namespace Armoire.Dialogs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry tex = new TextEntry(true, Properties.Resources.cmn_enter_value);
+            TextEntry tex = new(true, Properties.Resources.cmn_enter_value);
             tex.ShowDialog();
             if(!string.IsNullOrEmpty(tex.Result))
             {

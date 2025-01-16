@@ -15,13 +15,13 @@ namespace Armoire
 {
     public partial class ModuleWizard : Window
     {
-        ObservableCollection<module> tempModules = new ObservableCollection<module>(); // final module table to be exported
-        ObservableCollection<cstm_item> tempCustoms = new ObservableCollection<cstm_item>(); // final customise item table to be exported
-        TextureDatabase tex_db = new TextureDatabase(); // final tex_db to be exported
-        ObjectDatabase obj_db = new ObjectDatabase(); // final obj_db to be exported
-        SpriteDatabase spr_db = new SpriteDatabase(); // final spr_db to be exported
-        ObservableCollection<chritmFile> list = new ObservableCollection<chritmFile>(); // list of all chritms to be exported (chritm x 10 = 10 charas)
-        usedIDs finalUsedIDs = new usedIDs();
+        ObservableCollection<module> tempModules = new(); // final module table to be exported
+        ObservableCollection<cstm_item> tempCustoms = new(); // final customise item table to be exported
+        TextureDatabase tex_db = new(); // final tex_db to be exported
+        ObjectDatabase obj_db = new(); // final obj_db to be exported
+        SpriteDatabase spr_db = new(); // final spr_db to be exported
+        ObservableCollection<chritmFile> list = new(); // list of all chritms to be exported (chritm x 10 = 10 charas)
+        usedIDs finalUsedIDs = new();
         string exportFolder;
 
         public ModuleWizard()
@@ -34,7 +34,7 @@ namespace Armoire
         {
             foreach (string x in Program.charas)
             {
-                chritmFile file = new chritmFile
+                chritmFile file = new()
                 {
                     items = new List<itemEntry>(),
                     costumes = new List<cosEntry>(),
@@ -46,7 +46,7 @@ namespace Armoire
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            ModuleInfo modInfo = new ModuleInfo();
+            ModuleInfo modInfo = new();
             moduleHost.Children.Add(modInfo);
         }
         
@@ -55,7 +55,7 @@ namespace Armoire
             finalUsedIDs = new usedIDs();
             if (moduleHost.Children.Count > 0)
             {
-                FolderBrowserDialog fbd = new FolderBrowserDialog
+                FolderBrowserDialog fbd = new()
                 {
                     Description = "Please select your game directory.",
                     SelectedPath = Properties.Settings.Default.gamePath
@@ -65,7 +65,7 @@ namespace Armoire
                     Program.GetExistingIDs(fbd.SelectedPath, finalUsedIDs);
                     Properties.Settings.Default.gamePath = fbd.SelectedPath;
                     Properties.Settings.Default.Save();
-                    TextEntry textEntry = new TextEntry(false, "Enter MOD Folder Name");
+                    TextEntry textEntry = new(false, "Enter MOD Folder Name");
                     textEntry.ShowDialog();
                     if (textEntry.Result.Length > 0)
                     {
@@ -164,7 +164,7 @@ namespace Armoire
 
         private void AddToModuleTable(wizModule wizMod)
         {
-            module temp = new module();
+            module temp = new();
             if (wizMod.hairNG)
             {
                 temp.attr = Attr.NoSwap_CT;
@@ -180,7 +180,7 @@ namespace Armoire
             }
             else
             {
-                ChoiceWindow win = new ChoiceWindow("This Module ID is already being used and the resulting module will cause compatibility issues." +
+                ChoiceWindow win = new("This Module ID is already being used and the resulting module will cause compatibility issues." +
                     "\nWould you like to use a random, unused ID instead?", Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
                 win.ShowDialog();
                 if (win.isRightClicked)
@@ -198,7 +198,7 @@ namespace Armoire
             }
             else
             {
-                ChoiceWindow win = new ChoiceWindow("This sorting index is already being used and the resulting module will cause minor issues." +
+                ChoiceWindow win = new("This sorting index is already being used and the resulting module will cause minor issues." +
                     "\nWould you like to use a random, unused sorting index instead?", Properties.Resources.cmn_item_no, Properties.Resources.cmn_yes);
                 win.ShowDialog();
                 if (win.isRightClicked)
@@ -217,7 +217,7 @@ namespace Armoire
         }
         private void AddToCustomiseTable(wizModule wizMod, int item_no)
         {
-            cstm_item temp = new cstm_item
+            cstm_item temp = new()
             {
                 bind_module = wizMod.id,
                 id = wizMod.id,
@@ -253,12 +253,39 @@ namespace Armoire
             tempCustoms.Add(temp);
         }
 
+        private string ReturnSubIDString(int subID)
+        {
+            switch (subID)
+            {
+                case 0:
+                    return "HEADACCESSORY";
+                case 4:
+                    return "FACEACCESSORY";
+                case 8:
+                    return "CHESTACCESSORY";
+                case 16:
+                    return "BACKACCESSORY";
+                case 1:
+                    return "HAIR";
+                case 10:
+                    return "BODY";
+                case 14:
+                    return "HANDS";
+                case 6:
+                    return "EYELENSES";
+                case 24:
+                    return "EYETEXTURE";
+                default:
+                    return "UNKNOWN_ITEM_TYPE";
+            }
+        }
+
         private void AddToCharaItemTable(ModuleInfo modInfo)
         {
-            List<wizObjEntry> entries = new List<wizObjEntry>();
+            List<wizObjEntry> entries = new();
             foreach (wizObj x in modInfo.wizMod.objects)
             {
-                wizObjEntry objEntry = new wizObjEntry();
+                wizObjEntry objEntry = new();
                 var farc = BinaryFile.Load<FarcArchive>(x.objectFilePath);
                 foreach (string fileName in farc)
                 {
@@ -293,7 +320,7 @@ namespace Armoire
                                 }
                             }
                         }
-                        Dictionary<uint, uint> texIDs = new Dictionary<uint, uint>();
+                        Dictionary<uint, uint> texIDs = new();
                         for (int i = 0; i < objset.TextureIds.Count; i++)
                         {
                             if (texIDs.ContainsKey(objset.TextureIds[i]))
@@ -324,7 +351,7 @@ namespace Armoire
                         int texCount = 0;
                         foreach (uint id in objset.TextureIds)
                         {
-                            TextureInfo tex = new TextureInfo
+                            TextureInfo tex = new()
                             {
                                 Id = id,
                                 Name = mainName.ToUpper() + "_AUTO_TEXTURE_" + texCount
@@ -344,8 +371,8 @@ namespace Armoire
             }
             foreach (wizObjEntry o in entries)
             {
-                ObjectSetInfo objSetInfo = new ObjectSetInfo();
-                ObjectInfo objInfo = new ObjectInfo();
+                ObjectSetInfo objSetInfo = new();
+                ObjectInfo objInfo = new();
                 objSetInfo.Id = Program.Databases.GetUnusedID(finalUsedIDs.obj_db, 19999);
                 finalUsedIDs.obj_db.Add(objSetInfo.Id);
                 objSetInfo.Name = o.name;
@@ -357,7 +384,7 @@ namespace Armoire
                 objSetInfo.Objects.Add(objInfo);
                 obj_db.ObjectSets.Add(objSetInfo);
             }
-            cosEntry cos = new cosEntry
+            cosEntry cos = new()
             {
                 id = modInfo.wizMod.id,
                 items = new ObservableCollection<int>()
@@ -383,7 +410,7 @@ namespace Armoire
             }
             foreach (wizObj x in modInfo.wizMod.objects)
             {
-                x.item.name = x.objEntry.name + "_AUTO-GEN";
+                x.item.name = x.objEntry.name + "_AUTO-GEN_" + ReturnSubIDString(x.item.subID);
                 x.item.uid = x.objEntry.objName;
                 x.item.objset = new List<string>
                 {
@@ -391,12 +418,15 @@ namespace Armoire
                 };
                 //x.item.dataSetTexes = new ObservableCollection<dataSetTex>();
                 int itm_num = GetItemNumber(x.objectFilePath, modInfo.wizMod.chara);
-                if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)], itm_num))
+/*                if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)], itm_num))
                 {
                     finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)].Add(x.item.no);
                 }
+                else
+                {
+                    finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)].Add(x.item.no);
+                }*/
                 x.item.no = itm_num;
-                finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)].Add(x.item.no);
                 list[modInfo.charBox.SelectedIndex].items.Add(x.item);
                 cos.items.Add(x.item.no);
                 if (x.item.subID == 1 && !modInfo.wizMod.hairNG)
@@ -413,7 +443,7 @@ namespace Armoire
             if (name.Contains("itm"))
             {
                 string[] final = name.Split(new string[] { "itm" }, StringSplitOptions.None);
-                if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)], int.Parse(final[1])))
+                if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)], int.Parse(final[1])) && !(final[1] == "000"))
                 {
                     return int.Parse(final[1]);
                 }
@@ -423,7 +453,7 @@ namespace Armoire
                     {
                         // make code to change mikitm number and resave
                     }*/
-                    ChoiceWindow choice = new ChoiceWindow("The item number of the object you selected is already being used with this character.\n" +
+                    ChoiceWindow choice = new("The item number of the object you selected is already being used with this character.\n" +
                         "Would you like to use a unused, randomly generated one? " + "Item: " + final[1], "No", "Yes");
                     choice.ShowDialog();
                     if (choice.isRightClicked)

@@ -1,24 +1,21 @@
 ﻿using Armoire.Dialogs;
-using CsvHelper;
 using MikuMikuLibrary.Archives;
 using MikuMikuLibrary.Archives.CriMw;
 using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
 using MikuMikuLibrary.Sprites;
 using MikuMikuLibrary.Textures;
-using MikuMikuLibrary.Textures.Processing;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
-using static Armoire.MainWindow;
 
 namespace Armoire
 {
@@ -27,7 +24,7 @@ namespace Armoire
         public static string modulePath;
         public static string customPath;
         public static string charaPath;
-        public static List<string> charas = new List<string> { "MIKU", "RIN", "LEN", "LUKA", "KAITO", "MEIKO", "NERU", "HAKU", "SAKINE", "TETO" };
+        public static List<string> charas = new() { "MIKU", "RIN", "LEN", "LUKA", "KAITO", "MEIKO", "NERU", "HAKU", "SAKINE", "TETO" };
 
         public class IO
         {
@@ -50,7 +47,7 @@ namespace Armoire
             }
             public static ObservableCollection<chritmFile> ReadCharaFile(FarcArchive farc)
             {
-                ObservableCollection<chritmFile> temp = new ObservableCollection<chritmFile>();
+                ObservableCollection<chritmFile> temp = new();
 
                 foreach (var fileName in farc)
                 {
@@ -58,7 +55,7 @@ namespace Armoire
                     {
                         var source = farc.Open(fileName, EntryStreamMode.MemoryStream);
                         string name = fileName.Remove(3);
-                        StreamReader sr = new StreamReader(source);
+                        StreamReader sr = new(source);
                         string content = sr.ReadToEnd();
                         string[] vs = content.Split(new[] { '\n', '\r' });
                         temp.Add(ReadList(vs, name));
@@ -74,14 +71,14 @@ namespace Armoire
 
             public static chritmFile ReadList(string[] content, string name)
             {
-                List<cosEntry> tempCosList = new List<cosEntry>();
-                List<itemEntry> tempItemList = new List<itemEntry>();
-                ObservableCollection<dataSetTex> temp = new ObservableCollection<dataSetTex>();
-                cosEntry readEntry = new cosEntry();
-                List<int> tempItems = new List<int>();
-                itemEntry itemEntry = new itemEntry();
-                dataSetTex setTex = new dataSetTex();
-                List<string> list = new List<string>();
+                List<cosEntry> tempCosList = new();
+                List<itemEntry> tempItemList = new();
+                ObservableCollection<dataSetTex> temp = new();
+                cosEntry readEntry = new();
+                List<int> tempItems = new();
+                itemEntry itemEntry = new();
+                dataSetTex setTex = new();
+                List<string> list = new();
                 foreach (string fileLine in content)
                 {
                     string[] split = fileLine.Split('=');
@@ -172,7 +169,7 @@ namespace Armoire
                         }
                     }
                 }
-                chritmFile x = new chritmFile
+                chritmFile x = new()
                 {
                     chara = name,
                     costumes = tempCosList.OrderBy(o => o.id).ToList(),
@@ -180,41 +177,9 @@ namespace Armoire
                 };
                 return x;
             }
-            public static ObservableCollection<module> ReadModuleFileCSV(string csvPath)
-            {
-                ObservableCollection<module> temp = new ObservableCollection<module>();
-                using (var reader = new StreamReader(csvPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    var records = csv.GetRecords<module>();
-                    csv.Context.RegisterClassMap<moduleMap>();
-                    foreach (module x in records)
-                    {
-                        temp.Add(x);
-                    }
-                }
-                temp = new ObservableCollection<module>(temp.OrderBy(x => x.id).ToList());
-                return temp;
-            }
-            public static ObservableCollection<cstm_item> ReadCustomFileCSV(string csvPath)
-            {
-                ObservableCollection<cstm_item> temp = new ObservableCollection<cstm_item>();
-                using (var reader = new StreamReader(csvPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    var records = csv.GetRecords<cstm_item>();
-                    csv.Context.RegisterClassMap<MainWindow.cstm_item_map>();
-                    foreach (cstm_item x in records)
-                    {
-                        temp.Add(x);
-                    }
-                }
-                temp = new ObservableCollection<cstm_item>(temp.OrderBy(x => x.id).ToList());
-                return temp;
-            }
             public static ObservableCollection<module> ReadModuleFile(FarcArchive farc)
             {
-                ObservableCollection<module> temp = new ObservableCollection<module>();
+                ObservableCollection<module> temp = new();
                 string[] containString;
                 foreach (var fileName in farc)
                 {
@@ -281,7 +246,7 @@ namespace Armoire
 
             public static ObservableCollection<cstm_item> ReadCustomFile(FarcArchive farc)
             {
-                ObservableCollection<cstm_item> temp = new ObservableCollection<cstm_item>();
+                ObservableCollection<cstm_item> temp = new();
                 string[] containString;
                 foreach (var fileName in farc)
                 {
@@ -360,8 +325,8 @@ namespace Armoire
                 {
                     int count = 0;
                     var farc = new FarcArchive();
-                    MemoryStream outputSource = new MemoryStream();
-                    using (StreamWriter tw = new StreamWriter(outputSource))
+                    MemoryStream outputSource = new();
+                    using (StreamWriter tw = new(outputSource))
                     {
                         tw.AutoFlush = true;
                         foreach (T entry in list)
@@ -403,8 +368,8 @@ namespace Armoire
                     {
                         if (x.items.Count > 0)
                         {
-                            MemoryStream outputSource = new MemoryStream();
-                            using (StreamWriter tw = new StreamWriter(outputSource))
+                            MemoryStream outputSource = new();
+                            using (StreamWriter tw = new(outputSource))
                             {
                                 tw.AutoFlush = true;
                                 int count = 0;
@@ -453,12 +418,12 @@ namespace Armoire
         }
         public static void NotiBox(string value, string title)
         {
-            NotiBox noti = new NotiBox(value, title);
+            NotiBox noti = new(value, title);
             noti.ShowDialog();
         }
         public static bool ChoiceWindow(string main_text, string left_text, string right_text)
         {
-            ChoiceWindow win = new ChoiceWindow(main_text, left_text, right_text);
+            ChoiceWindow win = new(main_text, left_text, right_text);
             win.ShowDialog();
             return win.isRightClicked;
         }
@@ -467,7 +432,7 @@ namespace Armoire
         {
             public static string GetIDString(string id)
             {
-                StringBuilder sb = new StringBuilder(id);
+                StringBuilder sb = new(id);
                 while (sb.Length < 3)
                 {
                     sb.Insert(0, "0");
@@ -476,7 +441,7 @@ namespace Armoire
             }
             public static int GetUnusedID(List<int> used) // no limit version
             {
-                Random rnd = new Random();
+                Random rnd = new();
                 int final = rnd.Next();
                 while (used.Contains(final))
                 {
@@ -486,7 +451,7 @@ namespace Armoire
             }
             public static int GetUnusedID(List<int> used1, List<int> used2) // 2 list (int) version
             {
-                Random rnd = new Random();
+                Random rnd = new();
                 int final = rnd.Next();
                 while (used1.Contains(final) && used2.Contains(final))
                 {
@@ -496,7 +461,7 @@ namespace Armoire
             }
             public static uint GetUnusedID(List<uint> used) // no limit version
             {
-                Random rnd = new Random();
+                Random rnd = new();
                 int final = rnd.Next();
                 while (used.Contains((uint)final))
                 {
@@ -506,7 +471,7 @@ namespace Armoire
             }
             public static uint GetUnusedID(List<uint> used, int maximum) // obj_db, tex_db, spr_db
             {
-                Random rnd = new Random();
+                Random rnd = new();
                 int final = rnd.Next(maximum);
                 while (used.Contains((uint)final))
                 {
@@ -527,17 +492,17 @@ namespace Armoire
             }
             public static void AddToSpriteDatabase(SpriteDatabase spr_db, int id, bool isCustomise, List<uint> used_spr_IDs)
             {
-                SpriteSetInfo sprSetInfo = new SpriteSetInfo
+                SpriteSetInfo sprSetInfo = new()
                 {
                     Id = GetUnusedID(used_spr_IDs)
                 };
                 used_spr_IDs.Add(sprSetInfo.Id);
-                SpriteInfo sprInfo = new SpriteInfo
+                SpriteInfo sprInfo = new()
                 {
                     Id = GetUnusedID(used_spr_IDs)
                 };
                 used_spr_IDs.Add(sprInfo.Id);
-                SpriteTextureInfo sprTexInfo = new SpriteTextureInfo
+                SpriteTextureInfo sprTexInfo = new()
                 {
                     Id = GetUnusedID(used_spr_IDs),
                     Name = "MERGE_BC5COMP_0"
@@ -591,7 +556,7 @@ namespace Armoire
         }
         public static Sprite GetSprite(bool isCustomise)
         {
-            Sprite spr = new Sprite
+            Sprite spr = new()
             {
                 Width = 408,
                 Height = 494, // official width + height
@@ -613,15 +578,14 @@ namespace Armoire
         public static void GenerateSprite(Bitmap bmp, int id, string outputFolder, bool isCustomise)
         {
             Sprite spr = GetSprite(isCustomise);
-            Bitmap newBitmap = new Bitmap(bmp);
+            Bitmap newBitmap = new(bmp);
             newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-            MikuMikuLibrary.Textures.Processing.TextureEncoderCore tex = new MikuMikuLibrary.Textures.Processing.TextureEncoderCore();
-            Texture text = tex.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
+            Texture text = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
             text.Name = "MERGE_BC5COMP_0";
-            SpriteSet sprSet = new SpriteSet();
+            SpriteSet sprSet = new();
             sprSet.Sprites.Add(spr);
             sprSet.TextureSet.Textures.Add(text);
-            FarcArchive farc = new FarcArchive();
+            FarcArchive farc = new();
             var stream = new MemoryStream();
             sprSet.Save(stream, true);
             string fileName = "spr_";
@@ -661,16 +625,16 @@ namespace Armoire
             }
         }
 
-        public static List<ItemPreset> itemPresets = new List<ItemPreset>();
-        static readonly ItemPreset eyetex = new ItemPreset(37, 24, 0, 1, 2, 0, 0, (decimal)0.00);
-        static readonly ItemPreset lenses = new ItemPreset(1, 6, 1, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset hair = new ItemPreset(1, 1, 0, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset body = new ItemPreset(1, 10, 2, -1, 1, 0, 0, (decimal)0.00);
-        static readonly ItemPreset hands = new ItemPreset(1, 14, 2, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset headacc = new ItemPreset(1, 0, 0, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset faceacc = new ItemPreset(1, 4, 1, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset chestacc = new ItemPreset(1, 8, 2, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset backacc = new ItemPreset(1, 16, 2, -1, 0, 0, 0, (decimal)0.00);
+        public static List<ItemPreset> itemPresets = new();
+        static readonly ItemPreset eyetex = new(37, 24, 0, 1, 2, 0, 0, (decimal)0.00);
+        static readonly ItemPreset lenses = new(1, 6, 1, -1, 0, 0, 0, (decimal)0.00);
+        static readonly ItemPreset hair = new(1, 1, 0, -1, 0, 0, 0, (decimal)0.00);
+        static readonly ItemPreset body = new(1, 10, 2, -1, 1, 0, 0, (decimal)0.00);
+        static readonly ItemPreset hands = new(1, 14, 2, -1, 0, 0, 0, (decimal)0.00);
+        static readonly ItemPreset headacc = new(1, 0, 0, -1, 0, 0, 0, (decimal)0.00);
+        static readonly ItemPreset faceacc = new(1, 4, 1, -1, 0, 0, 0, (decimal)0.00);
+        static readonly ItemPreset chestacc = new(1, 8, 2, -1, 0, 0, 0, (decimal)0.00);
+        static readonly ItemPreset backacc = new(1, 16, 2, -1, 0, 0, 0, (decimal)0.00);
         public static void CreatePresetList()
         {
             itemPresets = new List<ItemPreset>
@@ -758,7 +722,6 @@ namespace Armoire
                 List<string> module_tbls;
                 List<string> customise_tbls;
                 List<string> chritm_props;
-                CpkArchive cpk = new CpkArchive();
                 string currentFile = "";
                 try
                 {
@@ -834,56 +797,61 @@ namespace Armoire
                     if (File.Exists((gameDirectory + "\\diva_dlc00_region.cpk")))
                     {
                         currentFile = "diva_dlc00_region";
-                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_dlc00_region.cpk");
+                        ProcessCPK(BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_dlc00_region.cpk"), usedID);
                     }
-                    else if (File.Exists((gameDirectory + "\\diva_main_region.cpk")))
+                    if (File.Exists((gameDirectory + "\\diva_main_region.cpk")))
                     {
                         currentFile = "diva_main_region";
-                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main_region.cpk");
+                        ProcessCPK(BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main_region.cpk"), usedID);
                     }
-                    else if (File.Exists((gameDirectory + "\\diva_main.cpk")))
+                    if (File.Exists((gameDirectory + "\\diva_main.cpk")))
                     {
                         currentFile = "diva_main";
-                        cpk = BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main.cpk");
+                        ProcessCPK(BinaryFile.Load<CpkArchive>(gameDirectory + "\\diva_main.cpk"), usedID);
                     }
                     else
                     {
                         Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory.", Properties.Resources.cmn_error);
                     }
-                    foreach (string file in cpk.FileNames)
-                    {
-                        switch (file)
-                        {
-                            case string s when s.Contains("gm_module_tbl.farc"):
-                                FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(farc, 0);
-                                break;
-                            case string s when s.Contains("gm_customize_item_tbl.farc"):
-                                FarcArchive farc2 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(farc2, 1);
-                                break;
-                            case string s when s.Contains("chritm_prop.farc"):
-                                FarcArchive farc3 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(farc3, 2);
-                                break;
-                            case string s when s.Contains("*obj_db.farc"):
-                                ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(obj_db);
-                                break;
-                            case string s when s.Contains("*tex_db.farc"):
-                                TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(tex_db);
-                                break;
-                            case string s when s.Contains("*spr_db.farc"):
-                                SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
-                                usedID.get_used_ids(spr_db);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                    
                 }
                 catch { Program.NotiBox("An error occurred while reading the files in your game directory.\nError in: " + currentFile, Properties.Resources.cmn_error); }
+            }
+        }
+
+        private static void ProcessCPK(CpkArchive cpk, usedIDs used)
+        {
+            foreach (string file in cpk.FileNames)
+            {
+                switch (file)
+                {
+                    case string s when s.Contains("gm_module_tbl.farc"):
+                        FarcArchive farc = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        used.get_used_ids(farc, 0);
+                        break;
+                    case string s when s.Contains("gm_customize_item_tbl.farc"):
+                        FarcArchive farc2 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        used.get_used_ids(farc2, 1);
+                        break;
+                    case string s when s.Contains("chritm_prop.farc"):
+                        FarcArchive farc3 = BinaryFile.Load<FarcArchive>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        used.get_used_ids(farc3, 2);
+                        break;
+                    case string s when s.Contains("*obj_db.bin"):
+                        ObjectDatabase obj_db = BinaryFile.Load<ObjectDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        used.get_used_ids(obj_db);
+                        break;
+                    case string s when s.Contains("*tex_db.bin"):
+                        TextureDatabase tex_db = BinaryFile.Load<TextureDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        used.get_used_ids(tex_db);
+                        break;
+                    case string s when s.Contains("*spr_db.bin"):
+                        SpriteDatabase spr_db = BinaryFile.Load<SpriteDatabase>(cpk.Open(file, EntryStreamMode.MemoryStream));
+                        used.get_used_ids(spr_db);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         public static void CreateModConfig(string FolderPath, string ModName) //Simple
@@ -900,12 +868,11 @@ namespace Armoire
         public static BitmapImage GetImage(Bitmap pngFile)
         {
             Sprite spr = Program.GetSprite(false);
-            SpriteSet sprite = new SpriteSet();
+            SpriteSet sprite = new();
             sprite.Sprites.Add(spr);
-            Bitmap newBitmap = new Bitmap(pngFile);
+            Bitmap newBitmap = new(pngFile);
             newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-            TextureEncoderCore tex = new TextureEncoderCore();
-            Texture text = tex.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
+            Texture text = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
             sprite.TextureSet.Textures.Add(text);
             Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
             BitmapImage img = Program.ToBitmapImage(cropSprite);

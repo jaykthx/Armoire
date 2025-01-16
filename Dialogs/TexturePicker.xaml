@@ -3,9 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire.Dialogs"
         mc:Ignorable="d"
-        Title="TexturePicker" Height="450" Width="800">
+        Title="Texture Picker" Height="600" Width="300" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DataTemplate x:Key="cmbTemplate">
+            <WrapPanel Height="75">
+                <Label Content="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                <Image Width="75" Height="75" Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </WrapPanel>
+        </DataTemplate>
+        <Style TargetType="ComboBox">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -13,12 +26,10 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Eyebrows Texture:" VerticalAlignment="Center" Grid.Row="0"/>
@@ -26,23 +37,11 @@
         <TextBlock Text="Eye Left Texture:" VerticalAlignment="Center" Grid.Row="2"/>
         <TextBlock Text="Eye Right Texture:" VerticalAlignment="Center" Grid.Row="3"/>
         <TextBlock Text="Face Texture:" VerticalAlignment="Center" Grid.Row="4"/>
-        <ComboBox x:Name="eyebrowCombo" Grid.Row="0" Grid.Column="1"/>
-        <ComboBox x:Name="eyelashCombo" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox x:Name="eyeLCombo" Grid.Row="2" Grid.Column="1"/>
-        <ComboBox x:Name="eyeRCombo" Grid.Row="3" Grid.Column="1"/>
-        <ComboBox x:Name="faceCombo" Grid.Row="4" Grid.Column="1"/>
-        <Image x:Name="imageBox"/>
-        <ListBox Grid.Column="3" Grid.RowSpan="5" ItemsSource="{Binding listItems}" x:Name="imageListBox">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3" Text="{Binding Name}"/>
-                        <Image Margin="3" Source="{Binding Image}" Width="64" Height="64"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <ComboBox x:Name="charaBox" Grid.Row="5" Grid.ColumnSpan="3"/>
-        <Button Content="OK" Grid.Row="6" Grid.ColumnSpan="3" TextBlock.FontSize="20" Click="Button_Click"/>
+        <ComboBox x:Name="eyebrowCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="0" Grid.Column="1"/>
+        <ComboBox x:Name="eyelashCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="1" Grid.Column="1"/>
+        <ComboBox x:Name="eyeLCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="2" Grid.Column="1"/>
+        <ComboBox x:Name="eyeRCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="3" Grid.Column="1"/>
+        <ComboBox x:Name="faceCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="4" Grid.Column="1"/>
+        <Button Content="OK" Grid.Row="5" Grid.ColumnSpan="2" TextBlock.FontSize="20" Click="Button_Click"/>
     </Grid>
 </Window>
