@@ -302,11 +302,9 @@ namespace Armoire
                         objInfo.Id = hObj.Id;
                         objSetInfo.Objects.Add(objInfo);
                     }
-                    Program.NotiBox(exportFolder + "/objset/" + objSetInfo.ArchiveFileName, "TEST");
                     Program.Wizard.ProcessTextures(objset, mainName, finalUsedIDs, tex_db);
                     objset.Save(stream, true);
                     farc.Add(objSetInfo.FileName, stream, false, ConflictPolicy.Replace);
-                    Program.NotiBox(exportFolder + "/objset/" + objSetInfo.ArchiveFileName, "ABOUT TO SAVE FARC");
                     farc.Save(exportFolder + "/objset/" + objSetInfo.ArchiveFileName);
                 }
             }
