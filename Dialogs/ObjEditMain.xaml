@@ -43,11 +43,11 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
-                <DataGridTextColumn x:Name="nameColumn" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
-                <DataGridTextColumn x:Name="fileNameColumn" Header="{x:Static p:Resources.obj_file}" Binding="{Binding FileName}" Width="125*"/>
-                <DataGridTextColumn x:Name="texFileColumn" Header="{x:Static p:Resources.obj_texture}" Binding="{Binding TextureFileName}" Width="125*"/>
-                <DataGridTextColumn x:Name="archFileColumn" Header="{x:Static p:Resources.obj_arch}" Binding="{Binding ArchiveFileName}" Width="125*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="idColumn" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="nameColumn" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="fileNameColumn" Header="{x:Static p:Resources.obj_file}" Binding="{Binding FileName}" Width="125*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="texFileColumn" Header="{x:Static p:Resources.obj_texture}" Binding="{Binding TextureFileName}" Width="125*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="archFileColumn" Header="{x:Static p:Resources.obj_arch}" Binding="{Binding ArchiveFileName}" Width="125*"/>
                 <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_objs}" Width="55" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

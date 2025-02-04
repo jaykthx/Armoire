@@ -9,7 +9,8 @@ using System.IO;
 using System.Windows;
 using Armoire.Dialogs;
 using System.Windows.Forms;
-using MikuMikuLibrary.Materials;
+using System.Linq;
+using Object = MikuMikuLibrary.Objects.Object;
 
 namespace Armoire
 {
@@ -58,23 +59,18 @@ namespace Armoire
                 FolderBrowserDialog fbd = new()
                 {
                     Description = "Please select your game directory.",
-                    SelectedPath = Properties.Settings.Default.gamePath
+                    SelectedPath = Properties.Settings.Default.themeSetting
                 };
                 if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     Program.GetExistingIDs(fbd.SelectedPath, finalUsedIDs);
-                    Properties.Settings.Default.gamePath = fbd.SelectedPath;
+                    Properties.Settings.Default.themeSetting = fbd.SelectedPath;
                     Properties.Settings.Default.Save();
                     TextEntry textEntry = new(false, "Enter MOD Folder Name");
                     textEntry.ShowDialog();
                     if (textEntry.Result.Length > 0)
                     {
-                        exportFolder = Properties.Settings.Default.gamePath + "/mods/" + textEntry.Result + "/rom/";
-                        Directory.CreateDirectory(exportFolder);
-                        Directory.CreateDirectory(exportFolder + "2d");
-                        Directory.CreateDirectory(exportFolder + "objset");
-                        Directory.CreateDirectory(exportFolder + "lang2");
-                        Program.CreateModConfig(exportFolder.Remove(exportFolder.Length - 5, 5), textEntry.Result);
+                        string exportFolder = Program.Wizard.ProcessDirectories(textEntry.Result);
                         // do the actual making
                         tempModules.Clear();
                         tex_db = new TextureDatabase();
@@ -83,11 +79,6 @@ namespace Armoire
                         list.Clear();
                         PopulateChritms();
                         bool proceed = true;
-                        // see if lang toml exists and delete it if it does!
-                        if (File.Exists(exportFolder + "/lang2/mod_str_array.toml"))
-                        {
-                            File.Delete(exportFolder + "/lang2/mod_str_array.toml");
-                        }
                         foreach (ModuleInfo info in moduleHost.Children)
                         {
                             info.finalizeModule();
@@ -116,7 +107,7 @@ namespace Armoire
                             }
                             else
                             {
-                                Program.NotiBox("Please check your modules, something is not set correctly.", Properties.Resources.cmn_error);
+                                Program.NotiBox(Properties.Resources.warn_wizard_problem, Properties.Resources.cmn_error);
                                 proceed = false;
                                 Program.IO.DeleteDirectory(exportFolder);
                                 return;
@@ -142,13 +133,13 @@ namespace Armoire
                 }
                 else
                 {
-                    Program.NotiBox("You need to give the mod a name.\nNot proceeding.", Properties.Resources.cmn_error);
+                    Program.NotiBox(Properties.Resources.warn_no_name, Properties.Resources.cmn_error);
                     return;
                 }
             }
             else
             {
-                Program.NotiBox("There are no modules in the wizard.", Properties.Resources.cmn_error);
+                Program.NotiBox(Properties.Resources.warn_no_items, Properties.Resources.cmn_error);
             }
         }
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -180,8 +171,8 @@ namespace Armoire
             }
             else
             {
-                ChoiceWindow win = new("This Module ID is already being used and the resulting module will cause compatibility issues." +
-                    "\nWould you like to use a random, unused ID instead?", Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
+                ChoiceWindow win = new(Properties.Resources.warn_used_0 + Properties.Resources.cmn_item_nofull + Properties.Resources.warn_used_1 + "\n" +
+                    Properties.Resources.warn_used_offer, Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
                 win.ShowDialog();
                 if (win.isRightClicked)
                 {
@@ -198,8 +189,8 @@ namespace Armoire
             }
             else
             {
-                ChoiceWindow win = new("This sorting index is already being used and the resulting module will cause minor issues." +
-                    "\nWould you like to use a random, unused sorting index instead?", Properties.Resources.cmn_item_no, Properties.Resources.cmn_yes);
+                ChoiceWindow win = new(Properties.Resources.warn_used_0 + Properties.Resources.cmn_index + Properties.Resources.warn_used_1 + "\n" +
+                    Properties.Resources.warn_used_offer, Properties.Resources.cmn_item_no, Properties.Resources.cmn_yes);
                 win.ShowDialog();
                 if (win.isRightClicked)
                 {
@@ -237,7 +228,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This Customise Item ID is already being used and the resulting item will cause compatibility issues.", Properties.Resources.window_notice);
+                Program.NotiBox(Properties.Resources.warn_used_0 + Properties.Resources.cmn_id + Properties.Resources.warn_used_1, Properties.Resources.window_notice);
             }
             
             if (Program.Databases.CheckID(finalUsedIDs.customize_item_tbl_index, wizMod.sort_index) == false)
@@ -246,148 +237,102 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This Customise Item sorting index is already being used, the resulting customise item will have sorting issues.", Properties.Resources.window_notice);
+                Program.NotiBox(Properties.Resources.warn_used_0 + Properties.Resources.cmn_index + Properties.Resources.warn_used_1, Properties.Resources.window_notice);
             }
             temp.sort_index = wizMod.sort_index;
             Program.Databases.AddToSpriteDatabase(spr_db, wizMod.id, true, finalUsedIDs.spr_db);
             tempCustoms.Add(temp);
         }
 
-        private string ReturnSubIDString(int subID)
+        private ObjectSetInfo CreateObjInfo(wizObj wiz, string chara)
         {
-            switch (subID)
+            ObjectSetInfo objSetInfo = new();
+            var farc = BinaryFile.Load<FarcArchive>(wiz.objectFilePath);
+            string subName = chara.ToUpper() + "ITM" + Program.Databases.GetUnusedID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)]);
+            var newFarc = new FarcArchive();
+            foreach (string fileName in farc)
             {
-                case 0:
-                    return "HEADACCESSORY";
-                case 4:
-                    return "FACEACCESSORY";
-                case 8:
-                    return "CHESTACCESSORY";
-                case 16:
-                    return "BACKACCESSORY";
-                case 1:
-                    return "HAIR";
-                case 10:
-                    return "BODY";
-                case 14:
-                    return "HANDS";
-                case 6:
-                    return "EYELENSES";
-                case 24:
-                    return "EYETEXTURE";
-                default:
-                    return "UNKNOWN_ITEM_TYPE";
+                if (fileName.EndsWith("_obj.bin"))
+                {
+                    string mainName = fileName.Remove(fileName.Length - 8, 8);
+                    if (wiz.item.attr != 2085)
+                    {
+                        objSetInfo.Name = mainName.ToUpper();
+                    }
+                    else
+                    {
+                        objSetInfo.Name = subName;
+                    }
+                    objSetInfo.ArchiveFileName = mainName + ".farc";
+                    objSetInfo.FileName = fileName;
+                    objSetInfo.TextureFileName = mainName + "_tex.bin";
+                    var stream = new MemoryStream();
+                    var source = farc.Open(fileName, EntryStreamMode.MemoryStream);
+                    var objset = new ObjectSet();
+                    objset.Load(source);
+                    Program.Wizard.ConvertToTriangleStrips(objset);
+                    List<Object> headObj = new List<Object>();
+                    int hCount = 0;
+                    foreach (Object obj in objset.Objects)
+                    {
+                        if (wiz.item.attr != 2085)
+                        {
+                            ObjectInfo objInfo = new();
+                            objInfo.Name = obj.Name;
+                            objInfo.Id = obj.Id;
+                            objSetInfo.Objects.Add(objInfo);
+                        }
+                        else
+                        {
+                            
+                            headObj.Add(obj);
+                        }
+                    }
+                    foreach(Object hObj in headObj)
+                    {
+                        ObjectInfo objInfo = new();
+                        if (hObj.Name.Contains("_head_0") || hObj.Name.Contains("_HEAD_0"))
+                        {
+                            objInfo.Name = subName + $"_ATAM_HEAD_0{hCount}_SP__DIVSKN";
+                            hCount++;
+                        }
+                        else
+                        {
+                            objInfo.Name = subName + $"_ATAM_HEAD_999__DIVSKN";
+                        }
+                        objInfo.Id = hObj.Id;
+                        objSetInfo.Objects.Add(objInfo);
+                    }
+                    Program.Wizard.ProcessTextures(objset, mainName, finalUsedIDs, tex_db);
+                    objset.Save(stream, true);
+                    farc.Add(objSetInfo.FileName, stream, false, ConflictPolicy.Replace);
+                    farc.Save(exportFolder + "/objset/" + objSetInfo.ArchiveFileName);
+                }
             }
+            farc.Dispose();
+            newFarc.Dispose();
+            return objSetInfo;
         }
 
         private void AddToCharaItemTable(ModuleInfo modInfo)
         {
-            List<wizObjEntry> entries = new();
-            foreach (wizObj x in modInfo.wizMod.objects)
+            List<ObjectSetInfo> entries = new(); // this is where we're storing the ObjSetInfo classes we create below so they can be used for chritm_tbl generating ig?
+            foreach (wizObj wiz in modInfo.wizMod.objects)
             {
-                wizObjEntry objEntry = new();
-                var farc = BinaryFile.Load<FarcArchive>(x.objectFilePath);
-                foreach (string fileName in farc)
-                {
-                    if (fileName.EndsWith("_obj.bin"))
-                    {
-                        string mainName = fileName.Remove(fileName.Length - 8, 8);
-                        objEntry.fileName = fileName;
-                        objEntry.name = (mainName.ToUpper());
-                        objEntry.archiveFileName = mainName + ".farc";
-                        objEntry.textureFileName = mainName + "_tex.bin";
-                        var stream = new MemoryStream();
-                        var source = farc.Open(fileName, EntryStreamMode.MemoryStream);
-                        var objset = new ObjectSet();
-                        objset.Load(source);
-                        foreach (var obj in objset.Objects)
-                        {
-                            objEntry.objName = obj.Name;
-                            objEntry.objId = obj.Id;
-                            foreach (var mesh in obj.Meshes) // might as well leave this in from kei's batchtristripper - thank you bestie for this part
-                            {
-                                foreach (var subMesh in mesh.SubMeshes)
-                                {
-                                    if (subMesh.PrimitiveType != PrimitiveType.Triangles)
-                                        continue;
-
-                                    var triangleStrip = MikuMikuLibrary.Objects.Processing.Stripifier.Stripify(subMesh.Indices);
-                                    if (triangleStrip == null)
-                                        continue;
-
-                                    subMesh.PrimitiveType = PrimitiveType.TriangleStrip;
-                                    subMesh.Indices = triangleStrip;
-                                }
-                            }
-                        }
-                        Dictionary<uint, uint> texIDs = new();
-                        for (int i = 0; i < objset.TextureIds.Count; i++)
-                        {
-                            if (texIDs.ContainsKey(objset.TextureIds[i]))
-                            {
-                                objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
-                            }
-                            else
-                            {
-                                texIDs.Add(objset.TextureIds[i], Program.Databases.GetUnusedID(finalUsedIDs.tex_db, 9999999));
-                                objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
-                                finalUsedIDs.tex_db.Add(objset.TextureIds[i]);
-                            }
-
-                        }
-                        foreach(MikuMikuLibrary.Objects.Object obj in objset.Objects)
-                        {
-                            foreach (Material mat in obj.Materials)
-                            {
-                                foreach(MaterialTexture matTex in mat.MaterialTextures)
-                                {
-                                    if (texIDs.ContainsKey(matTex.TextureId))
-                                    {
-                                        matTex.TextureId = texIDs[matTex.TextureId];
-                                    }
-                                }
-                            }
-                        }
-                        int texCount = 0;
-                        foreach (uint id in objset.TextureIds)
-                        {
-                            TextureInfo tex = new()
-                            {
-                                Id = id,
-                                Name = mainName.ToUpper() + "_AUTO_TEXTURE_" + texCount
-                            };
-                            texCount++;
-                            tex_db.Textures.Add(tex);
-                        }
-                        objset.Save(stream, true);
-                        x.objEntry = objEntry;
-                        entries.Add(objEntry);
-                        farc.Add(fileName, stream, false, ConflictPolicy.Replace);
-                        farc.IsCompressed = true;
-                        farc.Save(exportFolder + "/objset/" + Path.GetFileName(x.objectFilePath));
-                    }
-                    farc.Dispose();
-                }
+                ObjectSetInfo objset = CreateObjInfo(wiz, Program.Databases.GetChritmName(modInfo.charBox.Text.ToUpper()));
+                entries.Add(objset);
+                wiz.objectSet = objset;
             }
-            foreach (wizObjEntry o in entries)
+            foreach (ObjectSetInfo o in entries)
             {
-                ObjectSetInfo objSetInfo = new();
-                ObjectInfo objInfo = new();
-                objSetInfo.Id = Program.Databases.GetUnusedID(finalUsedIDs.obj_db, 19999);
-                finalUsedIDs.obj_db.Add(objSetInfo.Id);
-                objSetInfo.Name = o.name;
-                objSetInfo.TextureFileName = o.textureFileName;
-                objSetInfo.ArchiveFileName = o.archiveFileName;
-                objSetInfo.FileName = o.fileName;
-                objInfo.Id = o.objId;
-                objInfo.Name = o.objName;
-                objSetInfo.Objects.Add(objInfo);
-                obj_db.ObjectSets.Add(objSetInfo);
+                o.Id = Program.Databases.GetUnusedID(finalUsedIDs.obj_db, 19999);
+                finalUsedIDs.obj_db.Add(o.Id);
+                obj_db.ObjectSets.Add(o);
             }
             cosEntry cos = new()
             {
                 id = modInfo.wizMod.id,
-                items = new ObservableCollection<int>()
+                items = new()
             };
             bool containsHands = false;
             foreach (wizObj o in modInfo.wizMod.objects)
@@ -410,23 +355,21 @@ namespace Armoire
             }
             foreach (wizObj x in modInfo.wizMod.objects)
             {
-                x.item.name = x.objEntry.name + "_AUTO-GEN_" + ReturnSubIDString(x.item.subID);
-                x.item.uid = x.objEntry.objName;
+                x.item.name = x.objectSet.Name + " " + Program.Wizard.ReturnSubIDString(x.item.subID);
+                x.item.uid = x.objectSet.Objects[0].Name;
                 x.item.objset = new List<string>
                 {
-                    x.objEntry.name
+                    x.objectSet.Name
                 };
-                //x.item.dataSetTexes = new ObservableCollection<dataSetTex>();
-                int itm_num = GetItemNumber(x.objectFilePath, modInfo.wizMod.chara);
-/*                if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)], itm_num))
+                if (x.item.attr == 2085)
                 {
-                    finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)].Add(x.item.no);
+                    x.item.no = int.Parse(x.objectSet.Name.Split(new string[] { "ITM" }, StringSplitOptions.None).LastOrDefault());
                 }
                 else
                 {
-                    finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(modInfo.wizMod.chara)].Add(x.item.no);
-                }*/
-                x.item.no = itm_num;
+                    int itm_num = Program.Wizard.GetItemNumber(x.objectFilePath, modInfo.wizMod.chara, finalUsedIDs);
+                    x.item.no = itm_num;
+                }
                 list[modInfo.charBox.SelectedIndex].items.Add(x.item);
                 cos.items.Add(x.item.no);
                 if (x.item.subID == 1 && !modInfo.wizMod.hairNG)
@@ -435,42 +378,6 @@ namespace Armoire
                 }
             }
             list[modInfo.charBox.SelectedIndex].costumes.Add(cos);
-        }
-
-        private int GetItemNumber(string item_file_name, string chara)
-        {
-            string name = Path.GetFileNameWithoutExtension(item_file_name);
-            if (name.Contains("itm"))
-            {
-                string[] final = name.Split(new string[] { "itm" }, StringSplitOptions.None);
-                if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)], int.Parse(final[1])) && !(final[1] == "000"))
-                {
-                    return int.Parse(final[1]);
-                }
-                else
-                {
-                    /*if(Program.ChoiceWindow("The item number of the object you selected is already being used with this character.\nYou are going to encounter problems if you do not change it.\nWould you like to change it to the next available ID?", "No", "Yes") == true)
-                    {
-                        // make code to change mikitm number and resave
-                    }*/
-                    ChoiceWindow choice = new("The item number of the object you selected is already being used with this character.\n" +
-                        "Would you like to use a unused, randomly generated one? " + "Item: " + final[1], "No", "Yes");
-                    choice.ShowDialog();
-                    if (choice.isRightClicked)
-                    {
-                        return Program.Databases.GetUnusedID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)]);
-                    }
-                    else
-                    {
-                        return int.Parse(final[1]);
-                    }
-                }
-            }
-            else
-            {
-                Program.NotiBox("This file's name doesn't contain 'itm', you will have to adjust the ID manually.", Properties.Resources.cmn_error);
-                return 5555;
-            }
         }
     }
 }

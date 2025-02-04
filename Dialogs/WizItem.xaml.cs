@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace Armoire.Dialogs
@@ -14,18 +13,6 @@ namespace Armoire.Dialogs
         public WizItem()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog ofd = new();
-            ofd.Filter = "FARC files|*.farc";
-            ofd.Title = Armoire.Properties.Resources.exp_1;
-            if(ofd.ShowDialog() == true)
-            {
-                curObj.objectFilePath = ofd.FileName;
-                fileName.Text = System.IO.Path.GetFileName(ofd.FileName);
-            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

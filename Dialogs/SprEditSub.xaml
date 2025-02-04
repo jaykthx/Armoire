@@ -23,9 +23,9 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="*"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" MinWidth="260"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" Binding="{Binding Index}" Width="*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" MinWidth="260"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_index}" Binding="{Binding Index}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="2" Content="{x:Static p:Resources.cmn_apply}" Click="Button_Click"/>

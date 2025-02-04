@@ -27,7 +27,7 @@ namespace Armoire.Dialogs
         {
             if(ObjsetBox.Items.Count < 2)
             {
-                TextEntry win = new(false, "Enter object name");
+                TextEntry win = new(false, Properties.Resources.warn_enter_value);
                 if(win.ShowDialog() == true)
                 {
                     if (win.Result != "ENTER VALUE HERE")
@@ -35,12 +35,12 @@ namespace Armoire.Dialogs
                         itemCxt.objset.Add(win.Result);
                         ObjsetBox.Items.Refresh();
                     }
-                    else { Program.NotiBox("Enter a value.", Properties.Resources.cmn_error); }
+                    else { Program.NotiBox(Properties.Resources.warn_enter_value, Properties.Resources.cmn_error); }
                 }
             }
             else
             {
-                Program.NotiBox("Only 2 objects may be used.", "Common Sense Error");
+                Program.NotiBox(Properties.Resources.warn_object_limit, Properties.Resources.window_notice);
             }
         }
         private void Del_Click(object sender, RoutedEventArgs e)
@@ -73,8 +73,6 @@ namespace Armoire.Dialogs
         {
             var box = e.Source as TextBox;
             box.CaretIndex = box.Text.Length;
-            // Omitted Code: Insert code that does something whenever
-            // the text changes...
         }
     }
 }

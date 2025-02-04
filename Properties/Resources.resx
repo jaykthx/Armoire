@@ -180,6 +180,9 @@
   <data name="cmn_item_no" xml:space="preserve">
     <value>No.</value>
   </data>
+  <data name="cmn_item_nofull" xml:space="preserve">
+    <value>Item Number</value>
+  </data>
   <data name="cmn_item_type" xml:space="preserve">
     <value>Set Item Type</value>
   </data>
@@ -291,12 +294,6 @@
   <data name="exp_6" xml:space="preserve">
     <value>Saved successfully.</value>
   </data>
-  <data name="file_csv" xml:space="preserve">
-    <value>To CSV</value>
-  </data>
-  <data name="file_db_clean" xml:space="preserve">
-    <value>Cleaner</value>
-  </data>
   <data name="file_open" xml:space="preserve">
     <value>Open</value>
   </data>
@@ -311,6 +308,36 @@
   </data>
   <data name="file_wizard" xml:space="preserve">
     <value>Wizard</value>
+  </data>
+  <data name="item_backacc" xml:space="preserve">
+    <value>Back Accessory</value>
+  </data>
+  <data name="item_body" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="item_chestacc" xml:space="preserve">
+    <value>Chest Accessory</value>
+  </data>
+  <data name="item_contact" xml:space="preserve">
+    <value>Contact Lenses</value>
+  </data>
+  <data name="item_default" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="item_faceacc" xml:space="preserve">
+    <value>Face Accessory</value>
+  </data>
+  <data name="item_hair" xml:space="preserve">
+    <value>Hair</value>
+  </data>
+  <data name="item_hands" xml:space="preserve">
+    <value>Hands</value>
+  </data>
+  <data name="item_head" xml:space="preserve">
+    <value>Head</value>
+  </data>
+  <data name="item_headacc" xml:space="preserve">
+    <value>Head Accessory</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="md_dummy" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -364,6 +391,9 @@
   <data name="tab_module" xml:space="preserve">
     <value>Modules</value>
   </data>
+  <data name="tab_theme" xml:space="preserve">
+    <value>Themes</value>
+  </data>
   <data name="tex_add" xml:space="preserve">
     <value>Add Texture</value>
   </data>
@@ -403,8 +433,68 @@
   <data name="title_wizard_custom" xml:space="preserve">
     <value>Customise Item Wizard</value>
   </data>
+  <data name="warn_case_sensitive" xml:space="preserve">
+    <value>This is case sensitive.\nThis only applies to selected items.</value>
+  </data>
+  <data name="warn_costume_empty" xml:space="preserve">
+    <value>Costumes can not be empty.</value>
+  </data>
+  <data name="warn_delete" xml:space="preserve">
+    <value>This item could not be deleted.</value>
+  </data>
+  <data name="warn_divadir_wrong" xml:space="preserve">
+    <value>This is not a valid Project DIVA Mega Mix+ directory.</value>
+  </data>
+  <data name="warn_enter_value" xml:space="preserve">
+    <value>Enter a value.</value>
+  </data>
+  <data name="warn_error_read" xml:space="preserve">
+    <value>An error occurred while reading the files in your game directory.\nError in:</value>
+  </data>
+  <data name="warn_error_save" xml:space="preserve">
+    <value>An error occurred while saving your file.\nPlease try again.</value>
+  </data>
+  <data name="warn_file_error" xml:space="preserve">
+    <value>Something is wrong with the file you selected for this item.\nIt doesn't look like a .farc format file.</value>
+  </data>
+  <data name="warn_flop_save" xml:space="preserve">
+    <value>To save, you must select a file first.</value>
+  </data>
   <data name="warn_generic" xml:space="preserve">
     <value>A generic error occurred.</value>
+  </data>
+  <data name="warn_item_not_sel" xml:space="preserve">
+    <value>You must select an item first.</value>
+  </data>
+  <data name="warn_no_items" xml:space="preserve">
+    <value>There are no items in the wizard.</value>
+  </data>
+  <data name="warn_no_itm" xml:space="preserve">
+    <value>This file's name doesn't contain 'itm', a random number has been provided but you may need to adjust the ID manually.</value>
+  </data>
+  <data name="warn_no_name" xml:space="preserve">
+    <value>You need to give the mod a name.\nNot proceeding.</value>
+  </data>
+  <data name="warn_object_limit" xml:space="preserve">
+    <value>Only 2 objects may be used.</value>
+  </data>
+  <data name="warn_used_0" xml:space="preserve">
+    <value>This</value>
+  </data>
+  <data name="warn_used_1" xml:space="preserve">
+    <value>is already being used, the resulting item may have some issues.</value>
+  </data>
+  <data name="warn_used_offer" xml:space="preserve">
+    <value>Would you like to use a random, unused one instead?</value>
+  </data>
+  <data name="warn_virus" xml:space="preserve">
+    <value>Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.</value>
+  </data>
+  <data name="warn_window" xml:space="preserve">
+    <value>This window is already open.</value>
+  </data>
+  <data name="warn_wizard_problem" xml:space="preserve">
+    <value>Please check your items, something is not set correctly.</value>
   </data>
   <data name="window_item" xml:space="preserve">
     <value>Item Properties</value>

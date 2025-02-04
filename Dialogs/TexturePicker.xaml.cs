@@ -2,14 +2,11 @@
 using MikuMikuLibrary.IO;
 using MikuMikuLibrary.Textures;
 using MikuMikuLibrary.Textures.Processing;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Path = System.IO.Path;
 
 namespace Armoire.Dialogs
@@ -33,10 +30,6 @@ namespace Armoire.Dialogs
         {
             temp_item.dataSetTexes = new System.Collections.ObjectModel.ObservableCollection<dataSetTex>();
             FarcArchive farc = BinaryFile.Load<FarcArchive>(farc_path);
-            foreach(string filename in farc.FileNames)
-            {
-                Console.WriteLine(filename);
-            }
             foreach (string fileName in farc.FileNames)
             {
                 if (fileName.Contains("_tex"))
@@ -95,7 +88,7 @@ namespace Armoire.Dialogs
             }
             else
             {
-                Program.NotiBox("Something is wrong with the file you selected for this item.\nIt doesn't look like a .farc format file.", Properties.Resources.cmn_error);
+                Program.NotiBox(Properties.Resources.warn_file_error, Properties.Resources.cmn_error);
                 this.Close();
             }
         }

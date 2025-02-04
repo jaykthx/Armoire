@@ -19,8 +19,8 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="*"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="300"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="300"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

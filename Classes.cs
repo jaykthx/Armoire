@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using System.Security.RightsManagement;
 
 namespace Armoire
 {
@@ -55,9 +54,9 @@ namespace Armoire
         /// </summary>
         /// <param name="farc"></param>
         /// <param name="mode"></param>
-        public void get_used_ids(FarcArchive farc, int mode) // mode: 0 - module 1 - customize 2 - chritm
+        public void get_used_ids(FarcArchive farc, int mode)
         {
-            if(mode == 0) // works
+            if(mode == 0)
             {
                 ObservableCollection<module> m_tbl = Program.IO.ReadModuleFile(farc);
                 foreach (module m in m_tbl)
@@ -72,7 +71,7 @@ namespace Armoire
                     }
                 }
             }
-            else if(mode == 1) // will work if used
+            else if(mode == 1)
             {
                 ObservableCollection<cstm_item> c_tbl = Program.IO.ReadCustomFile(farc);
                 foreach (cstm_item c in c_tbl)
@@ -87,7 +86,7 @@ namespace Armoire
                     }
                 }
             }
-            else if(mode == 2) // works
+            else if(mode == 2)
             {
                 ObservableCollection<chritmFile> chritms = Program.IO.ReadCharaFile(farc);
                 foreach (chritmFile chrFile in chritms)
@@ -152,7 +151,7 @@ namespace Armoire
         public string name { get; set; }
         public bool ng { get; set; }
         public string shop_price { get; set; }
-        public int shop_st_day { get; set; } //honestly who would bother but ill leave it anyway
+        public int shop_st_day { get; set; }
         public int shop_st_month { get; set; }
         public int shop_st_year { get; set; }
         public int sort_index { get; set; }
@@ -163,7 +162,6 @@ namespace Armoire
         }
     }
 
-    [Serializable]
     public class module : Entry
     {
         public Attr attr { get; set; }
@@ -190,7 +188,6 @@ namespace Armoire
         }
     }
 
-    [Serializable]
     public class cstm_item : Entry
     {
         public int bind_module { get; set; }
@@ -220,7 +217,6 @@ namespace Armoire
             return x;
         }
     }
-    [Serializable]
     public class cosEntry
     {
         public string entry { get; set; }
@@ -241,30 +237,28 @@ namespace Armoire
             return x;
         }
     }
-    [Serializable]
     public class dataSetTex
     {
         public string entry { get; set; }
         public string chg { get; set; } = "ENTER NEW TEX NAME";
         public string org { get; set; } = "ENTER OLD TEX NAME";
     }
-    [Serializable]
     public class itemEntry
     {
         public string entry { get; set; }
-        public int attr { get; set; } = 0; //Editable
+        public int attr { get; set; } = 0;
         public int rpk = -1; // N/A
-        public string uid { get; set; } = "DUMMY_DIVSKN"; //Table
-        public ObservableCollection<dataSetTex> dataSetTexes { get; set; } = new ObservableCollection<dataSetTex>(); //Editable - Window
-        public int desID { get; set; } = 0; //Editable
-        public decimal face_depth { get; set; } = 0; //Editable (Combobox?)
-        public int flag = 0; //Marks tex swaps, not needed?
-        public string name { get; set; } = "DUMMY";// Table
-        public int no { get; set; } = 9999; // Table
-        public List<string> objset { get; set; } = new List<string> { "MIKITM001" };//Editable - Window
-        public int orgItm { get; set; } = 0; //Editable
-        public int subID { get; set; } = 0;  //Editable
-        public int type { get; set; } = 0; //Editable
+        public string uid { get; set; } = "DUMMY_DIVSKN";
+        public ObservableCollection<dataSetTex> dataSetTexes { get; set; } = new ObservableCollection<dataSetTex>();
+        public int desID { get; set; } = 0;
+        public decimal face_depth { get; set; } = 0;
+        public int flag = 0;
+        public string name { get; set; } = "DUMMY";
+        public int no { get; set; } = 9999;
+        public List<string> objset { get; set; } = new List<string> { "MIKITM001" };
+        public int orgItm { get; set; } = 0;
+        public int subID { get; set; } = 0;
+        public int type { get; set; } = 0;
 
         public List<string> getEntry()
         {
@@ -360,8 +354,8 @@ namespace Armoire
     }
     public class wizObj
     {
-        public string objectFilePath; // file path
-        public wizObjEntry objEntry = new(); // add after assigning for better follow-up
+        public string objectFilePath;
+        public ObjectSetInfo objectSet = new(); 
         public itemEntry item = new();
     }
     public class wizModule
@@ -370,7 +364,7 @@ namespace Armoire
         public localisedNames localNames = new();
         public bool hairNG;
         public string name = Properties.Resources.cmn_temp;
-        public int id = -1; //default to a number
+        public int id = -1;
         public string chara;
         public int sort_index = 999;
         public Bitmap bitmap = Properties.Resources.md_dummy;
@@ -380,13 +374,12 @@ namespace Armoire
         public wizObj obj = new();
         public string parts;
         public localisedNames localNames = new();
-        public string name;
+        public string name = Properties.Resources.cmn_temp;
         public int id = -1;
         public int sort_index = 999;
         public Bitmap bitmap = Properties.Resources.md_dummy;
 
     }
-
     public class localisedNames
     {
         public string cn = "发型";
@@ -397,15 +390,5 @@ namespace Armoire
         public string kr = " 헤어";
         public string sp = "Pelo ";
         public string tw = "髮型:";
-    }
-    public class wizObjEntry
-    {
-        public string name;
-        public string fileName; //obj
-        public string textureFileName;//tex
-        public string archiveFileName;//farc
-        public uint id;//obj_db id
-        public string objName; //divskn
-        public uint objId; //divskn id
     }
 }

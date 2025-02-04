@@ -1,15 +1,8 @@
 ﻿using Armoire.Dialogs;
-using MikuMikuLibrary.Sprites;
-using MikuMikuLibrary.Textures;
-using MikuMikuLibrary.Textures.Processing;
-using MikuMikuLibrary.Textures.Processing.Interfaces;
-using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
 
 namespace Armoire
 {
@@ -24,25 +17,32 @@ namespace Armoire
             InitializeComponent();
             charBox.ItemsSource = Program.charas;
             charBox.SelectedIndex = 0;
-            setModuleImage(Properties.Resources.md_dummy);
+            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, moduleImage);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //add
         {
-            WizItem itm = new();
-            itemPanel.Children.Add(itm);
-            itm.parentModInfo = this;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = "FARC files|*.farc";
+            ofd.Title = Armoire.Properties.Resources.exp_1;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                foreach(string filePath in  ofd.FileNames)
+                {
+                    WizItem itm = new();
+                    itm.parentModInfo = this;
+                    itm.curObj.objectFilePath = filePath;
+                    itm.fileName.Text = System.IO.Path.GetFileName(filePath);
+                    itemPanel.Children.Add(itm);
+                }
+            }
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                itemPanel.Children.RemoveAt(itemPanel.Children.Count - 1);
-            }
-            catch
-            {
-            }
+            itemPanel.Children.Clear();
         }
 
         private void nameButton_Click(object sender, RoutedEventArgs e)
@@ -111,7 +111,7 @@ namespace Armoire
                 Bitmap pngImage = new(ofd.FileName);
                 if (pngImage.Width == 512 && pngImage.Height == 512)
                 {
-                    setModuleImage(pngImage);
+                    Program.Wizard.SetModuleImage(pngImage, moduleImage);
                     wizMod.bitmap = pngImage;
                 }
                 else
@@ -120,19 +120,6 @@ namespace Armoire
                 }
             }
         }
-        private void setModuleImage(Bitmap pngFile)
-        {
-            Sprite spr = Program.GetSprite(false);
-            SpriteSet sprite = new();
-            sprite.Sprites.Add(spr);
-            Bitmap newBitmap = new(pngFile);
-            newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-            Texture text = TextureEncoder.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
-            //MikuMikuLibrary.Textures.Texture text = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
-            sprite.TextureSet.Textures.Add(text);
-            Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
-            BitmapImage img = Program.ToBitmapImage(cropSprite);
-            moduleImage.Source = img;
-        }
+        
     }
 }

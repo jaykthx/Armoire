@@ -8,21 +8,26 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Title="{x:Static p:Resources.window_preset}" Height="140" Width="250">
+        Title="{x:Static p:Resources.window_preset}" Height="300" Width="150">
     <Border>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="holdName" Text="{Binding name}" TextAlignment="Center" VerticalAlignment="Center"/>
-            <ComboBox x:Name="presetBox" MinWidth="150" Grid.Row="1"/>
-            <StackPanel Grid.Row="2" MinHeight="40">
-                <Button Content="{x:Static p:Resources.cmn_apply}" Click="Button_Click" Height="20" IsDefault="True"/>
-                <Button Content="{x:Static p:Resources.cmn_close_n}" Click="Exit_Click" Height="20" IsDefault="False"/>
-            </StackPanel>
-            
+            <UniformGrid Rows="10" Grid.Row="1">
+                <Button x:Name="hairButton" Content="Hair" Click="hair_Click"/>
+                <Button x:Name="bodyButton" Content="Body" Click="body_Click"/>
+                <Button x:Name="handButton" Content="Hands" Click="hand_Click"/>
+                <Button x:Name="headButton" Content="Head" Click="head_Click"/>
+                <Button x:Name="eyeButton" Content="Eye Texture Swap" Click="eye_Click"/>
+                <Button x:Name="contactButton" Content="Contact Lenses" Click="contact_Click"/>
+                <Button x:Name="headAccButton" Content="Head Accessory" Click="headAcc_Click"/>
+                <Button x:Name="faceAccButton" Content="Face Accessory" Click="faceAcc_Click"/>
+                <Button x:Name="chestAccButton" Content="Chest Accessory" Click="chestAcc_Click"/>
+                <Button x:Name="backAccButton" Content="Back Accessory" Click="backAcc_Click"/>
+            </UniformGrid>
         </Grid>
     </Border>
 </Window>

@@ -23,7 +23,7 @@
             <Button Content="-" Click="Remove_Click"/>
             <Button Content="{x:Static p:Resources.cmn_finish}" Click="Create_Click"/>
         </UniformGrid>
-        <ScrollViewer Background="#FFF0F0F0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" CanContentScroll="True" Grid.Row="1" Grid.ColumnSpan="4">
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" CanContentScroll="True" Grid.Row="1" Grid.ColumnSpan="4">
             <StackPanel x:Name="itemHost"/>
         </ScrollViewer>
     </Grid>

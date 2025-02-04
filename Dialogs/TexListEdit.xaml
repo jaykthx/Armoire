@@ -33,8 +33,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Resources.tex_org}" MinWidth="161" Binding="{Binding org}"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.tex_chg}" MinWidth="161" Binding="{Binding chg}"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.tex_org}" MinWidth="161" Binding="{Binding org}"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.tex_chg}" MinWidth="161" Binding="{Binding chg}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="{x:Static p:Resources.cmn_apply}" Grid.Row="1" Click="Button_Click" IsDefault="True" Margin="5,0,5,0"/>

@@ -1,15 +1,18 @@
 ﻿using Armoire.Dialogs;
+using Armoire.Properties;
 using MikuMikuLibrary.Archives;
 using MikuMikuLibrary.Archives.CriMw;
 using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
+using MikuMikuLibrary.Materials;
+using MikuMikuLibrary.Objects;
 using MikuMikuLibrary.Sprites;
 using MikuMikuLibrary.Textures;
+using MikuMikuLibrary.Textures.Processing;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -25,6 +28,158 @@ namespace Armoire
         public static string customPath;
         public static string charaPath;
         public static List<string> charas = new() { "MIKU", "RIN", "LEN", "LUKA", "KAITO", "MEIKO", "NERU", "HAKU", "SAKINE", "TETO" };
+
+        public class Wizard
+        {
+            public static void SetModuleImage(Bitmap pngFile, System.Windows.Controls.Image image)
+            {
+                Sprite spr = Program.GetSprite(false);
+                SpriteSet sprite = new();
+                sprite.Sprites.Add(spr);
+                Bitmap newBitmap = new(pngFile);
+                newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
+                Texture text = TextureEncoder.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
+                //MikuMikuLibrary.Textures.Texture text = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(newBitmap, MikuMikuLibrary.Textures.TextureFormat.DXT5, true);
+                sprite.TextureSet.Textures.Add(text);
+                Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
+                BitmapImage img = Program.ToBitmapImage(cropSprite);
+                image.Source = img;
+            }
+            public static string ProcessDirectories(string folderName)
+            {
+                string exportFolder = Properties.Settings.Default.themeSetting + "/mods/" + folderName + "/rom/";
+                Directory.CreateDirectory(exportFolder);
+                Directory.CreateDirectory(exportFolder + "2d");
+                Directory.CreateDirectory(exportFolder + "objset");
+                Directory.CreateDirectory(exportFolder + "lang2");
+                Program.CreateModConfig(exportFolder.Remove(exportFolder.Length - 5, 5), folderName);
+                if (File.Exists(exportFolder + "/lang2/mod_str_array.toml"))
+                {
+                    File.Delete(exportFolder + "/lang2/mod_str_array.toml");
+                }
+                return exportFolder;
+            }
+            public static string ReturnSubIDString(int subID)
+            {
+                switch (subID)
+                {
+                    case 0:
+                        return Properties.Resources.item_headacc;
+                    case 4:
+                        return Properties.Resources.item_faceacc;
+                    case 8:
+                        return Properties.Resources.item_chestacc;
+                    case 16:
+                        return Properties.Resources.item_backacc;
+                    case 1:
+                        return Properties.Resources.item_hair;
+                    case 10:
+                        return Properties.Resources.item_body;
+                    case 14:
+                        return Properties.Resources.item_hands;
+                    case 6:
+                        return Properties.Resources.item_contact;
+                    case 24:
+                        return Properties.Resources.item_head;
+                    default:
+                        return Properties.Resources.item_default;
+                }
+            }
+            public static void ConvertToTriangleStrips(ObjectSet objset)
+            {
+                foreach (var obj in objset.Objects)
+                {
+                    foreach (var mesh in obj.Meshes) // might as well leave this in from kei's batchtristripper - thank you bestie for this part
+                    {
+                        foreach (var subMesh in mesh.SubMeshes)
+                        {
+                            if (subMesh.PrimitiveType != PrimitiveType.Triangles)
+                                continue;
+
+                            var triangleStrip = MikuMikuLibrary.Objects.Processing.Stripifier.Stripify(subMesh.Indices);
+                            if (triangleStrip == null)
+                                continue;
+
+                            subMesh.PrimitiveType = PrimitiveType.TriangleStrip;
+                            subMesh.Indices = triangleStrip;
+                        }
+                    }
+                }
+            }
+            public static int GetItemNumber(string item_file_name, string chara, usedIDs finalUsedIDs)
+            {
+                string name = Path.GetFileNameWithoutExtension(item_file_name);
+                if (name.Contains("itm"))
+                {
+                    string[] final = name.Split(new string[] { "itm" }, StringSplitOptions.None);
+                    if (!Program.Databases.CheckID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)], int.Parse(final[1])) && !(final[1] == "000"))
+                    {
+                        return int.Parse(final[1]);
+                    }
+                    else
+                    {
+                        ChoiceWindow choice = new(Properties.Resources.warn_used_0 + Properties.Resources.cmn_item_nofull + Properties.Resources.warn_used_1 + "\n" +
+                    Properties.Resources.warn_used_offer + " " + Properties.Resources.cmn_cos_item +": " + final[1], Resources.cmn_no, Resources.cmn_yes);
+                        choice.ShowDialog();
+                        if (choice.isRightClicked)
+                        {
+                            return Program.Databases.GetUnusedID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)]);
+                        }
+                        else
+                        {
+                            return int.Parse(final[1]);
+                        }
+                    }
+                }
+                else
+                {
+                    Program.NotiBox(Properties.Resources.warn_no_itm, Properties.Resources.cmn_error);
+                    return Program.Databases.GetUnusedID(finalUsedIDs.chritm_prop_item[Program.Databases.GetChritmName(chara)]);
+                }
+            }
+            public static void ProcessTextures(ObjectSet objset, string name, usedIDs finalUsedIDs, TextureDatabase tex_db)
+            {
+                Dictionary<uint, uint> texIDs = new();
+                for (int i = 0; i < objset.TextureIds.Count; i++)
+                {
+                    if (texIDs.ContainsKey(objset.TextureIds[i]))
+                    {
+                        objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
+                    }
+                    else
+                    {
+                        texIDs.Add(objset.TextureIds[i], Program.Databases.GetUnusedID(finalUsedIDs.tex_db, 9999999));
+                        objset.TextureIds[i] = texIDs[objset.TextureIds[i]];
+                        finalUsedIDs.tex_db.Add(objset.TextureIds[i]);
+                    }
+                }
+
+                foreach (MikuMikuLibrary.Objects.Object obj in objset.Objects)
+                {
+                    foreach (Material mat in obj.Materials)
+                    {
+                        foreach (MaterialTexture matTex in mat.MaterialTextures)
+                        {
+                            if (texIDs.TryGetValue(matTex.TextureId, out uint value))
+                            {
+                                matTex.TextureId = value;
+                            }
+                        }
+                    }
+                }
+                int texCount = 0;
+                foreach (uint id in objset.TextureIds)
+                {
+                    TextureInfo tex = new()
+                    {
+                        Id = id,
+                        Name = name.ToUpper() + "_AUTO_TEXTURE_" + texCount
+                    };
+                    texCount++;
+                    tex_db.Textures.Add(tex);
+                }
+            }
+        }
 
         public class IO
         {
@@ -625,31 +780,20 @@ namespace Armoire
             }
         }
 
-        public static List<ItemPreset> itemPresets = new();
-        static readonly ItemPreset eyetex = new(37, 24, 0, 1, 2, 0, 0, (decimal)0.00);
-        static readonly ItemPreset lenses = new(1, 6, 1, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset hair = new(1, 1, 0, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset body = new(1, 10, 2, -1, 1, 0, 0, (decimal)0.00);
-        static readonly ItemPreset hands = new(1, 14, 2, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset headacc = new(1, 0, 0, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset faceacc = new(1, 4, 1, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset chestacc = new(1, 8, 2, -1, 0, 0, 0, (decimal)0.00);
-        static readonly ItemPreset backacc = new(1, 16, 2, -1, 0, 0, 0, (decimal)0.00);
-        public static void CreatePresetList()
-        {
-            itemPresets = new List<ItemPreset>
-            {
-                eyetex,
-                lenses,
-                hair,
-                body,
-                hands,
-                headacc,
-                faceacc,
-                chestacc,
-                backacc
-            };
-        }
+        public readonly static List<ItemPreset> itemPresets =
+        [
+            new(37, 24, 0, 1, 2, 0, 0, (decimal)0.00), // eyetex
+            new(1, 6, 1, -1, 0, 0, 0, (decimal)0.00), // lenses
+            new(1, 1, 0, -1, 0, 0, 0, (decimal)0.00), // hair
+            new(1, 10, 2, -1, 1, 0, 0, (decimal)0.00), // body
+            new(1, 14, 2, -1, 0, 0, 0, (decimal)0.00), // hands
+            new(1, 0, 0, -1, 0, 0, 0, (decimal)0.00), // head accessory
+            new(1, 4, 1, -1, 0, 0, 0, (decimal)0.00), // face accessory
+            new(1, 8, 2, -1, 0, 0, 0, (decimal)0.00), // chest accessory
+            new(1, 16, 2, -1, 0, 0, 0, (decimal)0.00), // back accessory
+            new(2085, 24, 0, 1, 1, 0, 0, (decimal)0.00) // head
+        ];
+
         public static BitmapImage ToBitmapImage(Bitmap bitmap) // Credit to the uploader of this code LawMan on StackOverflow
         {
             using (var memory = new MemoryStream())
@@ -737,7 +881,7 @@ namespace Armoire
                         {
                             if (file.Contains("eden") || file.Contains("Eden") || file.Contains("EDEN"))
                             {
-                                Program.NotiBox("Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.", Properties.Resources.cmn_error);
+                                Program.NotiBox(Properties.Resources.warn_virus, Properties.Resources.cmn_error);
                                 continue;
                             }
                             else
@@ -751,7 +895,7 @@ namespace Armoire
                         {
                             if (file.Contains("eden") || file.Contains("Eden") || file.Contains("EDEN"))
                             {
-                                Program.NotiBox("Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.", Properties.Resources.cmn_error);
+                                Program.NotiBox(Properties.Resources.warn_virus, Properties.Resources.cmn_error);
                                 continue;
                             }
                             else
@@ -765,7 +909,7 @@ namespace Armoire
                         {
                             if (file.Contains("eden") || file.Contains("Eden") || file.Contains("EDEN"))
                             {
-                                Program.NotiBox("Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.", Properties.Resources.cmn_error);
+                                Program.NotiBox(Properties.Resources.warn_virus, Properties.Resources.cmn_error);
                                 continue;
                             }
                             else
@@ -811,11 +955,11 @@ namespace Armoire
                     }
                     else
                     {
-                        Program.NotiBox("This is not a valid Project DIVA Mega Mix+ directory.", Properties.Resources.cmn_error);
+                        Program.NotiBox(Properties.Resources.warn_divadir_wrong, Properties.Resources.cmn_error);
                     }
                     
                 }
-                catch { Program.NotiBox("An error occurred while reading the files in your game directory.\nError in: " + currentFile, Properties.Resources.cmn_error); }
+                catch { Program.NotiBox(Properties.Resources.warn_error_read + currentFile, Properties.Resources.cmn_error); }
             }
         }
 
@@ -858,9 +1002,7 @@ namespace Armoire
         {
             using (TextWriter tw = new StreamWriter(FolderPath + "/config.toml"))
             {
-                tw.WriteLine("enabled = true");
-                tw.WriteLine("name = \"" + ModName + "\"");
-                tw.WriteLine("author = \"" + "Armoire" + "\"");
+                tw.WriteLine($"enabled = true\nname = \"{ModName}\"\nauthor = \"Armoire\"");
                 tw.WriteLine("description = \"A mod created using Armoire.\"");
                 tw.WriteLine("include = [\".\"]");
             }

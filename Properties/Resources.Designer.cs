@@ -250,6 +250,15 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Number.
+        /// </summary>
+        public static string cmn_item_nofull {
+            get {
+                return ResourceManager.GetString("cmn_item_nofull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Item Type.
         /// </summary>
         public static string cmn_item_type {
@@ -583,24 +592,6 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To CSV.
-        /// </summary>
-        public static string file_csv {
-            get {
-                return ResourceManager.GetString("file_csv", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cleaner.
-        /// </summary>
-        public static string file_db_clean {
-            get {
-                return ResourceManager.GetString("file_db_clean", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string file_open {
@@ -642,6 +633,96 @@ namespace Armoire.Properties {
         public static string file_wizard {
             get {
                 return ResourceManager.GetString("file_wizard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back Accessory.
+        /// </summary>
+        public static string item_backacc {
+            get {
+                return ResourceManager.GetString("item_backacc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body.
+        /// </summary>
+        public static string item_body {
+            get {
+                return ResourceManager.GetString("item_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chest Accessory.
+        /// </summary>
+        public static string item_chestacc {
+            get {
+                return ResourceManager.GetString("item_chestacc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Lenses.
+        /// </summary>
+        public static string item_contact {
+            get {
+                return ResourceManager.GetString("item_contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item.
+        /// </summary>
+        public static string item_default {
+            get {
+                return ResourceManager.GetString("item_default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Face Accessory.
+        /// </summary>
+        public static string item_faceacc {
+            get {
+                return ResourceManager.GetString("item_faceacc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hair.
+        /// </summary>
+        public static string item_hair {
+            get {
+                return ResourceManager.GetString("item_hair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hands.
+        /// </summary>
+        public static string item_hands {
+            get {
+                return ResourceManager.GetString("item_hands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Head.
+        /// </summary>
+        public static string item_head {
+            get {
+                return ResourceManager.GetString("item_head", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Head Accessory.
+        /// </summary>
+        public static string item_headacc {
+            get {
+                return ResourceManager.GetString("item_headacc", resourceCulture);
             }
         }
         
@@ -800,6 +881,15 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Themes.
+        /// </summary>
+        public static string tab_theme {
+            get {
+                return ResourceManager.GetString("tab_theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Texture.
         /// </summary>
         public static string tex_add {
@@ -890,6 +980,15 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Texture Picker.
+        /// </summary>
+        public static string title_texture {
+            get {
+                return ResourceManager.GetString("title_texture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Module Wizard.
         /// </summary>
         public static string title_wizard {
@@ -908,11 +1007,191 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is case sensitive.\nThis only applies to selected items..
+        /// </summary>
+        public static string warn_case_sensitive {
+            get {
+                return ResourceManager.GetString("warn_case_sensitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Costumes can not be empty..
+        /// </summary>
+        public static string warn_costume_empty {
+            get {
+                return ResourceManager.GetString("warn_costume_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This item could not be deleted..
+        /// </summary>
+        public static string warn_delete {
+            get {
+                return ResourceManager.GetString("warn_delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is not a valid Project DIVA Mega Mix+ directory..
+        /// </summary>
+        public static string warn_divadir_wrong {
+            get {
+                return ResourceManager.GetString("warn_divadir_wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a value..
+        /// </summary>
+        public static string warn_enter_value {
+            get {
+                return ResourceManager.GetString("warn_enter_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while reading the files in your game directory.\nError in:.
+        /// </summary>
+        public static string warn_error_read {
+            get {
+                return ResourceManager.GetString("warn_error_read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while saving your file.\nPlease try again..
+        /// </summary>
+        public static string warn_error_save {
+            get {
+                return ResourceManager.GetString("warn_error_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something is wrong with the file you selected for this item.\nIt doesn&apos;t look like a .farc format file..
+        /// </summary>
+        public static string warn_file_error {
+            get {
+                return ResourceManager.GetString("warn_file_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To save, you must select a file first..
+        /// </summary>
+        public static string warn_flop_save {
+            get {
+                return ResourceManager.GetString("warn_flop_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A generic error occurred..
         /// </summary>
         public static string warn_generic {
             get {
                 return ResourceManager.GetString("warn_generic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select an item first..
+        /// </summary>
+        public static string warn_item_not_sel {
+            get {
+                return ResourceManager.GetString("warn_item_not_sel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no items in the wizard..
+        /// </summary>
+        public static string warn_no_items {
+            get {
+                return ResourceManager.GetString("warn_no_items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This file&apos;s name doesn&apos;t contain &apos;itm&apos;, a random number has been provided but you may need to adjust the ID manually..
+        /// </summary>
+        public static string warn_no_itm {
+            get {
+                return ResourceManager.GetString("warn_no_itm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to give the mod a name.\nNot proceeding..
+        /// </summary>
+        public static string warn_no_name {
+            get {
+                return ResourceManager.GetString("warn_no_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only 2 objects may be used..
+        /// </summary>
+        public static string warn_object_limit {
+            get {
+                return ResourceManager.GetString("warn_object_limit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This.
+        /// </summary>
+        public static string warn_used_0 {
+            get {
+                return ResourceManager.GetString("warn_used_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is already being used, the resulting item may have some issues..
+        /// </summary>
+        public static string warn_used_1 {
+            get {
+                return ResourceManager.GetString("warn_used_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to use a random, unused one instead?.
+        /// </summary>
+        public static string warn_used_offer {
+            get {
+                return ResourceManager.GetString("warn_used_offer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods..
+        /// </summary>
+        public static string warn_virus {
+            get {
+                return ResourceManager.GetString("warn_virus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This window is already open..
+        /// </summary>
+        public static string warn_window {
+            get {
+                return ResourceManager.GetString("warn_window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please check your items, something is not set correctly..
+        /// </summary>
+        public static string warn_wizard_problem {
+            get {
+                return ResourceManager.GetString("warn_wizard_problem", resourceCulture);
             }
         }
         

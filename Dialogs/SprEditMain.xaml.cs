@@ -131,7 +131,7 @@ namespace Armoire.Dialogs
                 }
                 else
                 {
-                    Program.NotiBox("An error occurred while saving your file.\nPlease try again.", Properties.Resources.cmn_error);
+                    Program.NotiBox(Properties.Resources.warn_error_save, Properties.Resources.cmn_error);
                 }
             }
             else { Program.NotiBox(Properties.Resources.warn_generic, Properties.Resources.cmn_error); }
@@ -239,7 +239,7 @@ namespace Armoire.Dialogs
 
         private void Replace_Click(object sender, RoutedEventArgs e)
         {
-            Program.NotiBox("This is case sensitive." + "\nThis only applies to selected items.", Properties.Resources.window_notice);
+            Program.NotiBox(Properties.Resources.warn_case_sensitive, Properties.Resources.window_notice);
             TextEntry ti = new(false, Properties.Resources.replace_old);
             TextEntry ti2 = new(false, Properties.Resources.replace_new);
             string detect;

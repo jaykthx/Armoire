@@ -37,11 +37,11 @@
         <TextBlock Text="Eye Left Texture:" VerticalAlignment="Center" Grid.Row="2"/>
         <TextBlock Text="Eye Right Texture:" VerticalAlignment="Center" Grid.Row="3"/>
         <TextBlock Text="Face Texture:" VerticalAlignment="Center" Grid.Row="4"/>
-        <ComboBox x:Name="eyebrowCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="0" Grid.Column="1"/>
-        <ComboBox x:Name="eyelashCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox x:Name="eyeLCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="2" Grid.Column="1"/>
-        <ComboBox x:Name="eyeRCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="3" Grid.Column="1"/>
-        <ComboBox x:Name="faceCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="4" Grid.Column="1"/>
+        <ComboBox x:Name="eyebrowCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
+        <ComboBox x:Name="eyelashCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
+        <ComboBox x:Name="eyeLCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="2" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
+        <ComboBox x:Name="eyeRCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="3" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
+        <ComboBox x:Name="faceCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="4" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
         <Button Content="OK" Grid.Row="5" Grid.ColumnSpan="2" TextBlock.FontSize="20" Click="Button_Click"/>
     </Grid>
 </Window>

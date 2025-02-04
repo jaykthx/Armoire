@@ -130,10 +130,10 @@
     <value>関連モジュール</value>
   </data>
   <data name="cmn_button_change" xml:space="preserve">
-    <value>変更する</value>
+    <value>変更</value>
   </data>
   <data name="cmn_button_edit" xml:space="preserve">
-    <value>エディット</value>
+    <value>変更</value>
   </data>
   <data name="cmn_chara" xml:space="preserve">
     <value>キャラ</value>
@@ -180,8 +180,11 @@
   <data name="cmn_item_no" xml:space="preserve">
     <value>番号</value>
   </data>
+  <data name="cmn_item_nofull" xml:space="preserve">
+    <value>アイテム番号</value>
+  </data>
   <data name="cmn_item_type" xml:space="preserve">
-    <value>Set Item Type</value>
+    <value>タイプ変更</value>
   </data>
   <data name="cmn_month" xml:space="preserve">
     <value>月</value>
@@ -280,7 +283,7 @@
     <value>希望する値を入力してください。</value>
   </data>
   <data name="exp_3" xml:space="preserve">
-    <value>PNGフォーマットのプレビュー画像は512px x 512pxになるの必要があります。</value>
+    <value>PNGフォーマットのプレビュー画像は512px x 512pxになる必要があります。</value>
   </data>
   <data name="exp_4" xml:space="preserve">
     <value>まずはファイルを開いてください。</value>
@@ -290,9 +293,6 @@
   </data>
   <data name="exp_6" xml:space="preserve">
     <value>保存が無事に成功しました。</value>
-  </data>
-  <data name="file_db_clean" xml:space="preserve">
-    <value>クリーナー</value>
   </data>
   <data name="file_open" xml:space="preserve">
     <value>ファイルを開く</value>
@@ -307,7 +307,37 @@
     <value>ファイル</value>
   </data>
   <data name="file_wizard" xml:space="preserve">
-    <value>ウイザード</value>
+    <value>ウィザード</value>
+  </data>
+  <data name="item_backacc" xml:space="preserve">
+    <value>背アイテム</value>
+  </data>
+  <data name="item_body" xml:space="preserve">
+    <value />
+  </data>
+  <data name="item_chestacc" xml:space="preserve">
+    <value>胸アイテム</value>
+  </data>
+  <data name="item_contact" xml:space="preserve">
+    <value>コンタクト</value>
+  </data>
+  <data name="item_default" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="item_faceacc" xml:space="preserve">
+    <value>顔アイテム</value>
+  </data>
+  <data name="item_hair" xml:space="preserve">
+    <value>ヘア</value>
+  </data>
+  <data name="item_hands" xml:space="preserve">
+    <value>手</value>
+  </data>
+  <data name="item_head" xml:space="preserve">
+    <value>顔</value>
+  </data>
+  <data name="item_headacc" xml:space="preserve">
+    <value>頭アイテム</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="md_dummy" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -338,7 +368,7 @@
     <value>現在のテキストを入力してください。</value>
   </data>
   <data name="select_png" xml:space="preserve">
-    <value>PNGファイルを選択してください。</value>
+    <value>PNGファイルを選択する</value>
   </data>
   <data name="spr_add" xml:space="preserve">
     <value>スプライトを追加する</value>
@@ -360,6 +390,9 @@
   </data>
   <data name="tab_module" xml:space="preserve">
     <value>モジュール</value>
+  </data>
+  <data name="tab_theme" xml:space="preserve">
+    <value>テーマ設定</value>
   </data>
   <data name="tex_add" xml:space="preserve">
     <value>テクスチャを追加する</value>
@@ -400,8 +433,68 @@
   <data name="title_wizard_custom" xml:space="preserve">
     <value>カスタマイズアイテムウィザード</value>
   </data>
+  <data name="warn_case_sensitive" xml:space="preserve">
+    <value>このプロセスはケースセンシティブです。\nそれに、選択したエントリーのみが影響を受けます。</value>
+  </data>
+  <data name="warn_costume_empty" xml:space="preserve">
+    <value>コスチュームは空っぽになれません。</value>
+  </data>
+  <data name="warn_delete" xml:space="preserve">
+    <value>このアイテムを削除できませんでした。</value>
+  </data>
+  <data name="warn_divadir_wrong" xml:space="preserve">
+    <value>これは妥当な「Project DIVA Mega39's+」ディレクトリではありません。</value>
+  </data>
+  <data name="warn_enter_value" xml:space="preserve">
+    <value>値を入力してください。</value>
+  </data>
+  <data name="warn_error_read" xml:space="preserve">
+    <value>ゲームのファイルを読み込み途中にエラーが発生しました。\n参考のファイル：</value>
+  </data>
+  <data name="warn_error_save" xml:space="preserve">
+    <value>保存している途中にエラーが発生しました。\nもう一度やり直してください。</value>
+  </data>
+  <data name="warn_file_error" xml:space="preserve">
+    <value>このアイテムに選択したファイルでエラーが発生しました。\nFARCファイルではないかもしれません。</value>
+  </data>
+  <data name="warn_flop_save" xml:space="preserve">
+    <value>保存するには、ファイルを開く必要があります。</value>
+  </data>
   <data name="warn_generic" xml:space="preserve">
     <value>エラーが発生しました。</value>
+  </data>
+  <data name="warn_item_not_sel" xml:space="preserve">
+    <value>まず、アイテムを選択する必要があります。</value>
+  </data>
+  <data name="warn_no_items" xml:space="preserve">
+    <value>ウィザードにアイテムがありません。</value>
+  </data>
+  <data name="warn_no_itm" xml:space="preserve">
+    <value>このファイル名に「itm」が入っていません。ランダムに番号を付けましたが、自分で調整する必要があるかもしれません。</value>
+  </data>
+  <data name="warn_no_name" xml:space="preserve">
+    <value>このMODを名付ける必要があります。\nという理由で、進めません。</value>
+  </data>
+  <data name="warn_object_limit" xml:space="preserve">
+    <value>オブジェクトは二つに限ります。</value>
+  </data>
+  <data name="warn_used_0" xml:space="preserve">
+    <value>この</value>
+  </data>
+  <data name="warn_used_1" xml:space="preserve">
+    <value>は既に使われています。　作成しているアイテムは問題を生じる可能性があります。</value>
+  </data>
+  <data name="warn_used_offer" xml:space="preserve">
+    <value>現在使われていないのを使いますか？</value>
+  </data>
+  <data name="warn_virus" xml:space="preserve">
+    <value>Eden ProjectというMODのフォルダが見つかりました。\n当ツールと他のMODに対して多くのエラーを発生するきらいがあるため、恐れ入りますがこのMODの内容は読みません。</value>
+  </data>
+  <data name="warn_window" xml:space="preserve">
+    <value>このウィンドウはもう開いています。</value>
+  </data>
+  <data name="warn_wizard_problem" xml:space="preserve">
+    <value>ウィザードに登録されているアイテムの中で、正しく設定されない部分があります。改めてアイテムの設定をご確認ください。</value>
   </data>
   <data name="window_item" xml:space="preserve">
     <value>アイテム詳細</value>

@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:Armoire"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
-    <Grid Background="LightGray">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -27,18 +27,18 @@
         <TextBlock x:Name="idText" Text="{x:Static p:Resources.cmn_id}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0"/>
         <Button x:Name="idButton" Content="{x:Static p:Resources.cmn_button_edit}" Grid.Row="1" Click="idButton_Click" Grid.Column="1"/>
         <TextBlock Text="{x:Static p:Resources.cmn_chara}" Grid.Row="2" VerticalAlignment="Center" Grid.Column="0"/>
-        <ComboBox x:Name="charBox" Grid.Row="2" SelectionChanged="charBox_SelectionChanged" MinWidth="140" Grid.Column="1" VerticalAlignment="Center"/>
+        <ComboBox x:Name="charBox" Style="{StaticResource ComboStyle}" Grid.Row="2" SelectionChanged="charBox_SelectionChanged" MinWidth="140" Grid.Column="1" VerticalAlignment="Center"/>
         <TextBlock x:Name="indexText" Grid.Row="3" Text="{x:Static p:Resources.cmn_index}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0"/>
         <Button x:Name="indexButton" Grid.Row="3" Content="{x:Static p:Resources.cmn_button_edit}" Click="indexButton_Click" Grid.Column="1"/>
         <TextBlock Text="{x:Static p:Resources.cmn_hair_swap}" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0"/>
         <CheckBox x:Name="hairCheck" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
         <TextBlock Text="{x:Static p:Resources.cmn_item_list}" Grid.Row="5" VerticalAlignment="Center" Grid.Column="0"/>
         <UniformGrid Columns="2" Grid.Column="1" Grid.Row="5">
-            <Button Content="+" FontWeight="Bold" Click="Button_Click"/>
-            <Button Content="-" FontWeight="Bold" Click="Button_Click_1"/>
+            <Button Content="Add Items" Click="Button_Click" HorizontalAlignment="Left" Width="83"/>
+            <Button Content="Remove All" Click="Button_Click_1"/>
         </UniformGrid>
         <StackPanel x:Name="itemPanel" Grid.Row="6" Grid.ColumnSpan="2"/>
-        <StackPanel Grid.RowSpan="7" Grid.Column="2" Background="DarkGray">
+        <StackPanel Grid.RowSpan="7" Grid.Column="2">
             <TextBlock Text="{x:Static p:Resources.cmn_preview_img}" HorizontalAlignment="Center"/>
             <Image x:Name="moduleImage" Height="250"/>
             <Button Content="{x:Static p:Resources.select_png}" Click="Button_Click_2" MinHeight="34"/>

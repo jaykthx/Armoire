@@ -26,34 +26,33 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Menu Grid.Row="0" Grid.ColumnSpan="5" Height="20" Foreground="Black">
+                <Menu Grid.Row="0" Grid.ColumnSpan="5" Height="20">
                     <MenuItem StaysOpenOnClick="True" Width="auto" Header="{x:Static p:Resources.file_title}">
                         <MenuItem Header="{x:Static p:Resources.file_open}" Command="Open"/>
                         <MenuItem Header="{x:Static p:Resources.file_save}"  Command="Save"/>
                         <MenuItem Header="{x:Static p:Resources.file_saveas}"  Command="SaveAs" InputGestureText="Ctrl+Shift+S"/>
-                        <!--<MenuItem Header="{x:Static p:Resources.file_db_clean}"  Click="Test_Click"/>-->
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click"/>
                 </Menu>
-                <DataGrid x:Name="DataGrid_Modules" Background="LightGray" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding Modules}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" BorderBrush="White">
+                <RepeatButton Template="{DynamicResource RepeatButtonTemplate1}"></RepeatButton>
+                <DataGrid x:Name="DataGrid_Modules" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding Modules}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{x:Static p:Resources.cxt_module_add}"  Click="AddButton_Click"/>
-                            <!--<MenuItem Header="Add Module (At End)"  Click="AddButton2_Click"/>-->
                             <MenuItem Header="{x:Static p:Resources.cxt_module_remove}" Click="DeleteEntry"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                     <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="idRow_Modules" Header="{x:Static p:Resources.cmn_id}" Width="40" Binding="{Binding id}"/>
-                        <DataGridComboBoxColumn x:Name="attrBox" Header="{x:Static p:Resources.cmn_attr}" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridComboBoxColumn x:Name="charaBox_Modules" Width="70" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="160*" Binding="{Binding name}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" Width="50" Binding="{Binding shop_price}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" Width="50" Binding="{Binding sort_index}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_cos}" Width="80" Binding="{Binding cos}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" Width="50" Binding="{Binding shop_st_day}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" Width="50" Binding="{Binding shop_st_month}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" Width="50" Binding="{Binding shop_st_year}"/>
+                        <DataGridTextColumn x:Name="idRow_Modules" EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_id}" Width="40" Binding="{Binding id}"/>
+                        <DataGridComboBoxColumn x:Name="attrBox" EditingElementStyle="{StaticResource ComboStyle}" Header="{x:Static p:Resources.cmn_attr}" ItemsSource="{Binding attrs}" SelectedValueBinding="{Binding attr, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridComboBoxColumn x:Name="charaBox_Modules" EditingElementStyle="{StaticResource ComboStyle}" Width="70" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" EditingElementStyle="{StaticResource EditStyle}" Width="160*" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" EditingElementStyle="{StaticResource EditStyle}" Width="50" Binding="{Binding shop_price}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" EditingElementStyle="{StaticResource EditStyle}" Width="50" Binding="{Binding sort_index}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_cos}" EditingElementStyle="{StaticResource EditStyle}" Width="80" Binding="{Binding cos}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" EditingElementStyle="{StaticResource EditStyle}" Width="50" Binding="{Binding shop_st_day}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" EditingElementStyle="{StaticResource EditStyle}" Width="50" Binding="{Binding shop_st_month}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" EditingElementStyle="{StaticResource EditStyle}" Width="50" Binding="{Binding shop_st_year}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -72,7 +71,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click_Customize"/>
                 </Menu>
-                <DataGrid x:Name="DataGrid_Customize" Background="LightGray" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding CustItems}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Customize" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                <DataGrid x:Name="DataGrid_Customize" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding CustItems}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Customize" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{x:Static p:Resources.cxt_acc_add}"  Click="AddButton_Click_Customize"/>
@@ -82,16 +81,16 @@
                     </DataGrid.ContextMenu>
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="idRow_Customize" Header="{x:Static p:Resources.cmn_id}" Width="35" Binding="{Binding id}"/>
-                        <DataGridComboBoxColumn x:Name="partBox" Header="{x:Static p:Resources.cmn_parts}" Width="50" ItemsSource="{Binding partslist}" SelectedValueBinding="{Binding parts, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridComboBoxColumn x:Name="charaBox_Customize" Width="65" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="160*" Binding="{Binding name}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" Width="40" Binding="{Binding shop_price}"/>
-                        <DataGridTextColumn Header= "{x:Static p:Resources.cmn_index}" Width="40" Binding="{Binding sort_index}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_objid}" Width="70" Binding="{Binding obj_id}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_bind}" Width="100" Binding="{Binding bind_module}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" Width="40" Binding="{Binding shop_st_day}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" Width="45" Binding="{Binding shop_st_month}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" Width="40" Binding="{Binding shop_st_year}"/>
+                        <DataGridComboBoxColumn x:Name="partBox" Header="{x:Static p:Resources.cmn_parts}" EditingElementStyle="{StaticResource ComboStyle}" Width="50" ItemsSource="{Binding partslist}" SelectedValueBinding="{Binding parts, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridComboBoxColumn x:Name="charaBox_Customize" Width="65" EditingElementStyle="{StaticResource ComboStyle}" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" EditingElementStyle="{StaticResource EditStyle}" Width="160*" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding shop_price}"/>
+                        <DataGridTextColumn Header= "{x:Static p:Resources.cmn_index}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding sort_index}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_objid}" EditingElementStyle="{StaticResource EditStyle}" Width="70" Binding="{Binding obj_id}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_bind}" EditingElementStyle="{StaticResource EditStyle}" Width="100" Binding="{Binding bind_module}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding shop_st_day}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_month}" EditingElementStyle="{StaticResource EditStyle}" Width="45" Binding="{Binding shop_st_month}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_year}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding shop_st_year}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -125,18 +124,18 @@
                             </ContextMenu>
                         </TreeView.ContextMenu>
                     </TreeView>
-                <ComboBox x:Name="CharaBox" Grid.Row="1" Height="20" SelectionChanged="CharaBox_SelectionChanged"/>
-                <DataGrid x:Name="ItemDataGrid"  Background="LightGray" Grid.Row="3" HeadersVisibility="Column" ItemsSource="{Binding items, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Chara" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                <ComboBox Style="{DynamicResource ComboStyle}" x:Name="CharaBox" Grid.Row="1" Height="20" SelectionChanged="CharaBox_SelectionChanged"/>
+                <DataGrid x:Name="ItemDataGrid" Grid.Row="3" HeadersVisibility="Column" ItemsSource="{Binding items, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Chara" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="{x:Static p:Resources.cxt_item_add}"  Click="AddItem"/>
+                            <MenuItem Header="{x:Static p:Resources.cxt_item_add}" Click="AddItem"/>
                             <MenuItem Header="{x:Static p:Resources.cxt_item_remove}" Click="DelItem"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_item_no}" Width="32" Binding="{Binding no}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Width="80*" Binding="{Binding name}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_objuid}" Width="80*" Binding="{Binding uid}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_item_no}" EditingElementStyle="{StaticResource EditStyle}" Width="" Binding="{Binding no}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" EditingElementStyle="{StaticResource EditStyle}" Width="80*" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_objuid}" EditingElementStyle="{StaticResource EditStyle}" Width="80*" Binding="{Binding uid}"/>
                         <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_preset}" Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -165,6 +164,18 @@
                 <Button Content="{x:Static p:Resources.window_spr}" Click="Open_SprEditor"/>
                 <Button Content="{x:Static p:Resources.window_obj}" Click="Open_ObjEditor" Grid.Row="1"/>
                 <Button Content="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Grid.Row="2"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static p:Resources.tab_theme}">
+            <Grid>
+                <UniformGrid Rows="0" Columns="1">
+                    <Button Content="Default" Click="Default_Click"/>
+                    <Button Content="Dark" Click="Dark_Click"/>
+                    <Button Content="Light" Click="Light_Click"/>
+                    <Button Content="Pink" Click="Pink_Click"/>
+                    <Button Content="Blue" Click="Blue_Click"/>
+                    <Button Content="Vampire" Click="Vampire_Click"/>
+                </UniformGrid>
             </Grid>
         </TabItem>
     </TabControl>

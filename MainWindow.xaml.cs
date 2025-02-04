@@ -8,17 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
 using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
@@ -27,6 +22,7 @@ namespace Armoire
 {
     public partial class MainWindow : Window
     {
+        int secretCount = 0;
         //module
         public static ObservableCollection<module> Modules = new();
         //cust
@@ -47,9 +43,11 @@ namespace Armoire
             partBox.ItemsSource = partsList;
             DataGrid_Customize.ItemsSource = CustItems;
             DataGrid_Customize.Items.IsLiveSorting = true;
-            //CosDataGrid.Items.IsLiveSorting = true;
             ItemDataGrid.Items.IsLiveSorting = true;
-
+            if (Settings.Default.themeSetting.Length > 2)
+            {
+                ChangeTheme(Settings.Default.themeSetting);
+            }
         }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -76,7 +74,7 @@ namespace Armoire
                 }
                 else
                 {
-                    Program.NotiBox("You must open a file before attempting to save it.", Properties.Resources.cmn_error);
+                    Program.NotiBox(Properties.Resources.warn_flop_save, Properties.Resources.cmn_error);
                 }
             }
             else if (TabControl1.SelectedIndex == 1)
@@ -87,7 +85,7 @@ namespace Armoire
                 }
                 else
                 {
-                    Program.NotiBox("You must open a file before attempting to save it.", Properties.Resources.cmn_error);
+                    Program.NotiBox(Properties.Resources.warn_flop_save, Properties.Resources.cmn_error);
                 }
             }
             else
@@ -98,7 +96,7 @@ namespace Armoire
                 }
                 else
                 {
-                    Program.NotiBox("You must open a file before attempting to save it.", Properties.Resources.cmn_error);
+                    Program.NotiBox(Properties.Resources.warn_flop_save, Properties.Resources.cmn_error);
                 }
             }
         }
@@ -185,7 +183,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("An error occured whilst deleting your items.", Properties.Resources.cmn_error);
+                Program.NotiBox(Properties.Resources.warn_delete, Properties.Resources.cmn_error);
             }
         }
 
@@ -230,7 +228,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This window is already open.", "Friendly Reminder");
+                Program.NotiBox(Properties.Resources.warn_window, Properties.Resources.window_notice);
             }
         }
         private void Open_TexEditor(object sender, RoutedEventArgs e)
@@ -242,7 +240,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This window is already open.", "Friendly Reminder");
+                Program.NotiBox(Properties.Resources.warn_window, Properties.Resources.window_notice);
             }
         }
         private void Open_ObjEditor(object sender, RoutedEventArgs e)
@@ -254,7 +252,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("This window is already open.", "Friendly Reminder");
+                Program.NotiBox(Properties.Resources.warn_window, Properties.Resources.window_notice);
             }
         }
         private void Wizard_Click(object sender, RoutedEventArgs e)
@@ -422,7 +420,7 @@ namespace Armoire
             }
             else
             {
-                Program.NotiBox("An error occured whilst deleting your items.", Properties.Resources.cmn_error);
+                Program.NotiBox(Properties.Resources.warn_delete, Properties.Resources.cmn_error);
             }
         }
         private void AddButton_Click_Customize(object sender, RoutedEventArgs e)
@@ -677,6 +675,49 @@ namespace Armoire
                 PresetPicker ppcker = new(item, chritmFiles[CharaBox.SelectedIndex].chara.ToUpper(), true, false);
                 ppcker.ShowDialog();
             }
+        }
+
+        private void ChangeTheme(string theme)
+        {
+            Settings.Default.themeSetting = theme;
+            Settings.Default.Save();
+            var app = (App)System.Windows.Application.Current;
+            app.ChangeTheme(new Uri(("/Themes/" + theme + ".xaml"), UriKind.Relative));
+        }
+
+        private void Pink_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme("Pink");
+            secretCount++;
+            if(secretCount >= 10)
+            {
+                ChangeTheme("PSP");
+            }
+        }
+        private void Blue_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme("Blue");
+            secretCount = 0;
+        }
+        private void Dark_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme("Dark");
+            secretCount = 0;
+        }
+        private void Light_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme("Light");
+            secretCount = 0;
+        }
+        private void Default_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme("Default");
+            secretCount = 0;
+        }
+        private void Vampire_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme("Vampire");
+            secretCount = 0;
         }
     }
 }

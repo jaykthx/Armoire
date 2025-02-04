@@ -43,9 +43,9 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.obj_file}" Binding="{Binding FileName}" Width="125*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" Header="{x:Static p:Resources.obj_file}" Binding="{Binding FileName}" Width="125*"/>
                 <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_sprs}" Width="60" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

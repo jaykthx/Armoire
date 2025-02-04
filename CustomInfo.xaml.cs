@@ -1,8 +1,6 @@
 ﻿using Armoire.Dialogs;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -19,7 +17,7 @@ namespace Armoire
         public CustomInfo()
         {
             InitializeComponent();
-            Program.GetImage(Properties.Resources.md_dummy);
+            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, moduleImage);
             partsBox.ItemsSource = partsList;
             partsBox.SelectedIndex = 0;
         }
@@ -60,7 +58,7 @@ namespace Armoire
             else { return; }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e) // Select PNG Code - Also sets image box source to the PNG using Program.GetImage()
+        private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new();
             ofd.Filter = "PNG Files|*.png";
@@ -89,13 +87,13 @@ namespace Armoire
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new();
+            OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "FARC files|*.farc";
             ofd.Title = Properties.Resources.exp_1;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                fileName.Text = System.IO.Path.GetFileName(ofd.FileName).ToString();
                 wizCus.obj.objectFilePath = ofd.FileName;
-                fileName.Text = System.IO.Path.GetFileName(ofd.FileName);
             }
         }
 

@@ -43,8 +43,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
-                <DataGridTextColumn x:Name="nameColumn" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="idColumn" Header="{x:Static p:Resources.cmn_id}" Binding="{Binding Id}" Width="30*"/>
+                <DataGridTextColumn EditingElementStyle="{StaticResource EditStyle}" x:Name="nameColumn" Header="{x:Static p:Resources.cmn_name}" Binding="{Binding Name}" Width="150*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

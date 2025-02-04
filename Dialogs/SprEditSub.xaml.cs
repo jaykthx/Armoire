@@ -91,7 +91,7 @@ namespace Armoire.Dialogs
                     }
                     else
                     {
-                        Program.NotiBox("You must not delete this.", "Friendly Advice");
+                        Program.NotiBox(Properties.Resources.warn_delete, Properties.Resources.window_notice);
                     }
                 }
                 Grid123.ItemsSource = spriteSet.Textures;

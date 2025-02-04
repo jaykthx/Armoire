@@ -32,7 +32,7 @@ namespace Armoire.Dialogs
                     cosCxt.items.Add(int.Parse(win.Result));
                     itemList.Items.Refresh();
                 }
-                else { Program.NotiBox("Enter a value.", Properties.Resources.cmn_error); }
+                else { Program.NotiBox(Properties.Resources.warn_enter_value, Properties.Resources.cmn_error); }
             }
         }
 
@@ -44,11 +44,11 @@ namespace Armoire.Dialogs
             }
             else if(cosCxt.items.Count == 1)
             {
-                Program.NotiBox("Costumes must not be empty.", Properties.Resources.cmn_error);
+                Program.NotiBox(Properties.Resources.warn_costume_empty, Properties.Resources.cmn_error);
             }
             else
             {
-                Program.NotiBox("You must select an item first.", Properties.Resources.cmn_error);
+                Program.NotiBox(Properties.Resources.warn_item_not_sel, Properties.Resources.cmn_error);
             }
         }
 
