@@ -434,7 +434,7 @@
     <value>Customise Item Wizard</value>
   </data>
   <data name="warn_case_sensitive" xml:space="preserve">
-    <value>This is case sensitive.\nThis only applies to selected items.</value>
+    <value>This is case sensitive. This only applies to selected items.</value>
   </data>
   <data name="warn_costume_empty" xml:space="preserve">
     <value>Costumes can not be empty.</value>
@@ -449,13 +449,13 @@
     <value>Enter a value.</value>
   </data>
   <data name="warn_error_read" xml:space="preserve">
-    <value>An error occurred while reading the files in your game directory.\nError in:</value>
+    <value>An error occurred while reading the files in your game directory. Error in:</value>
   </data>
   <data name="warn_error_save" xml:space="preserve">
-    <value>An error occurred while saving your file.\nPlease try again.</value>
+    <value>An error occurred while saving your file. Please try again.</value>
   </data>
   <data name="warn_file_error" xml:space="preserve">
-    <value>Something is wrong with the file you selected for this item.\nIt doesn't look like a .farc format file.</value>
+    <value>Something is wrong with the file you selected for this item. It doesn't look like a .farc format file.</value>
   </data>
   <data name="warn_flop_save" xml:space="preserve">
     <value>To save, you must select a file first.</value>
@@ -473,7 +473,7 @@
     <value>This file's name doesn't contain 'itm', a random number has been provided but you may need to adjust the ID manually.</value>
   </data>
   <data name="warn_no_name" xml:space="preserve">
-    <value>You need to give the mod a name.\nNot proceeding.</value>
+    <value>You need to give the mod a name. Not proceeding.</value>
   </data>
   <data name="warn_object_limit" xml:space="preserve">
     <value>Only 2 objects may be used.</value>
@@ -488,7 +488,7 @@
     <value>Would you like to use a random, unused one instead?</value>
   </data>
   <data name="warn_virus" xml:space="preserve">
-    <value>Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods.</value>
+    <value>Eden Project mod folder detected. This file will not be read as it is known to cause issues with Armoire and other mods.</value>
   </data>
   <data name="warn_window" xml:space="preserve">
     <value>This window is already open.</value>

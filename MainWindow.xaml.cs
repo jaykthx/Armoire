@@ -44,7 +44,7 @@ namespace Armoire
             DataGrid_Customize.ItemsSource = CustItems;
             DataGrid_Customize.Items.IsLiveSorting = true;
             ItemDataGrid.Items.IsLiveSorting = true;
-            if (Settings.Default.themeSetting.Length > 2)
+            if (Settings.Default.themeSetting.Length > 2 && Settings.Default.themeSetting.Length < 8)
             {
                 ChangeTheme(Settings.Default.themeSetting);
             }

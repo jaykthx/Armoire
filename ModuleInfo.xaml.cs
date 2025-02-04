@@ -34,6 +34,7 @@ namespace Armoire
                     itm.parentModInfo = this;
                     itm.curObj.objectFilePath = filePath;
                     itm.fileName.Text = System.IO.Path.GetFileName(filePath);
+                    Program.NotiBox(filePath, "TEST");
                     itemPanel.Children.Add(itm);
                 }
             }

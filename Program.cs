@@ -47,17 +47,17 @@ namespace Armoire
             }
             public static string ProcessDirectories(string folderName)
             {
-                string exportFolder = Properties.Settings.Default.themeSetting + "/mods/" + folderName + "/rom/";
-                Directory.CreateDirectory(exportFolder);
-                Directory.CreateDirectory(exportFolder + "2d");
-                Directory.CreateDirectory(exportFolder + "objset");
-                Directory.CreateDirectory(exportFolder + "lang2");
-                Program.CreateModConfig(exportFolder.Remove(exportFolder.Length - 5, 5), folderName);
-                if (File.Exists(exportFolder + "/lang2/mod_str_array.toml"))
+                string finalFolder = Properties.Settings.Default.gamePath + "/mods/" + folderName + "/rom/";
+                Directory.CreateDirectory(finalFolder);
+                Directory.CreateDirectory(finalFolder + "2d");
+                Directory.CreateDirectory(finalFolder + "objset");
+                Directory.CreateDirectory(finalFolder + "lang2");
+                CreateModConfig(finalFolder.Remove(finalFolder.Length - 5, 5), folderName);
+                if (File.Exists(finalFolder + "/lang2/mod_str_array.toml"))
                 {
-                    File.Delete(exportFolder + "/lang2/mod_str_array.toml");
+                    File.Delete(finalFolder + "/lang2/mod_str_array.toml");
                 }
-                return exportFolder;
+                return finalFolder;
             }
             public static string ReturnSubIDString(int subID)
             {

@@ -34,7 +34,7 @@
         <CheckBox x:Name="hairCheck" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
         <TextBlock Text="{x:Static p:Resources.cmn_item_list}" Grid.Row="5" VerticalAlignment="Center" Grid.Column="0"/>
         <UniformGrid Columns="2" Grid.Column="1" Grid.Row="5">
-            <Button Content="Add Items" Click="Button_Click" HorizontalAlignment="Left" Width="83"/>
+            <Button Content="Add Items" Click="Button_Click" HorizontalAlignment="Center" Width="83"/>
             <Button Content="Remove All" Click="Button_Click_1"/>
         </UniformGrid>
         <StackPanel x:Name="itemPanel" Grid.Row="6" Grid.ColumnSpan="2"/>

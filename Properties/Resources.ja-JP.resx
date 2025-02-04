@@ -289,7 +289,7 @@
     <value>まずはファイルを開いてください。</value>
   </data>
   <data name="exp_5" xml:space="preserve">
-    <value>エラーが発生しました。関連ファイル：</value>
+    <value>エラーが発生しました。参考のファイル：</value>
   </data>
   <data name="exp_6" xml:space="preserve">
     <value>保存が無事に成功しました。</value>
@@ -434,7 +434,7 @@
     <value>カスタマイズアイテムウィザード</value>
   </data>
   <data name="warn_case_sensitive" xml:space="preserve">
-    <value>このプロセスはケースセンシティブです。\nそれに、選択したエントリーのみが影響を受けます。</value>
+    <value>このプロセスはケースセンシティブです。　それに、選択したエントリーのみが影響を受けます。</value>
   </data>
   <data name="warn_costume_empty" xml:space="preserve">
     <value>コスチュームは空っぽになれません。</value>
@@ -449,13 +449,13 @@
     <value>値を入力してください。</value>
   </data>
   <data name="warn_error_read" xml:space="preserve">
-    <value>ゲームのファイルを読み込み途中にエラーが発生しました。\n参考のファイル：</value>
+    <value>ゲームのファイルを読み込み途中にエラーが発生しました。　参考のファイル：</value>
   </data>
   <data name="warn_error_save" xml:space="preserve">
-    <value>保存している途中にエラーが発生しました。\nもう一度やり直してください。</value>
+    <value>保存している途中にエラーが発生しました。　もう一度やり直してください。</value>
   </data>
   <data name="warn_file_error" xml:space="preserve">
-    <value>このアイテムに選択したファイルでエラーが発生しました。\nFARCファイルではないかもしれません。</value>
+    <value>このアイテムに選択したファイルでエラーが発生しました。　FARCファイルではないかもしれません。</value>
   </data>
   <data name="warn_flop_save" xml:space="preserve">
     <value>保存するには、ファイルを開く必要があります。</value>
@@ -470,10 +470,10 @@
     <value>ウィザードにアイテムがありません。</value>
   </data>
   <data name="warn_no_itm" xml:space="preserve">
-    <value>このファイル名に「itm」が入っていません。ランダムに番号を付けましたが、自分で調整する必要があるかもしれません。</value>
+    <value>このファイル名に「itm」が入っていません。　ランダムに番号を付けましたが、自分で調整する必要があるかもしれません。</value>
   </data>
   <data name="warn_no_name" xml:space="preserve">
-    <value>このMODを名付ける必要があります。\nという理由で、進めません。</value>
+    <value>このMODを名付ける必要があります。　という理由で、進めません。</value>
   </data>
   <data name="warn_object_limit" xml:space="preserve">
     <value>オブジェクトは二つに限ります。</value>
@@ -488,7 +488,7 @@
     <value>現在使われていないのを使いますか？</value>
   </data>
   <data name="warn_virus" xml:space="preserve">
-    <value>Eden ProjectというMODのフォルダが見つかりました。\n当ツールと他のMODに対して多くのエラーを発生するきらいがあるため、恐れ入りますがこのMODの内容は読みません。</value>
+    <value>Eden ProjectというMODのフォルダが見つかりました。　このツールと他のMODに対して多くのエラーを発生するきらいがあるため、恐れ入りますがこのMODの内容は読みません。</value>
   </data>
   <data name="warn_window" xml:space="preserve">
     <value>このウィンドウはもう開いています。</value>

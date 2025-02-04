@@ -23,7 +23,7 @@ namespace Armoire
         SpriteDatabase spr_db = new(); // final spr_db to be exported
         ObservableCollection<chritmFile> list = new(); // list of all chritms to be exported (chritm x 10 = 10 charas)
         usedIDs finalUsedIDs = new();
-        string exportFolder;
+        public string exportFolder;
 
         public ModuleWizard()
         {
@@ -59,18 +59,18 @@ namespace Armoire
                 FolderBrowserDialog fbd = new()
                 {
                     Description = "Please select your game directory.",
-                    SelectedPath = Properties.Settings.Default.themeSetting
+                    SelectedPath = Properties.Settings.Default.gamePath
                 };
                 if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     Program.GetExistingIDs(fbd.SelectedPath, finalUsedIDs);
-                    Properties.Settings.Default.themeSetting = fbd.SelectedPath;
+                    Properties.Settings.Default.gamePath = fbd.SelectedPath;
                     Properties.Settings.Default.Save();
                     TextEntry textEntry = new(false, "Enter MOD Folder Name");
                     textEntry.ShowDialog();
                     if (textEntry.Result.Length > 0)
                     {
-                        string exportFolder = Program.Wizard.ProcessDirectories(textEntry.Result);
+                        exportFolder = Program.Wizard.ProcessDirectories(textEntry.Result);
                         // do the actual making
                         tempModules.Clear();
                         tex_db = new TextureDatabase();
@@ -284,7 +284,6 @@ namespace Armoire
                         }
                         else
                         {
-                            
                             headObj.Add(obj);
                         }
                     }
@@ -303,9 +302,11 @@ namespace Armoire
                         objInfo.Id = hObj.Id;
                         objSetInfo.Objects.Add(objInfo);
                     }
+                    Program.NotiBox(exportFolder + "/objset/" + objSetInfo.ArchiveFileName, "TEST");
                     Program.Wizard.ProcessTextures(objset, mainName, finalUsedIDs, tex_db);
                     objset.Save(stream, true);
                     farc.Add(objSetInfo.FileName, stream, false, ConflictPolicy.Replace);
+                    Program.NotiBox(exportFolder + "/objset/" + objSetInfo.ArchiveFileName, "ABOUT TO SAVE FARC");
                     farc.Save(exportFolder + "/objset/" + objSetInfo.ArchiveFileName);
                 }
             }

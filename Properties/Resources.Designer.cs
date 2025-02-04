@@ -1007,7 +1007,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is case sensitive.\nThis only applies to selected items..
+        ///   Looks up a localized string similar to This is case sensitive. This only applies to selected items..
         /// </summary>
         public static string warn_case_sensitive {
             get {
@@ -1052,7 +1052,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred while reading the files in your game directory.\nError in:.
+        ///   Looks up a localized string similar to An error occurred while reading the files in your game directory. Error in:.
         /// </summary>
         public static string warn_error_read {
             get {
@@ -1061,7 +1061,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred while saving your file.\nPlease try again..
+        ///   Looks up a localized string similar to An error occurred while saving your file. Please try again..
         /// </summary>
         public static string warn_error_save {
             get {
@@ -1070,7 +1070,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something is wrong with the file you selected for this item.\nIt doesn&apos;t look like a .farc format file..
+        ///   Looks up a localized string similar to Something is wrong with the file you selected for this item. It doesn&apos;t look like a .farc format file..
         /// </summary>
         public static string warn_file_error {
             get {
@@ -1124,7 +1124,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You need to give the mod a name.\nNot proceeding..
+        ///   Looks up a localized string similar to You need to give the mod a name. Not proceeding..
         /// </summary>
         public static string warn_no_name {
             get {
@@ -1169,7 +1169,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eden Project mod folder detected.\nThis file will not be read as it is known to cause issues with Armoire and other mods..
+        ///   Looks up a localized string similar to Eden Project mod folder detected. This file will not be read as it is known to cause issues with Armoire and other mods..
         /// </summary>
         public static string warn_virus {
             get {
