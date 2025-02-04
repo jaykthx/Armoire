@@ -34,7 +34,6 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click"/>
                 </Menu>
-                <RepeatButton Template="{DynamicResource RepeatButtonTemplate1}"></RepeatButton>
                 <DataGrid x:Name="DataGrid_Modules" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding Modules}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
