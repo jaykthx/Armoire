@@ -6,17 +6,17 @@
         xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire"
         mc:Ignorable="d"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="ToolWindow"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        Title="{x:Static p:Resources.window_notice}" Height="75" Width="200">
+        Title="{x:Static p:Resources.window_notice}" MinHeight="75" Width="200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" MinHeight="35"/>
             <RowDefinition MinHeight="15"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="textBox" Grid.Row="0" Text="Test Message" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <TextBlock x:Name="textBox" Grid.Row="0" Text="Test Message" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Padding="5"/>
         <Button x:Name="okButton" Content="OK" IsDefault="True" Grid.Row="1" Click="Button_Click"/>
     </Grid>
 </Window>

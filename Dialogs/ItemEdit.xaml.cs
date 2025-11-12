@@ -8,8 +8,8 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class ItemEdit : Window
     {
-        itemEntry itemCxt = null;
-        public ItemEdit(itemEntry item)
+        CharacterItemEntry itemCxt = null;
+        public ItemEdit(CharacterItemEntry item)
         {
             InitializeComponent();
             this.DataContext = item;
@@ -62,11 +62,11 @@ namespace Armoire.Dialogs
         }
         private void Tex_Click(object sender, RoutedEventArgs e)
         {
-            if(itemCxt.dataSetTexes.Count == 0)
+            if(itemCxt.dataSetTex.Count == 0)
             {
-                itemCxt.dataSetTexes = new System.Collections.ObjectModel.ObservableCollection<dataSetTex>();
+                itemCxt.dataSetTex = new System.Collections.ObjectModel.ObservableCollection<DataSetTex>();
             }
-            TexListEdit texEdit = new(itemCxt.dataSetTexes);
+            TexListEdit texEdit = new(itemCxt.dataSetTex);
             texEdit.ShowDialog();
         }
         private void textChangedEventHandler(object sender, TextChangedEventArgs e)

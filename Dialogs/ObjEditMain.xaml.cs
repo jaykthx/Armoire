@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -18,13 +19,6 @@ namespace Armoire.Dialogs
         public ObjEditMain()
         {
             InitializeComponent();
-        }
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
         }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -100,38 +94,58 @@ namespace Armoire.Dialogs
             db.ObjectSets.Add(objSet);
             Grid1.Items.Refresh();
         }
-        private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE item
+
+        private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE sprite
         {
             int index = 0;
             List<ObjectSetInfo> objColle = new();
-            foreach (var x in Grid1.SelectedItems)
+            TextEntry tex = new TextEntry(true, Properties.Resources.warn_increment);
+            if (tex.ShowDialog() == true && tex.Result.Length > 0)
             {
-                index = Grid1.Items.IndexOf(x);
-                objColle.Add(ObjDupe(index));
+                foreach (var x in Grid1.SelectedItems)
+                {
+                    index = db.ObjectSets.IndexOf(x as ObjectSetInfo);
+                    objColle.Add(ObjDupe(index, uint.Parse(tex.Result)));
+                }
+            }
+            else
+            {
+                foreach (var x in Grid1.SelectedItems)
+                {
+                    index = db.ObjectSets.IndexOf(x as ObjectSetInfo);
+                    objColle.Add(ObjDupe(index, 0));
+                }
             }
             foreach (ObjectSetInfo obj in objColle)
             {
                 db.ObjectSets.Insert(index + 1, obj);
                 index++;
             }
+            Grid1.ItemsSource = db.ObjectSets;
+            if (Grid1.Items.SortDescriptions.Count > 0)
+            {
+                SortDescription sort = Grid1.Items.SortDescriptions[0];
+                Grid1.Items.SortDescriptions.Add(sort);
+                Grid1.Items.SortDescriptions.RemoveAt(0);
+            }
             Grid1.Items.Refresh();
         }
 
-        private ObjectSetInfo ObjDupe(int index) // return ObjectSetInfo
+        private ObjectSetInfo ObjDupe(int index, uint increment) // return ObjectSetInfo
         {
             ObjectSetInfo newObjInfo = new()
             {
                 FileName = db.ObjectSets[index].FileName,
                 ArchiveFileName = db.ObjectSets[index].ArchiveFileName,
                 TextureFileName = db.ObjectSets[index].TextureFileName,
-                Name = db.ObjectSets[index].Name,
-                Id = db.ObjectSets[index].Id
+                Name = db.ObjectSets[index].Name + "_DUPE",
+                Id = db.ObjectSets[index].Id + increment
             };
             foreach (ObjectInfo obj in db.ObjectSets[index].Objects)
             {
                 ObjectInfo newObj = new()
                 {
-                    Id = obj.Id,
+                    Id = obj.Id + increment,
                     Name = obj.Name
                 };
                 newObjInfo.Objects.Add(newObj);
@@ -146,9 +160,17 @@ namespace Armoire.Dialogs
                 Filter = "Object Database files|*obj_db.bin", //"データベースファイル |*_db.bin"; 
                 Multiselect = true,
             };
-            if (ofd.ShowDialog() == true)
+            try
             {
-                Open(ofd.FileNames);
+                if (ofd.ShowDialog() == true)
+                {
+                    Open(ofd.FileNames);
+                }
+            }
+
+            catch (Exception e)
+            {
+                PopupNotification pop = new(e.Message);
             }
         }
 
@@ -250,7 +272,7 @@ namespace Armoire.Dialogs
         }
         private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
-            string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             Open(files);
         }
     }

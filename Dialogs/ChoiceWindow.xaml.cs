@@ -14,6 +14,7 @@ namespace Armoire.Dialogs
             RightButton.Content = RightText;
             LeftButton.Content = LeftText;
             PromptInfo.Text = MainText;
+            this.ShowDialog();
         }
 
         private void RightButton_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,5 @@
 ﻿using MikuMikuLibrary.Databases;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Armoire.Dialogs
 {
@@ -20,14 +19,14 @@ namespace Armoire.Dialogs
             {
                 spriteMode = true;
                 Grid123.ItemsSource = spriteSet.Sprites;
-                AddMenu.Header = "Add Sprite";
-                DelMenu.Header = "Delete Sprite";
+                AddMenu.Header = Properties.Resources.spr_add;
+                DelMenu.Header = Properties.Resources.spr_del;
             }
             else
             {
                 Grid123.ItemsSource = spriteSet.Textures;
-                AddMenu.Header = "Add Texture";
-                DelMenu.Header = "Delete Texture";
+                AddMenu.Header = Properties.Resources.tex_add;
+                DelMenu.Header = Properties.Resources.tex_del;
             }
         }
 
@@ -36,14 +35,6 @@ namespace Armoire.Dialogs
             this.DialogResult = true;
             this.Close();
         }
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e) //Add
         {
             if (spriteMode)

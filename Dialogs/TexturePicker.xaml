@@ -9,9 +9,9 @@
         Title="Texture Picker" Height="600" Width="300" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <DataTemplate x:Key="cmbTemplate">
-            <WrapPanel Height="75">
+            <WrapPanel Height="40">
                 <Label Content="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                <Image Width="75" Height="75" Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Width="40" Height="40" Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </WrapPanel>
         </DataTemplate>
         <Style TargetType="ComboBox">
@@ -32,11 +32,11 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Eyebrows Texture:" VerticalAlignment="Center" Grid.Row="0"/>
-        <TextBlock Text="Eyelashes Texture:" VerticalAlignment="Center" Grid.Row="1"/>
-        <TextBlock Text="Eye Left Texture:" VerticalAlignment="Center" Grid.Row="2"/>
-        <TextBlock Text="Eye Right Texture:" VerticalAlignment="Center" Grid.Row="3"/>
-        <TextBlock Text="Face Texture:" VerticalAlignment="Center" Grid.Row="4"/>
+        <TextBlock Text="{x:Static p:Resources.texture_eyebrow}" VerticalAlignment="Center" Grid.Row="0"/>
+        <TextBlock Text="{x:Static p:Resources.texture_eyelash}" VerticalAlignment="Center" Grid.Row="1"/>
+        <TextBlock Text="{x:Static p:Resources.texture_eye_l}" VerticalAlignment="Center" Grid.Row="2"/>
+        <TextBlock Text="{x:Static p:Resources.texture_eye_r}" VerticalAlignment="Center" Grid.Row="3"/>
+        <TextBlock Text="{x:Static p:Resources.texture_face}" VerticalAlignment="Center" Grid.Row="4"/>
         <ComboBox x:Name="eyebrowCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
         <ComboBox x:Name="eyelashCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ComboStyle}"/>
         <ComboBox x:Name="eyeLCombo" ItemTemplate="{StaticResource cmbTemplate}" Grid.Row="2" Grid.Column="1" Style="{StaticResource ComboStyle}"/>

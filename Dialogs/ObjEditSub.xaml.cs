@@ -1,6 +1,5 @@
 ﻿using MikuMikuLibrary.Databases;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Armoire.Dialogs
 {
@@ -21,14 +20,6 @@ namespace Armoire.Dialogs
             this.DialogResult = true;
             this.Close();
         }
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e) //Add
         {
             ObjectInfo objectInfo = new();

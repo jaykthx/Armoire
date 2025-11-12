@@ -8,8 +8,8 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class TexListEdit : Window
     {
-        ObservableCollection<dataSetTex> temp;
-        public TexListEdit(ObservableCollection<dataSetTex> textureList)
+        ObservableCollection<DataSetTex> temp;
+        public TexListEdit(ObservableCollection<DataSetTex> textureList)
         {
             InitializeComponent();
             this.DataContext = null;
@@ -27,9 +27,9 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            dataSetTex tex = new();
-            tex.chg = "New Texture Name";
-            tex.org = "Original Texture Name";
+            DataSetTex tex = new();
+            tex.chg = "New Texture Name(新)";
+            tex.org = "Original Texture Name(元)";
             temp.Add(tex);
         }
 

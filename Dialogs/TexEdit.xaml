@@ -37,9 +37,9 @@
             </DataGrid.InputBindings>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Add Texture" Click="Add_Click"/>
-                    <MenuItem Header="Duplicate Texture(s)" Click="Dupe_Click"/>
-                    <MenuItem Header="Delete Texture(s)" Click="Delete_Click"/>
+                    <MenuItem Header="{x:Static p:Resources.tex_add}" Click="Add_Click"/>
+                    <MenuItem Header="{x:Static p:Resources.tex_dupe}" Click="Dupe_Click"/>
+                    <MenuItem Header="{x:Static p:Resources.tex_del}" Click="Delete_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>

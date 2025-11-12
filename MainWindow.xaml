@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
-        Title="Armoire" Height="600" Width="800">
+        Title="Armoire" Height="600" Width="800" Closing="Window_Closing">
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="Open"/>
         <KeyBinding Gesture="Ctrl+S" Command="Save"/>
@@ -20,7 +20,7 @@
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
     </Window.CommandBindings>
     <TabControl x:Name="TabControl1">
-        <TabItem Header="{x:Static p:Resources.tab_module}">
+        <TabItem x:Name="moduleTab" Header="{x:Static p:Resources.tab_module}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
@@ -31,10 +31,10 @@
                         <MenuItem Header="{x:Static p:Resources.file_open}" Command="Open"/>
                         <MenuItem Header="{x:Static p:Resources.file_save}"  Command="Save"/>
                         <MenuItem Header="{x:Static p:Resources.file_saveas}"  Command="SaveAs" InputGestureText="Ctrl+Shift+S"/>
+                        <MenuItem Header="{x:Static p:Resources.cmn_close}" Click="Close_Modules"/>
                     </MenuItem>
-                    <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click"/>
                 </Menu>
-                <DataGrid x:Name="DataGrid_Modules" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding Modules}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                <DataGrid x:Name="DataGrid_Modules" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding Modules}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" CellEditEnding="DataGrid_Modules_CellEditEnding">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{x:Static p:Resources.cxt_module_add}"  Click="AddButton_Click"/>
@@ -56,7 +56,7 @@
                 </DataGrid>
             </Grid>
         </TabItem>
-        <TabItem Header="{x:Static p:Resources.tab_custom}">
+        <TabItem x:Name="customTab" Header="{x:Static p:Resources.tab_custom}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
@@ -64,13 +64,13 @@
                 </Grid.RowDefinitions>
                 <Menu Height="20">
                     <MenuItem StaysOpenOnClick="True" Header="{x:Static p:Resources.file_title}">
-                        <MenuItem Header="{x:Static p:Resources.file_open}" Command="Open" Click="Open_Click_Customize"/>
-                        <MenuItem Header="{x:Static p:Resources.file_save}" Command="Save" Click="Save_Click_Customize"/>
-                        <MenuItem Header="{x:Static p:Resources.file_saveas}" Command="SaveAs" InputGestureText="Ctrl+Shift+S" Click="SaveAs_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.file_open}" Click="Open_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.file_save}" Click="Save_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.file_saveas}" InputGestureText="Ctrl+Shift+S" Click="SaveAs_Click_Customize"/>
+                        <MenuItem Header="{x:Static p:Resources.cmn_close}" Click="Close_Customs"/>
                     </MenuItem>
-                    <MenuItem Header="{x:Static p:Resources.file_wizard}"  Click="Wizard_Click_Customize"/>
                 </Menu>
-                <DataGrid x:Name="DataGrid_Customize" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding CustItems}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Customize" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                <DataGrid x:Name="DataGrid_Customize" Grid.Row="1" HeadersVisibility="Column" ItemsSource="{Binding CustItems}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Customize" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" CellEditEnding="DataGrid_Customize_CellEditEnding">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{x:Static p:Resources.cxt_acc_add}"  Click="AddButton_Click_Customize"/>
@@ -84,7 +84,7 @@
                         <DataGridComboBoxColumn x:Name="charaBox_Customize" Width="65" EditingElementStyle="{StaticResource ComboStyle}" Header="{x:Static p:Resources.cmn_chara}"  ItemsSource="{Binding charas}" SelectedValueBinding="{Binding chara, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" EditingElementStyle="{StaticResource EditStyle}" Width="160*" Binding="{Binding name}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_price}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding shop_price}"/>
-                        <DataGridTextColumn Header= "{x:Static p:Resources.cmn_index}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding sort_index}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_index}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding sort_index}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_objid}" EditingElementStyle="{StaticResource EditStyle}" Width="70" Binding="{Binding obj_id}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_bind}" EditingElementStyle="{StaticResource EditStyle}" Width="100" Binding="{Binding bind_module}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_day}" EditingElementStyle="{StaticResource EditStyle}" Width="40" Binding="{Binding shop_st_day}"/>
@@ -94,10 +94,10 @@
                 </DataGrid>
             </Grid>
         </TabItem>
-        <TabItem Header="{x:Static p:Resources.tab_chritm}">
+        <TabItem x:Name="charaTab" Header="{x:Static p:Resources.tab_chritm}">
             <Grid>
                 <Grid.Resources>
-                    <HierarchicalDataTemplate DataType = "{x:Type src:cosEntry}" ItemsSource = "{Binding Path=items}">
+                    <HierarchicalDataTemplate DataType = "{x:Type src:CharacterCostumeEntry}" ItemsSource = "{Binding Path=items}">
                         <TextBlock Text="{Binding Path=id, StringFormat='COS: {0}'}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
@@ -112,19 +112,20 @@
                         <MenuItem Header="{x:Static p:Resources.file_open}"  Command="Open"/>
                         <MenuItem Header="{x:Static p:Resources.file_save}"  Command="Save"/>
                         <MenuItem Header="{x:Static p:Resources.file_saveas}"  Command="SaveAs"/>
+                        <MenuItem Header="{x:Static p:Resources.cmn_close}" Click="Close_Character"/>
                     </MenuItem>
                 </Menu>
-                    <TreeView x:Name="CosListBox" ItemsSource="{Binding costumes, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2">
-                        <TreeView.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="{x:Static p:Resources.cxt_cos_add}"  Click="AddCos"/>
-                                <MenuItem Header="{x:Static p:Resources.cmn_button_edit}"  Click="EditCos"/>
-                                <MenuItem Header="{x:Static p:Resources.cxt_cos_remove}"  Click="DelCos"/>
-                            </ContextMenu>
-                        </TreeView.ContextMenu>
-                    </TreeView>
+                <TreeView x:Name="CosListBox" ItemsSource="{Binding costumes, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True" Grid.Row="2" Drop="CosListBox_Drop">
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Resources.cxt_cos_add}"  Click="AddCos"/>
+                            <MenuItem Header="{x:Static p:Resources.cmn_button_edit}"  Click="EditCos"/>
+                            <MenuItem Header="{x:Static p:Resources.cxt_cos_remove}"  Click="DelCos"/>
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                </TreeView>
                 <ComboBox Style="{DynamicResource ComboStyle}" x:Name="CharaBox" Grid.Row="1" Height="20" SelectionChanged="CharaBox_SelectionChanged"/>
-                <DataGrid x:Name="ItemDataGrid" Grid.Row="3" HeadersVisibility="Column" ItemsSource="{Binding items, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Chara" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True">
+                <DataGrid x:Name="ItemDataGrid" Grid.Row="3" HeadersVisibility="Column" ItemsSource="{Binding items, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserResizeRows="False" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Drop="DataGrid_Drop_Chara" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" AllowDrop="True" CellEditEnding="ItemDataGrid_CellEditEnding">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{x:Static p:Resources.cxt_item_add}" Click="AddItem"/>
@@ -132,16 +133,9 @@
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_item_no}" EditingElementStyle="{StaticResource EditStyle}" Width="" Binding="{Binding no}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.cmn_item_no}" EditingElementStyle="{StaticResource EditStyle}" Width="20*" Binding="{Binding no}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_name}" EditingElementStyle="{StaticResource EditStyle}" Width="80*" Binding="{Binding name}"/>
                         <DataGridTextColumn Header="{x:Static p:Resources.cmn_objuid}" EditingElementStyle="{StaticResource EditStyle}" Width="80*" Binding="{Binding uid}"/>
-                        <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_preset}" Width="50">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="{x:Static p:Resources.cmn_button_change}" Click="Change_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="{x:Static p:Resources.cmn_details}" Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -165,16 +159,94 @@
                 <Button Content="{x:Static p:Resources.window_tex}" Click="Open_TexEditor" Grid.Row="2"/>
             </Grid>
         </TabItem>
+        <TabItem Header="{x:Static p:Resources.title_wizard}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <UniformGrid Grid.ColumnSpan="3" Columns="3" Grid.Row="1">
+                    <Button Content="{x:Static p:Resources.cmn_add}" Click="WizardAddButton_Click"/>
+                    <Button Content="{x:Static p:Resources.cmn_remove_all}" Click="WizardRemoveButton_Click"/>
+                    <Button Content="{x:Static p:Resources.cmn_finish}" FontWeight="Bold" Click="WizardCreateButton_Click"/>
+                </UniformGrid>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" CanContentScroll="True" Grid.Row="0" Grid.ColumnSpan="4">
+                    <StackPanel x:Name="itemHost"/>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+        <TabItem Header="DivaModArchive">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{x:Static p:Resources.dma_blurb}" TextAlignment="Center" Height="50" TextWrapping="Wrap"/>
+                <Button x:Name="DmaDownloadButton" Content="{x:Static p:Resources.dma_download}" Click="DMAUpdate_Click" Grid.Row="1"/>
+                <Button Content="{x:Static p:Resources.dma_check_conflict}" Click="DMACheck_Click" Grid.Row="2"/>
+            </Grid>
+        </TabItem>
         <TabItem Header="{x:Static p:Resources.tab_theme}">
             <Grid>
                 <UniformGrid Rows="0" Columns="1">
-                    <Button Content="Default" Click="Default_Click"/>
-                    <Button Content="Dark" Click="Dark_Click"/>
-                    <Button Content="Light" Click="Light_Click"/>
-                    <Button Content="Pink" Click="Pink_Click"/>
-                    <Button Content="Blue" Click="Blue_Click"/>
-                    <Button Content="Vampire" Click="Vampire_Click"/>
+                    <Button Content="{x:Static p:Resources.theme_default}" Click="Default_Click"/>
+                    <Button Content="{x:Static p:Resources.theme_light}" Click="Light_Click"/>
+                    <Button Content="{x:Static p:Resources.theme_pink}" Click="Pink_Click"/>
+                    <Button Content="{x:Static p:Resources.theme_blue}" Click="Blue_Click"/>
+                    <Button Content="{x:Static p:Resources.theme_violet}" Click="Violet_Click"/>
+                    <UniformGrid Rows="1" Columns="0">
+                        <Button Content="初音ミク" Click="Miku_Click"/>
+                        <Button Content="鏡音リン" Click="Rin_Click"/>
+                        <Button x:Name="LenThemeButton" Content="鏡音レン" Click="Len_Click"/>
+                        <Button Content="巡音ルカ" Click="Luka_Click"/>
+                        <Button Content="カイト" Click="Kaito_Click"/>
+                        <Button Content="メイコ" Click="Meiko_Click"/>
+                    </UniformGrid>
                 </UniformGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static p:Resources.tab_setting}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="30" Height="50"/>
+                    <RowDefinition MinHeight="50" Height="*"/>
+                    <RowDefinition MinHeight="30" Height="50"/>
+                    <RowDefinition MinHeight="30" Height="50"/>
+                    <RowDefinition MinHeight="20" Height="*"/>
+                </Grid.RowDefinitions>
+                <UniformGrid Columns="2" Rows="0">
+                    <Button Content="{x:Static p:Resources.settings_game}" Click="Button_Click"/>
+                    <Button Content="{x:Static p:Resources.settings_dma}" Click="Button_Click_1"/>
+                </UniformGrid>
+                <Button x:Name="SelfUpdateButton" Content="{x:Static p:Resources.cmn_update}" Click="SelfUpdate_Click" Grid.Row="1"/>
+                <UniformGrid Columns="2" Grid.Row="2">
+                    <TextBlock Text="{x:Static p:Resources.cmn_lang}" VerticalAlignment="Center" TextAlignment="Center"/>
+                    <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboStyle}" SelectionChanged="LanguageComboBox_SelectionChanged" VerticalAlignment="Stretch" TextBlock.TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </UniformGrid>
+                <UniformGrid Columns="2" Grid.Row="3">
+                    <TextBlock Text="{x:Static p:Resources.align_text}" VerticalAlignment="Center" TextAlignment="Center"/>
+                    <ComboBox x:Name="AlignmentComboBox" Style="{StaticResource ComboStyle}" SelectionChanged="AlignmentComboBox_SelectionChanged"  VerticalAlignment="Stretch" TextBlock.TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="{x:Static p:Resources.align_centre}"/>
+                        <ComboBoxItem Content="{x:Static p:Resources.align_left}"/>
+                        <ComboBoxItem Content="{x:Static p:Resources.align_right}"/>
+                    </ComboBox>
+                </UniformGrid>
+                <Border Grid.Row="4" BorderBrush="{StaticResource Color3Brush}" BorderThickness="1">
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center">
+    Armoire by jaykthx.
+    <LineBreak/>Thanks to <Hyperlink NavigateUri="https://github.com/blueskythlikesclouds" RequestNavigate="Hyperlink_RequestNavigate">Skyth</Hyperlink> for <Hyperlink NavigateUri="https://github.com/blueskythlikesclouds/MikuMikuLibrary" RequestNavigate="Hyperlink_RequestNavigate">MikuMikuLibrary</Hyperlink>.<LineBreak/>
+    Thanks to <Hyperlink NavigateUri="https://github.com/vixen256" RequestNavigate="Hyperlink_RequestNavigate">vixen256</Hyperlink> for <Hyperlink NavigateUri="https://divamodarchive.com/" RequestNavigate="Hyperlink_RequestNavigate">DivaModArchive</Hyperlink>.<LineBreak/>An additional thank you to all who tested, gave feedback and more.<LineBreak/>GitHub: 
+    <Hyperlink NavigateUri="https://github.com/jaykthx/Armoire" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/jaykthx/Armoire</Hyperlink>
+                        <LineBreak/>P.S. both modding servers are bad rest in piss
+                    </TextBlock>
+                </Border>
+                
             </Grid>
         </TabItem>
     </TabControl>

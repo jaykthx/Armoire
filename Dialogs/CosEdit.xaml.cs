@@ -7,8 +7,8 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class CosEdit : Window
     {
-        cosEntry cosCxt;
-        public CosEdit(cosEntry cos)
+        CharacterCostumeEntry cosCxt;
+        public CosEdit(CharacterCostumeEntry cos)
         {
             InitializeComponent();
             this.DataContext = cos;
@@ -24,7 +24,7 @@ namespace Armoire.Dialogs
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            TextEntry win = new(true, "Enter item number");
+            TextEntry win = new(true, "Enter desired value.");
             if (win.ShowDialog() == true)
             {
                 if (win.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrEmpty(win.Result))

@@ -12,7 +12,7 @@
         Title="{x:Static p:Resources.exp_2}" Height="95" Width="250" x:Name="win1">
     <Grid>
         <StackPanel>
-            <TextBox x:Name="texBox" Visibility="Collapsed" Text="{x:Static p:Resources.cmn_enter_value}" MinHeight="40"/>
+            <TextBox x:Name="texBox" Visibility="Collapsed" Text="" MinHeight="40"/>
             <TextBox x:Name="numBox" Visibility="Collapsed" Text="" PreviewTextInput="CheckNumbers" MinHeight="40"/>
             <Button Content="OK" Click="Button_Click" IsDefault="true" HorizontalContentAlignment="Center"/>
         </StackPanel>

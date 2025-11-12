@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Armoire.Dialogs"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
-        SizeToContent="Width"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Title="{x:Static p:Resources.window_tex_chg}" Height="250" MinHeight="250" Width="350">
     <Grid>

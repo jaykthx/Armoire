@@ -1,9 +1,10 @@
-﻿using MikuMikuLibrary.Databases;
+﻿using Microsoft.Win32;
+using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace Armoire.Dialogs
@@ -19,13 +20,6 @@ namespace Armoire.Dialogs
         }
         SpriteDatabase db = new();
         string saveLocation = null;
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFile();
@@ -47,9 +41,16 @@ namespace Armoire.Dialogs
                 Filter = "Sprite Database files|*spr_db.bin",
                 Multiselect = true
             };
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            try
             {
-                Open(ofd.FileNames);
+                if (ofd.ShowDialog() == true)
+                {
+                    Open(ofd.FileNames);
+                }
+            }
+            catch (Exception e)
+            {
+                PopupNotification pop = new(e.Message);
             }
         }
         private void Open(string[] files)
@@ -124,7 +125,7 @@ namespace Armoire.Dialogs
             sfd.FileName = "mod_spr_db.bin";
             if (db.SpriteSets.Count != 0)
             {
-                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (sfd.ShowDialog() == true)
                 {
                     db.Save(sfd.FileName);
                     Program.NotiBox(Properties.Resources.exp_6, Properties.Resources.window_notice);
@@ -182,36 +183,37 @@ namespace Armoire.Dialogs
         {
             int index = 0;
             List<SpriteSetInfo> spriteColle = new();
-            foreach (var x in Grid1.SelectedItems)
+            TextEntry tex = new TextEntry(true, Properties.Resources.warn_increment);
+            if (tex.ShowDialog() == true && tex.Result.Length > 0)
             {
-                TextEntry tex = new TextEntry(true, "Please enter increment for ID value.");
-                if (tex.ShowDialog() == true && tex.Result.Length > 0)
+                foreach (var x in Grid1.SelectedItems)
                 {
                     index = db.SpriteSets.IndexOf(x as SpriteSetInfo);
                     spriteColle.Add(spriteDupe(index, uint.Parse(tex.Result)));
-                    foreach (SpriteSetInfo spr in spriteColle)
-                    {
-                        db.SpriteSets.Insert(index + 1, spr);
-                        index++;
-                    }
-                }
-                else
-                {
-                    spriteColle.Add(spriteDupe(index, 0));
-                    foreach (SpriteSetInfo spr in spriteColle)
-                    {
-                        db.SpriteSets.Insert(index + 1, spr);
-                        index++;
-                    }
                 }
             }
+            else
+            {
+                foreach (var x in Grid1.SelectedItems)
+                {
+                    index = db.SpriteSets.IndexOf(x as SpriteSetInfo);
+                    spriteColle.Add(spriteDupe(index, 0));
+                }
+            }
+            foreach (SpriteSetInfo spr in spriteColle)
+            {
+                db.SpriteSets.Insert(index + 1, spr);
+                index++;
+            }
             Grid1.ItemsSource = db.SpriteSets;
-            SortDescription sort = Grid1.Items.SortDescriptions[0];
-            Grid1.Items.SortDescriptions.Add(sort);
-            Grid1.Items.SortDescriptions.RemoveAt(0);
+            if (Grid1.Items.SortDescriptions.Count > 0)
+            {
+                SortDescription sort = Grid1.Items.SortDescriptions[0];
+                Grid1.Items.SortDescriptions.Add(sort);
+                Grid1.Items.SortDescriptions.RemoveAt(0);
+            }
             Grid1.Items.Refresh();
         }
-
         private SpriteSetInfo spriteDupe(int index, uint increment)
         {
             SpriteSetInfo newSprInfo = new();
@@ -265,12 +267,19 @@ namespace Armoire.Dialogs
                         sprInfo.Name = sprInfo.Name.Replace(detect, number);
                     }
                 }
+                foreach (SpriteTextureInfo sprTexInfo in spr.Textures)
+                {
+                    if (sprTexInfo.Name.Contains(detect))
+                    {
+                        sprTexInfo.Name = sprTexInfo.Name.Replace(detect, number);
+                    }
+                }
                 Grid1.Items.Refresh();
             }
         }
         private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
-            string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             Open(files);
         }
     }

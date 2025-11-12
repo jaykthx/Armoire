@@ -1,27 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows8.0</TargetFramework>
-    <OutputType>WinExe</OutputType>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows8.0</TargetFramework>
+		<OutputType>WinExe</OutputType>
+		<IsWebBootstrapper>false</IsWebBootstrapper>
+		<PublishUrl>publish\</PublishUrl>
+		<OutputPath>$(SolutionDir)\bin\$(Configuration)\Armoire\</OutputPath>
+		<OutDir>$(OutputPath)</OutDir>
+		<Nullable>enable</Nullable>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<UpdateEnabled>false</UpdateEnabled>
+		<UpdateMode>Foreground</UpdateMode>
+		<UpdateInterval>7</UpdateInterval>
+		<PublishSingleFile>false</PublishSingleFile>
+		<UpdateIntervalUnits>Days</UpdateIntervalUnits>
+		<UpdatePeriodically>false</UpdatePeriodically>
+		<UpdateRequired>false</UpdateRequired>
+		<MapFileExtensions>true</MapFileExtensions>
+		<ApplicationRevision>0</ApplicationRevision>
+		<ApplicationVersion>Stable</ApplicationVersion>
+		<UseApplicationTrust>false</UseApplicationTrust>
+		<BootstrapperEnabled>true</BootstrapperEnabled>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<UseWindowsForms>false</UseWindowsForms>
+		<UseWPF>true</UseWPF>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
@@ -37,6 +40,11 @@
     <StartupObject>Armoire.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
+  <ItemGroup>
+    <None Remove="armoire.ico" />
+    <None Remove="Resources\cancel.png" />
+    <None Remove="Resources\heart.png" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Update="System">
       <Private>True</Private>
@@ -73,11 +81,15 @@
     <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\cancel.png" />
+    <Resource Include="Resources\heart.png" />
     <Resource Include="Resources\md_dummy.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.7.23375.6" />
+    <PackageReference Include="Squid-Box.SevenZipSharp" Version="1.6.2.24" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.10" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MikuMikuLibrary">
@@ -100,8 +112,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.ja-JP.resx">
+    <EmbeddedResource Update="Properties\Resources.ja.resx">
       <SubType>Designer</SubType>
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -109,14 +122,26 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Update="7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Ijwhost.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>del "$(TargetDir)*.xml"</PostBuildEvent>
     <IsPublishable>False</IsPublishable>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <Nullable>enable</Nullable>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RootNamespace>Armoire</RootNamespace>
   </PropertyGroup>
 </Project>

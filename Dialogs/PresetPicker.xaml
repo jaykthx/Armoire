@@ -16,17 +16,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="holdName" Text="{Binding name}" TextAlignment="Center" VerticalAlignment="Center"/>
-            <UniformGrid Rows="10" Grid.Row="1">
-                <Button x:Name="hairButton" Content="Hair" Click="hair_Click"/>
-                <Button x:Name="bodyButton" Content="Body" Click="body_Click"/>
-                <Button x:Name="handButton" Content="Hands" Click="hand_Click"/>
-                <Button x:Name="headButton" Content="Head" Click="head_Click"/>
-                <Button x:Name="eyeButton" Content="Eye Texture Swap" Click="eye_Click"/>
-                <Button x:Name="contactButton" Content="Contact Lenses" Click="contact_Click"/>
-                <Button x:Name="headAccButton" Content="Head Accessory" Click="headAcc_Click"/>
-                <Button x:Name="faceAccButton" Content="Face Accessory" Click="faceAcc_Click"/>
-                <Button x:Name="chestAccButton" Content="Chest Accessory" Click="chestAcc_Click"/>
-                <Button x:Name="backAccButton" Content="Back Accessory" Click="backAcc_Click"/>
+            <UniformGrid Rows="9" Grid.Row="1">
+                <Button x:Name="hairButton" Content="{x:Static p:Resources.item_hair}" Click="hair_Click"/>
+                <Button x:Name="bodyButton" Content="{x:Static p:Resources.item_body}" Click="body_Click"/>
+                <Button x:Name="handButton" Content="{x:Static p:Resources.item_hands}" Click="hand_Click"/>
+                <Button x:Name="eyeButton" Content="{x:Static p:Resources.item_eye}" Click="eye_Click"/>
+                <Button x:Name="contactButton" Content="{x:Static p:Resources.item_contact}" Click="contact_Click"/>
+                <Button x:Name="headAccButton" Content="{x:Static p:Resources.item_headacc}" Click="headAcc_Click"/>
+                <Button x:Name="faceAccButton" Content="{x:Static p:Resources.item_faceacc}" Click="faceAcc_Click"/>
+                <Button x:Name="chestAccButton" Content="{x:Static p:Resources.item_chestacc}" Click="chestAcc_Click"/>
+                <Button x:Name="backAccButton" Content="{x:Static p:Resources.item_backacc}" Click="backAcc_Click"/>
             </UniformGrid>
         </Grid>
     </Border>

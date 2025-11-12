@@ -138,6 +138,9 @@
   <data name="cmn_chara" xml:space="preserve">
     <value>Character</value>
   </data>
+  <data name="cmn_close" xml:space="preserve">
+    <value>Close File</value>
+  </data>
   <data name="cmn_close_n" xml:space="preserve">
     <value>Close without Saving</value>
   </data>
@@ -324,6 +327,9 @@
   <data name="item_default" xml:space="preserve">
     <value>Item</value>
   </data>
+  <data name="item_eye" xml:space="preserve">
+    <value>Eye Texture Swap</value>
+  </data>
   <data name="item_faceacc" xml:space="preserve">
     <value>Face Accessory</value>
   </data>
@@ -342,6 +348,18 @@
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="md_dummy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\md_dummy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notice_download_finished" xml:space="preserve">
+    <value>All downloads have finished.</value>
+  </data>
+  <data name="notice_update" xml:space="preserve">
+    <value>Update downloaded.</value>
+  </data>
+  <data name="notice_update2" xml:space="preserve">
+    <value>Restarting Armoire.</value>
+  </data>
+  <data name="notice_update_newest" xml:space="preserve">
+    <value>You are using the latest version.</value>
   </data>
   <data name="obj_add" xml:space="preserve">
     <value>Add Object</value>
@@ -428,16 +446,13 @@
     <value>Texture Picker</value>
   </data>
   <data name="title_wizard" xml:space="preserve">
-    <value>Module Wizard</value>
-  </data>
-  <data name="title_wizard_custom" xml:space="preserve">
-    <value>Customise Item Wizard</value>
+    <value>Wizard</value>
   </data>
   <data name="warn_case_sensitive" xml:space="preserve">
     <value>This is case sensitive. This only applies to selected items.</value>
   </data>
   <data name="warn_costume_empty" xml:space="preserve">
-    <value>Costumes can not be empty.</value>
+    <value>Costumes must not be empty.</value>
   </data>
   <data name="warn_delete" xml:space="preserve">
     <value>This item could not be deleted.</value>
@@ -463,29 +478,23 @@
   <data name="warn_generic" xml:space="preserve">
     <value>A generic error occurred.</value>
   </data>
+  <data name="warn_increment" xml:space="preserve">
+    <value>Please enter the amount to increase the ID by.</value>
+  </data>
   <data name="warn_item_not_sel" xml:space="preserve">
     <value>You must select an item first.</value>
   </data>
   <data name="warn_no_items" xml:space="preserve">
     <value>There are no items in the wizard.</value>
   </data>
-  <data name="warn_no_itm" xml:space="preserve">
-    <value>This file's name doesn't contain 'itm', a random number has been provided but you may need to adjust the ID manually.</value>
-  </data>
   <data name="warn_no_name" xml:space="preserve">
-    <value>You need to give the mod a name. Not proceeding.</value>
+    <value>Please give your mod a name.</value>
   </data>
   <data name="warn_object_limit" xml:space="preserve">
     <value>Only 2 objects may be used.</value>
   </data>
   <data name="warn_used_0" xml:space="preserve">
-    <value>This</value>
-  </data>
-  <data name="warn_used_1" xml:space="preserve">
-    <value>is already being used, the resulting item may have some issues.</value>
-  </data>
-  <data name="warn_used_offer" xml:space="preserve">
-    <value>Would you like to use a random, unused one instead?</value>
+    <value>This </value>
   </data>
   <data name="warn_virus" xml:space="preserve">
     <value>Eden Project mod folder detected. This file will not be read as it is known to cause issues with Armoire and other mods.</value>
@@ -525,5 +534,203 @@
   </data>
   <data name="window_tex_chg" xml:space="preserve">
     <value>Texture Replacement Editor</value>
+  </data>
+  <data name="notice_download_fail" xml:space="preserve">
+    <value>An error occured whilst downloading.</value>
+  </data>
+  <data name="tab_setting" xml:space="preserve">
+    <value>Settings/Update</value>
+  </data>
+  <data name="warn_unsaved" xml:space="preserve">
+    <value>You have unsaved changes, do you wish to quit without saving?</value>
+  </data>
+  <data name="dma_blurb" xml:space="preserve">
+    <value>This tab allows you to update and reference compatibility information pertaining to mods hosted on DivaModArchive. While this can help to avoid clashing IDs, it is not fool proof, please check your mods thoroughly to ensure desired compatibility.</value>
+  </data>
+  <data name="notice_download_failed_file" xml:space="preserve">
+    <value>Could not download this file:</value>
+  </data>
+  <data name="notice_try_again" xml:space="preserve">
+    <value>Please try again.</value>
+  </data>
+  <data name="cmn_update" xml:space="preserve">
+    <value>Update Armoire</value>
+  </data>
+  <data name="dma_download" xml:space="preserve">
+    <value>Download latest compatibility information</value>
+  </data>
+  <data name="cmn_remove_all" xml:space="preserve">
+    <value>Remove All</value>
+  </data>
+  <data name="dma_check_conflict" xml:space="preserve">
+    <value>Check mods for conflicts</value>
+  </data>
+  <data name="theme_default" xml:space="preserve">
+    <value>Default (Dark)</value>
+  </data>
+  <data name="theme_pink" xml:space="preserve">
+    <value>Pink</value>
+  </data>
+  <data name="theme_blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="theme_light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="theme_violet" xml:space="preserve">
+    <value>Violet</value>
+  </data>
+  <data name="update_new_found" xml:space="preserve">
+    <value>A new version is available.</value>
+  </data>
+  <data name="warn_delete_all" xml:space="preserve">
+    <value>This will delete all entries, are you sure?</value>
+  </data>
+  <data name="update_new_found_2" xml:space="preserve">
+    <value>Would you like to update?</value>
+  </data>
+  <data name="dma_update_already" xml:space="preserve">
+    <value>You have already updated the database today, would you like to do it again?</value>
+  </data>
+  <data name="notice_unsaved" xml:space="preserve">
+    <value>You have unsaved changes, are you sure you want to exit Armoire?</value>
+  </data>
+  <data name="cmn_lang" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="dma_check_1" xml:space="preserve">
+    <value>This process will check EVERY mod in your mods folder and export any conflicts with the base game AND the DMA compatibility information.</value>
+  </data>
+  <data name="dma_check_2" xml:space="preserve">
+    <value>It may take a very long time and create a large file.</value>
+  </data>
+  <data name="cmn_sure" xml:space="preserve">
+    <value>Is this okay?</value>
+  </data>
+  <data name="conflict_start" xml:space="preserve">
+    <value>Clashing</value>
+  </data>
+  <data name="conflict_module_id" xml:space="preserve">
+    <value>Module IDs</value>
+  </data>
+  <data name="conflict_module_sort" xml:space="preserve">
+    <value>Module Sorting Indexes</value>
+  </data>
+  <data name="conflict_custom_id" xml:space="preserve">
+    <value>Customize Item IDs</value>
+  </data>
+  <data name="conflict_custom_sort" xml:space="preserve">
+    <value>Customize Item Sorting Indexes</value>
+  </data>
+  <data name="conflict_cos_id" xml:space="preserve">
+    <value>Character Costume IDs</value>
+  </data>
+  <data name="conflict_item_id" xml:space="preserve">
+    <value>Character Item Nos</value>
+  </data>
+  <data name="conflict_farc" xml:space="preserve">
+    <value>Farc File Names</value>
+  </data>
+  <data name="conflict_tex_id" xml:space="preserve">
+    <value>Texture IDs</value>
+  </data>
+  <data name="conflict_tex_name" xml:space="preserve">
+    <value>Texture Names</value>
+  </data>
+  <data name="conflict_spr_set" xml:space="preserve">
+    <value>Sprite Sets</value>
+  </data>
+  <data name="conflict_spr" xml:space="preserve">
+    <value>Sprites</value>
+  </data>
+  <data name="conflict_spr_tex" xml:space="preserve">
+    <value>Sprite Texture IDs</value>
+  </data>
+  <data name="settings_dma" xml:space="preserve">
+    <value>Set DMA Information Path</value>
+  </data>
+  <data name="settings_game" xml:space="preserve">
+    <value>Set Game Data Path</value>
+  </data>
+  <data name="wizard_add_new" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="wizard_add_exist" xml:space="preserve">
+    <value>Add Existing</value>
+  </data>
+  <data name="wizard_remove" xml:space="preserve">
+    <value>Remove All</value>
+  </data>
+  <data name="wizard_module" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="wizard_customise" xml:space="preserve">
+    <value>Customize Item</value>
+  </data>
+  <data name="texture_eyebrow" xml:space="preserve">
+    <value>Eyebrows</value>
+  </data>
+  <data name="texture_eye_l" xml:space="preserve">
+    <value>Eye (Left)</value>
+  </data>
+  <data name="texture_eye_r" xml:space="preserve">
+    <value>Eye (Right)</value>
+  </data>
+  <data name="texture_face" xml:space="preserve">
+    <value>Face</value>
+  </data>
+  <data name="texture_eyelash" xml:space="preserve">
+    <value>Eyelashes</value>
+  </data>
+  <data name="name_miku" xml:space="preserve">
+    <value>Hatsune Miku</value>
+  </data>
+  <data name="name_rin" xml:space="preserve">
+    <value>Kagamine Rin</value>
+  </data>
+  <data name="name_len" xml:space="preserve">
+    <value>Kagamine Len</value>
+  </data>
+  <data name="name_luka" xml:space="preserve">
+    <value>Megurine Luka</value>
+  </data>
+  <data name="name_kaito" xml:space="preserve">
+    <value>KAITO</value>
+  </data>
+  <data name="name_meiko" xml:space="preserve">
+    <value>MEIKO</value>
+  </data>
+  <data name="name_neru" xml:space="preserve">
+    <value>Akita Neru</value>
+  </data>
+  <data name="name_haku" xml:space="preserve">
+    <value>Yowane Haku</value>
+  </data>
+  <data name="name_sakine" xml:space="preserve">
+    <value>Sakine Meiko</value>
+  </data>
+  <data name="name_teto" xml:space="preserve">
+    <value>Kasane Teto</value>
+  </data>
+  <data name="spr_set_add" xml:space="preserve">
+    <value>Add Sprite Set</value>
+  </data>
+  <data name="spr_set_dupe" xml:space="preserve">
+    <value>Duplicate Sprite Set(s)</value>
+  </data>
+  <data name="spr_set_del" xml:space="preserve">
+    <value>Delete Sprite Set(s)</value>
+  </data>
+  <data name="align_text" xml:space="preserve">
+    <value>Text Alignment</value>
+  </data>
+  <data name="align_left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="align_right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="align_centre" xml:space="preserve">
+    <value>Centre</value>
   </data>
 </root>

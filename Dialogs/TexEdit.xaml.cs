@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using MikuMikuLibrary.Databases;
 using MikuMikuLibrary.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -19,13 +20,6 @@ namespace Armoire.Dialogs
         }
         TextureDatabase db = new();
         string saveLocation = null;
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
 
         private void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -86,24 +80,49 @@ namespace Armoire.Dialogs
             db.Textures.Add(texInfo);
             Grid1.Items.Refresh();
         }
-        private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE item
+        private void Dupe_Click(object sender, RoutedEventArgs e) //Dupe ONE sprite
         {
-            List<ObjectSetInfo> objColle = new();
-            foreach (var x in Grid1.SelectedItems)
+            int index = 0;
+            List<TextureInfo> texColle = new();
+            TextEntry text = new TextEntry(true, Properties.Resources.warn_increment);
+            if (text.ShowDialog() == true && text.Result.Length > 0)
             {
-                objColle.Add(TexDupe(Grid1.Items.IndexOf(x)));
+                foreach (var x in Grid1.SelectedItems)
+                {
+                    index = db.Textures.IndexOf(x as TextureInfo);
+                    texColle.Add(TexDupe(index, uint.Parse(text.Result)));
+                }
+            }
+            else
+            {
+                foreach (var x in Grid1.SelectedItems)
+                {
+                    index = db.Textures.IndexOf(x as TextureInfo);
+                    texColle.Add(TexDupe(index, 0));
+                }
+            }
+            foreach (TextureInfo tex in texColle)
+            {
+                db.Textures.Insert(index + 1, tex);
+                index++;
+            }
+            Grid1.ItemsSource = db.Textures;
+            if (Grid1.Items.SortDescriptions.Count > 0)
+            {
+                SortDescription sort = Grid1.Items.SortDescriptions[0];
+                Grid1.Items.SortDescriptions.Add(sort);
+                Grid1.Items.SortDescriptions.RemoveAt(0);
             }
             Grid1.Items.Refresh();
         }
-
-        private ObjectSetInfo TexDupe(int index) // return ObjectSetInfo
+        private TextureInfo TexDupe(int index, uint increment) // return ObjectSetInfo
         {
-            ObjectSetInfo newObjInfo = new()
+            TextureInfo texInfo = new()
             {
-                Name = db.Textures[index].Name,
-                Id = db.Textures[index].Id
+                Name = db.Textures[index].Name + "_DUPE",
+                Id = db.Textures[index].Id + increment
             };
-            return newObjInfo;
+            return texInfo;
         }
         private void OpenFile()
         {
@@ -113,9 +132,16 @@ namespace Armoire.Dialogs
                 Filter = "Texture Database files|*tex_db.bin",
                 Multiselect = true,
             };
-            if (ofd.ShowDialog() == true)
+            try
             {
-                Open(ofd.FileNames);
+                if (ofd.ShowDialog() == true)
+                {
+                    Open(ofd.FileNames);
+                }
+            }
+            catch (Exception e)
+            {
+                PopupNotification pop = new(e.Message);
             }
         }
         private void Open(string[] files)
@@ -198,7 +224,7 @@ namespace Armoire.Dialogs
         }
         private void DataGrid_Drop(object sender, System.Windows.DragEventArgs e) // Loads drag and dropped items
         {
-            string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             Open(files);
         }
     }

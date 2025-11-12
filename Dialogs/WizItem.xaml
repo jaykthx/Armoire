@@ -15,6 +15,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="{x:Static p:Resources.cmn_cos_item}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1" Grid.Column="0"/>
         <TextBlock x:Name="fileName" MaxWidth="90" Text="{x:Static p:Resources.cmn_short_name}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1" Grid.Column="1"/>
-        <Button Content="{x:Static p:Resources.cmn_item_type}" Grid.Column="2" Click="Button_Click_1"/>
+        <Button x:Name="itemTypeButton" Content="{x:Static p:Resources.cmn_item_type}" Grid.Column="2" Click="Button_Click_1"/>
     </Grid>
 </UserControl>

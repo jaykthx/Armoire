@@ -6,25 +6,28 @@
         xmlns:p="clr-namespace:Armoire.Properties"
         xmlns:local="clr-namespace:Armoire.Dialogs"
         mc:Ignorable="d"
+        WindowStyle="ToolWindow"
+        ResizeMode="CanResize"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner"
-        Title="{x:Static p:Resources.window_notice}" Height="125" Width="300">
+        WindowStartupLocation="CenterScreen"
+        Title="{x:Static p:Resources.window_notice}" MinHeight="125" MinWidth="350">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="PromptInfo" Text="" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Margin="0,0,0,10" TextAlignment="Center" TextWrapping="Wrap" MinHeight="20"/>
-        <Button x:Name="RightButton" Content="{x:Static p:Resources.cmn_yes}" Grid.Column="3" Grid.Row="2" Click="RightButton_Click" IsDefault="True"/>
-        <Button x:Name="LeftButton" Content="{x:Static p:Resources.cmn_no}" Grid.Column="1" Grid.Row="2" Click="LeftButton_Click"/>
+            <RowDefinition MinHeight="5" Height="*"/>
+            <RowDefinition MinHeight="60" Height="auto"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition MinHeight="30"/>
+            <RowDefinition MinHeight="5" Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="PromptInfo" Text="" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Height="auto"/>
+        <Button x:Name="RightButton" Content="{x:Static p:Resources.cmn_yes}" Grid.Column="3" Grid.Row="3" Click="RightButton_Click" IsDefault="True"/>
+        <Button x:Name="LeftButton" Content="{x:Static p:Resources.cmn_no}" Grid.Column="1" Grid.Row="3" Click="LeftButton_Click"/>
         </Grid>
 </Window>

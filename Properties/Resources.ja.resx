@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="cmn_add" xml:space="preserve">
-    <value>追加する</value>
+    <value>追加</value>
   </data>
   <data name="cmn_apply" xml:space="preserve">
     <value>保存して閉じる</value>
   </data>
   <data name="cmn_attr" xml:space="preserve">
-    <value>アトリビュート</value>
+    <value>属性</value>
   </data>
   <data name="cmn_bind" xml:space="preserve">
     <value>関連モジュール</value>
@@ -137,6 +137,9 @@
   </data>
   <data name="cmn_chara" xml:space="preserve">
     <value>キャラ</value>
+  </data>
+  <data name="cmn_close" xml:space="preserve">
+    <value>閉じる</value>
   </data>
   <data name="cmn_close_n" xml:space="preserve">
     <value>保存せずに閉じる</value>
@@ -157,7 +160,7 @@
     <value>ENTER VALUE HERE</value>
   </data>
   <data name="cmn_error" xml:space="preserve">
-    <value>エラーが発生しました</value>
+    <value>エラーが発生しました。</value>
   </data>
   <data name="cmn_exit" xml:space="preserve">
     <value>終了</value>
@@ -226,7 +229,7 @@
     <value>取り除く</value>
   </data>
   <data name="cmn_replace" xml:space="preserve">
-    <value>全体の取り替え</value>
+    <value>全体的に置換</value>
   </data>
   <data name="cmn_sel" xml:space="preserve">
     <value>選択</value>
@@ -253,37 +256,37 @@
     <value>はい</value>
   </data>
   <data name="cxt_acc_add" xml:space="preserve">
-    <value>アクセサリーを追加する</value>
+    <value>アクセサリー追加</value>
   </data>
   <data name="cxt_acc_remove" xml:space="preserve">
-    <value>アクセサリーを取り除く</value>
+    <value>アクセサリー削除</value>
   </data>
   <data name="cxt_cos_add" xml:space="preserve">
-    <value>コスチュームを追加する</value>
+    <value>コスチューム追加</value>
   </data>
   <data name="cxt_cos_remove" xml:space="preserve">
-    <value>コスチュームを取り除く</value>
+    <value>コスチューム削除</value>
   </data>
   <data name="cxt_item_add" xml:space="preserve">
-    <value>アイテムを追加する</value>
+    <value>アイテム追加</value>
   </data>
   <data name="cxt_item_remove" xml:space="preserve">
-    <value>アイテムを取り除く</value>
+    <value>アイテム削除</value>
   </data>
   <data name="cxt_module_add" xml:space="preserve">
-    <value>モジュールを追加する</value>
+    <value>モジュール追加</value>
   </data>
   <data name="cxt_module_remove" xml:space="preserve">
-    <value>モジュールを取り除く</value>
+    <value>モジュール削除</value>
   </data>
   <data name="exp_1" xml:space="preserve">
     <value>モデルのFARCファイルを選択してください。</value>
   </data>
   <data name="exp_2" xml:space="preserve">
-    <value>希望する値を入力してください。</value>
+    <value>値を入力してください。</value>
   </data>
   <data name="exp_3" xml:space="preserve">
-    <value>PNGフォーマットのプレビュー画像は512px x 512pxになる必要があります。</value>
+    <value>プレビュー画像は512px x 512px角度のPNGフォーマットに限ります。</value>
   </data>
   <data name="exp_4" xml:space="preserve">
     <value>まずはファイルを開いてください。</value>
@@ -295,13 +298,13 @@
     <value>保存が無事に成功しました。</value>
   </data>
   <data name="file_open" xml:space="preserve">
-    <value>ファイルを開く</value>
+    <value>開く</value>
   </data>
   <data name="file_save" xml:space="preserve">
-    <value>保存する</value>
+    <value>保存</value>
   </data>
   <data name="file_saveas" xml:space="preserve">
-    <value>名前を付けて保存する</value>
+    <value>名前を付けて保存</value>
   </data>
   <data name="file_title" xml:space="preserve">
     <value>ファイル</value>
@@ -313,7 +316,7 @@
     <value>背アイテム</value>
   </data>
   <data name="item_body" xml:space="preserve">
-    <value />
+    <value>体</value>
   </data>
   <data name="item_chestacc" xml:space="preserve">
     <value>胸アイテム</value>
@@ -323,6 +326,9 @@
   </data>
   <data name="item_default" xml:space="preserve">
     <value>アイテム</value>
+  </data>
+  <data name="item_eye" xml:space="preserve">
+    <value>顔</value>
   </data>
   <data name="item_faceacc" xml:space="preserve">
     <value>顔アイテム</value>
@@ -334,7 +340,7 @@
     <value>手</value>
   </data>
   <data name="item_head" xml:space="preserve">
-    <value>顔</value>
+    <value>頭</value>
   </data>
   <data name="item_headacc" xml:space="preserve">
     <value>頭アイテム</value>
@@ -343,17 +349,29 @@
   <data name="md_dummy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\md_dummy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="notice_download_finished" xml:space="preserve">
+    <value>ダウンロードは完了しました。</value>
+  </data>
+  <data name="notice_update" xml:space="preserve">
+    <value>アップデートをダウンロードしました。</value>
+  </data>
+  <data name="notice_update2" xml:space="preserve">
+    <value>再起動します。</value>
+  </data>
+  <data name="notice_update_newest" xml:space="preserve">
+    <value>すでに最新バージョンです。</value>
+  </data>
   <data name="obj_add" xml:space="preserve">
-    <value>オブジェクトを追加する</value>
+    <value>オブジェクト追加</value>
   </data>
   <data name="obj_arch" xml:space="preserve">
     <value>アーカイブファイル名</value>
   </data>
   <data name="obj_del" xml:space="preserve">
-    <value>オブジェクトを削除する</value>
+    <value>オブジェクト削除</value>
   </data>
   <data name="obj_dupe" xml:space="preserve">
-    <value>オブジェクトを模倣する</value>
+    <value>オブジェクト模倣</value>
   </data>
   <data name="obj_file" xml:space="preserve">
     <value>ファイル名</value>
@@ -368,16 +386,16 @@
     <value>現在のテキストを入力してください。</value>
   </data>
   <data name="select_png" xml:space="preserve">
-    <value>PNGファイルを選択する</value>
+    <value>PNGファイル選択</value>
   </data>
   <data name="spr_add" xml:space="preserve">
-    <value>スプライトを追加する</value>
+    <value>スプライト追加</value>
   </data>
   <data name="spr_del" xml:space="preserve">
-    <value>スプライトを削除する</value>
+    <value>スプライト削除</value>
   </data>
   <data name="spr_dupe" xml:space="preserve">
-    <value>スプライトを模倣する</value>
+    <value>スプライト模倣</value>
   </data>
   <data name="tab_chritm" xml:space="preserve">
     <value>キャラクターアイテム</value>
@@ -395,52 +413,49 @@
     <value>テーマ設定</value>
   </data>
   <data name="tex_add" xml:space="preserve">
-    <value>テクスチャを追加する</value>
+    <value>テクスチャ追加</value>
   </data>
   <data name="tex_chg" xml:space="preserve">
     <value>新テクスチャ</value>
   </data>
   <data name="tex_chg_add" xml:space="preserve">
-    <value>取り替えを追加する</value>
+    <value>切り替え追加</value>
   </data>
   <data name="tex_chg_del" xml:space="preserve">
-    <value>取り替えを削除する</value>
+    <value>切り替え削除</value>
   </data>
   <data name="tex_del" xml:space="preserve">
-    <value>テクスチャを削除する</value>
+    <value>テクスチャ削除</value>
   </data>
   <data name="tex_dupe" xml:space="preserve">
-    <value>テクスチャを模倣する</value>
+    <value>テクスチャ模倣</value>
   </data>
   <data name="tex_org" xml:space="preserve">
     <value>元テクスチャ</value>
   </data>
   <data name="title_edit_obj" xml:space="preserve">
-    <value>Object Database Editor</value>
+    <value>オブジェクトデータベースエディター</value>
   </data>
   <data name="title_edit_spr" xml:space="preserve">
-    <value>Sprite Database Editor</value>
+    <value>スプライトデータベースエディター</value>
   </data>
   <data name="title_edit_tex" xml:space="preserve">
-    <value>Texture Database Editor</value>
+    <value>テクスチャデータベースエディター</value>
   </data>
   <data name="title_texture" xml:space="preserve">
     <value>テクスチャを選んでください</value>
   </data>
   <data name="title_wizard" xml:space="preserve">
-    <value>モジュールウィザード</value>
-  </data>
-  <data name="title_wizard_custom" xml:space="preserve">
-    <value>カスタマイズアイテムウィザード</value>
+    <value>ウィザード</value>
   </data>
   <data name="warn_case_sensitive" xml:space="preserve">
-    <value>このプロセスはケースセンシティブです。　それに、選択したエントリーのみが影響を受けます。</value>
+    <value>このプロセスはケースセンシティブです。　しかも、選択した項目のみが影響を受けます。</value>
   </data>
   <data name="warn_costume_empty" xml:space="preserve">
-    <value>コスチュームは空っぽになれません。</value>
+    <value>コスチュームは少なくとも一つのアイテムを含まなければなりません。</value>
   </data>
   <data name="warn_delete" xml:space="preserve">
-    <value>このアイテムを削除できませんでした。</value>
+    <value>このアイテムは削除できませんでした。</value>
   </data>
   <data name="warn_divadir_wrong" xml:space="preserve">
     <value>これは妥当な「Project DIVA Mega39's+」ディレクトリではありません。</value>
@@ -463,38 +478,32 @@
   <data name="warn_generic" xml:space="preserve">
     <value>エラーが発生しました。</value>
   </data>
+  <data name="warn_increment" xml:space="preserve">
+    <value>IDを増やす値を入力してください。</value>
+  </data>
   <data name="warn_item_not_sel" xml:space="preserve">
-    <value>まず、アイテムを選択する必要があります。</value>
+    <value>まず、アイテムを選択しなければなりません。</value>
   </data>
   <data name="warn_no_items" xml:space="preserve">
-    <value>ウィザードにアイテムがありません。</value>
-  </data>
-  <data name="warn_no_itm" xml:space="preserve">
-    <value>このファイル名に「itm」が入っていません。　ランダムに番号を付けましたが、自分で調整する必要があるかもしれません。</value>
+    <value>ウィザードにアイテムが入っていません。</value>
   </data>
   <data name="warn_no_name" xml:space="preserve">
-    <value>このMODを名付ける必要があります。　という理由で、進めません。</value>
+    <value>MODの名前を付けてください。</value>
   </data>
   <data name="warn_object_limit" xml:space="preserve">
-    <value>オブジェクトは二つに限ります。</value>
+    <value>アイテム内のオブジェクトは２つしか使えません。</value>
   </data>
   <data name="warn_used_0" xml:space="preserve">
     <value>この</value>
   </data>
-  <data name="warn_used_1" xml:space="preserve">
-    <value>は既に使われています。　作成しているアイテムは問題を生じる可能性があります。</value>
-  </data>
-  <data name="warn_used_offer" xml:space="preserve">
-    <value>現在使われていないのを使いますか？</value>
-  </data>
   <data name="warn_virus" xml:space="preserve">
-    <value>Eden ProjectというMODのフォルダが見つかりました。　このツールと他のMODに対して多くのエラーを発生するきらいがあるため、恐れ入りますがこのMODの内容は読みません。</value>
+    <value>Eden ProjectというMODのフォルダが見つかりました。　当Armoireも、他のMODに対しても多くのエラーを発生するきらいがあるため、恐れ入りますがこのMODの内容は読み込めません。</value>
   </data>
   <data name="warn_window" xml:space="preserve">
     <value>このウィンドウはもう開いています。</value>
   </data>
   <data name="warn_wizard_problem" xml:space="preserve">
-    <value>ウィザードに登録されているアイテムの中で、正しく設定されない部分があります。改めてアイテムの設定をご確認ください。</value>
+    <value>ウィザードに登録されているアイテムの内に、正しく設定されていないアイテムがあります。改めてアイテムの設定をご確認ください。</value>
   </data>
   <data name="window_item" xml:space="preserve">
     <value>アイテム詳細</value>
@@ -509,21 +518,219 @@
     <value>オブジェクトデータベース</value>
   </data>
   <data name="window_obj_edit" xml:space="preserve">
-    <value>Object Entry Editor</value>
+    <value>オブジェクトエントリーエディター</value>
   </data>
   <data name="window_preset" xml:space="preserve">
-    <value>プリセットを選択する</value>
+    <value>プリセット選択</value>
   </data>
   <data name="window_spr" xml:space="preserve">
     <value>スプライトデータベース</value>
   </data>
   <data name="window_spr_edit" xml:space="preserve">
-    <value>Sprite Entry Editor</value>
+    <value>スプライトエントリーエディター</value>
   </data>
   <data name="window_tex" xml:space="preserve">
     <value>テクスチャデータベース</value>
   </data>
   <data name="window_tex_chg" xml:space="preserve">
-    <value>テクスチャ取り替えエディター</value>
+    <value>テクスチャ切り替えエディター</value>
+  </data>
+  <data name="notice_download_fail" xml:space="preserve">
+    <value>ダウンロードの途中でエラーが発生しました。</value>
+  </data>
+  <data name="tab_setting" xml:space="preserve">
+    <value>設定・更新</value>
+  </data>
+  <data name="warn_unsaved" xml:space="preserve">
+    <value>まだ保存されていないデーターがあります。保存せずに終了してよろしいですか？</value>
+  </data>
+  <data name="dma_blurb" xml:space="preserve">
+    <value>こちらではDivaModArchiveにアップされているMODの詳細(使われているID、ファイルネームなど)を取得できます。　一致しているIDを使わないように使えます。　ただし、合致する可能性もございますので、ご自分でご確認をお願い致します。</value>
+  </data>
+  <data name="notice_download_failed_file" xml:space="preserve">
+    <value>このファイルはダウンロードできませんでした：</value>
+  </data>
+  <data name="notice_try_again" xml:space="preserve">
+    <value>もう一度やり直してください。</value>
+  </data>
+  <data name="cmn_update" xml:space="preserve">
+    <value>最新バージョンに更新</value>
+  </data>
+  <data name="dma_download" xml:space="preserve">
+    <value>最新の対応詳細をダウンロード</value>
+  </data>
+  <data name="cmn_remove_all" xml:space="preserve">
+    <value>すべてを削除</value>
+  </data>
+  <data name="dma_check_conflict" xml:space="preserve">
+    <value>一致しているIDなどを照合</value>
+  </data>
+  <data name="theme_default" xml:space="preserve">
+    <value>デフォルト (ダーク)</value>
+  </data>
+  <data name="theme_pink" xml:space="preserve">
+    <value>ピンク</value>
+  </data>
+  <data name="theme_blue" xml:space="preserve">
+    <value>ブルー</value>
+  </data>
+  <data name="theme_light" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="theme_violet" xml:space="preserve">
+    <value>スミレ</value>
+  </data>
+  <data name="update_new_found" xml:space="preserve">
+    <value>新しいバージョンがあります。</value>
+  </data>
+  <data name="warn_delete_all" xml:space="preserve">
+    <value>全ての項目を削除してよろしいですか？</value>
+  </data>
+  <data name="update_new_found_2" xml:space="preserve">
+    <value>更新してよろしいですか？</value>
+  </data>
+  <data name="dma_update_already" xml:space="preserve">
+    <value>今日はすでにDivaModArchiveの一致詳細を取得しました、もう一回更新してよろしいですか？</value>
+  </data>
+  <data name="notice_unsaved" xml:space="preserve">
+    <value>まだ保存していないデータがあります、本当にArmoireを終了してよろしいですか？</value>
+  </data>
+  <data name="cmn_lang" xml:space="preserve">
+    <value>言語:</value>
+  </data>
+  <data name="dma_check_1" xml:space="preserve">
+    <value>このプロセスはmodsというフォルダにある各MODとMega39s+の基盤ファイルやDivaModArchiveにアップされているMODの一致しているIDなどをテキストファイルに記します。</value>
+  </data>
+  <data name="dma_check_2" xml:space="preserve">
+    <value>サイズが大きいファイルを出力し、長時間がかかる場合があります。</value>
+  </data>
+  <data name="cmn_sure" xml:space="preserve">
+    <value>よろしいですか？</value>
+  </data>
+  <data name="conflict_start" xml:space="preserve">
+    <value>一致している</value>
+  </data>
+  <data name="conflict_module_id" xml:space="preserve">
+    <value>モジュールID</value>
+  </data>
+  <data name="conflict_module_sort" xml:space="preserve">
+    <value>モジュール索引</value>
+  </data>
+  <data name="conflict_custom_id" xml:space="preserve">
+    <value>カスタマイズアイテムID</value>
+  </data>
+  <data name="conflict_custom_sort" xml:space="preserve">
+    <value>カスタマイズアイテム索引</value>
+  </data>
+  <data name="conflict_cos_id" xml:space="preserve">
+    <value>キャラクターコスチュームID (COS)</value>
+  </data>
+  <data name="conflict_item_id" xml:space="preserve">
+    <value>キャラクターアイテム番号 (item_no)</value>
+  </data>
+  <data name="conflict_farc" xml:space="preserve">
+    <value>FARCファイル名</value>
+  </data>
+  <data name="conflict_tex_id" xml:space="preserve">
+    <value>テクスチャID</value>
+  </data>
+  <data name="conflict_tex_name" xml:space="preserve">
+    <value>テクスチャ名</value>
+  </data>
+  <data name="conflict_spr_set" xml:space="preserve">
+    <value>スプライトセット</value>
+  </data>
+  <data name="conflict_spr" xml:space="preserve">
+    <value>スプライト項目</value>
+  </data>
+  <data name="conflict_spr_tex" xml:space="preserve">
+    <value>スプライトテクスチャID</value>
+  </data>
+  <data name="settings_dma" xml:space="preserve">
+    <value>DivaModArchive対応詳細保存先設定</value>
+  </data>
+  <data name="settings_game" xml:space="preserve">
+    <value>ゲームデータ先設定</value>
+  </data>
+  <data name="wizard_add_new" xml:space="preserve">
+    <value>新しく追加</value>
+  </data>
+  <data name="wizard_add_exist" xml:space="preserve">
+    <value>既成追加</value>
+  </data>
+  <data name="wizard_remove" xml:space="preserve">
+    <value>全部削除</value>
+  </data>
+  <data name="wizard_module" xml:space="preserve">
+    <value>モジュール</value>
+  </data>
+  <data name="wizard_customise" xml:space="preserve">
+    <value>カスタマイズアイテム</value>
+  </data>
+  <data name="texture_eyebrow" xml:space="preserve">
+    <value>眉毛</value>
+  </data>
+  <data name="texture_eye_l" xml:space="preserve">
+    <value>目 (左)</value>
+  </data>
+  <data name="texture_eye_r" xml:space="preserve">
+    <value>目 (右)</value>
+  </data>
+  <data name="texture_face" xml:space="preserve">
+    <value>顔</value>
+  </data>
+  <data name="texture_eyelash" xml:space="preserve">
+    <value>まつ毛</value>
+  </data>
+  <data name="name_miku" xml:space="preserve">
+    <value>初音ミク</value>
+  </data>
+  <data name="name_rin" xml:space="preserve">
+    <value>鏡音リン</value>
+  </data>
+  <data name="name_len" xml:space="preserve">
+    <value>鏡音レン</value>
+  </data>
+  <data name="name_luka" xml:space="preserve">
+    <value>巡音ルカ</value>
+  </data>
+  <data name="name_kaito" xml:space="preserve">
+    <value>カイト</value>
+  </data>
+  <data name="name_meiko" xml:space="preserve">
+    <value>メイコ</value>
+  </data>
+  <data name="name_neru" xml:space="preserve">
+    <value>亞北ネル</value>
+  </data>
+  <data name="name_haku" xml:space="preserve">
+    <value>弱音ハク</value>
+  </data>
+  <data name="name_sakine" xml:space="preserve">
+    <value>咲音メイコ</value>
+  </data>
+  <data name="name_teto" xml:space="preserve">
+    <value>重音テト</value>
+  </data>
+  <data name="spr_set_add" xml:space="preserve">
+    <value>スプライトセット追加</value>
+  </data>
+  <data name="spr_set_dupe" xml:space="preserve">
+    <value>スプライトセット模倣</value>
+  </data>
+  <data name="spr_set_del" xml:space="preserve">
+    <value>スプライトセット削除</value>
+  </data>
+  <data name="align_text" xml:space="preserve">
+    <value>テキスト配置</value>
+  </data>
+  <data name="align_left" xml:space="preserve">
+    <value>左揃え</value>
+  </data>
+  <data name="align_right" xml:space="preserve">
+    <value>右揃え</value>
+  </data>
+  <data name="align_centre" xml:space="preserve">
+    <value>左右中央揃え</value>
   </data>
 </root>

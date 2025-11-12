@@ -8,21 +8,24 @@ namespace Armoire.Dialogs
     /// </summary>
     public partial class WizItem : UserControl
     {
-        public wizObj curObj = new();
-        public ModuleInfo parentModInfo;
-        public WizItem()
+        public WizardObject curObj = new();
+        public WizItem(bool isExisting)
         {
             InitializeComponent();
+            if (isExisting)
+            {
+                itemTypeButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if(curObj.item == null)
             {
-                curObj.item = new itemEntry();
+                curObj.item = new CharacterItemEntry();
             }
-            curObj.item.name = Armoire.Properties.Resources.cmn_temp;
-            PresetPicker picker = new(curObj.item, curObj.objectFilePath, Program.Databases.GetChritmName(parentModInfo.charBox.SelectedValue as string).ToUpper(), true, true);
+            curObj.item.name = Properties.Resources.cmn_temp;
+            PresetPicker picker = new(curObj, (((WizardInfo)((Grid)((StackPanel)this.Parent).Parent).Parent).CharacterBox.SelectedValue as string).ToUpper(), true);
             picker.ShowDialog();
             curObj.item = picker.itemCurrent;
         }
