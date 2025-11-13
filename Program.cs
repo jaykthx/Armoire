@@ -21,13 +21,14 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Armoire
 {
     public class Program
     {
-        public static readonly DateTime versionDate = new DateTime(2025,11,12);
+        public static readonly DateTime versionDate = new DateTime(2025,11,13);
         public static string modulePath;
         public static Downloader downloader = new();
         public static string customPath;
@@ -61,324 +62,6 @@ namespace Armoire
                 BitmapImage img = ToBitmapImage(cropSprite);
                 image.Source = img;
             }
-            /*public static string ProcessDirectories(string folderName)
-            {
-                string finalFolder = Settings.Default.gamePath + "/mods/" + folderName + "/rom/";
-                Directory.CreateDirectory(finalFolder);
-                Directory.CreateDirectory(finalFolder + "2d");
-                Directory.CreateDirectory(finalFolder + "objset");
-                Directory.CreateDirectory(finalFolder + "lang2");
-                if (File.Exists(finalFolder + "/lang2/mod_str_array.toml"))
-                {
-                    File.Delete(finalFolder + "/lang2/mod_str_array.toml");
-                }
-                return finalFolder;
-            }
-            public static string ReturnSubIDString(int subID)
-            {
-                switch (subID)
-                {
-                    case 0:
-                        return Resources.item_headacc;
-                    case 4:
-                        return Resources.item_faceacc;
-                    case 8:
-                        return Resources.item_chestacc;
-                    case 16:
-                        return Resources.item_backacc;
-                    case 1:
-                        return Resources.item_hair;
-                    case 10:
-                        return Resources.item_body;
-                    case 14:
-                        return Resources.item_hands;
-                    case 6:
-                        return Resources.item_contact;
-                    case 24:
-                        return Resources.item_head;
-                    default:
-                        return Resources.item_default;
-                }
-            }
-            
-
-            public static void AddToModuleTable(WizardEntry wizMod, UsedIdSet used, ObservableCollection<Module> modules, SpriteDatabase spr_db)
-            {
-                Module temp = new();
-                if (wizMod.hairNG)
-                {
-                    temp.attr = Attr.NoSwap_CT;
-                }
-                else
-                {
-                    temp.attr = Attr.Default_CT;
-                }
-                temp.chara = wizMod.chara;
-                if (Program.Databases.CheckID(used.module_tbl, wizMod.id) == false)
-                {
-                    used.module_tbl.Add(temp.id);
-                }
-                else
-                {
-                    ChoiceWindow win = new(Properties.Resources.warn_used_0 + Properties.Resources.cmn_item_nofull + Properties.Resources.warn_used_1 + "\n" +
-                        Properties.Resources.warn_used_offer, Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
-                    win.ShowDialog();
-                    if (win.isRightClicked)
-                    {
-                        wizMod.id = Program.Databases.GetUnusedID(used.module_tbl, used.customize_item_tbl);
-                        used.module_tbl.Add(wizMod.id);
-                    }
-                }
-                temp.id = wizMod.id;
-                temp.cos = "COS_" + Program.Databases.GetIDString((temp.id + 1).ToString());
-                temp.name = wizMod.name;
-                if (Program.Databases.CheckID(used.module_tbl_index, wizMod.sort_index) == false)
-                {
-                    used.module_tbl_index.Add(wizMod.sort_index);
-                }
-                else
-                {
-                    ChoiceWindow win = new(Properties.Resources.warn_used_0 + Properties.Resources.cmn_index + Properties.Resources.warn_used_1 + "\n" +
-                        Properties.Resources.warn_used_offer, Properties.Resources.cmn_item_no, Properties.Resources.cmn_yes);
-                    win.ShowDialog();
-                    if (win.isRightClicked)
-                    {
-                        wizMod.sort_index = Program.Databases.GetUnusedID(used.module_tbl_index);
-                        used.module_tbl_index.Add(wizMod.sort_index);
-                    }
-                }
-                temp.sort_index = wizMod.sort_index;
-                temp.shop_price = "900";
-                temp.shop_st_day = 1;
-                temp.shop_st_month = 1;
-                temp.shop_st_year = 2009;
-                Program.Databases.AddToSpriteDatabase(spr_db, wizMod.id, false, used.spr_db);
-                modules.Add(temp);
-            }
-            public static void AddItemToCustomizeTable(WizardEntry wizMod, int item_no, UsedIdSet used)
-            {
-                CustomizeItem temp;
-                if (wizMod.isItem)
-                {
-                    temp = new()
-                    {
-                        bind_module = -1,
-                        id = wizMod.id,
-                        name = wizMod.name,
-                        parts = wizMod.parts,
-                        chara = "ALL",
-                        obj_id = item_no,
-                        ng = false,
-                        shop_price = "300",
-                        shop_st_day = 1,
-                        shop_st_month = 1,
-                        shop_st_year = 2009
-                    };
-                }
-                else
-                {
-                    temp = new()
-                    {
-                        bind_module = wizMod.id,
-                        id = wizMod.id,
-                        name = wizMod.name + "ヘア",
-                        parts = "KAMI",
-                        chara = wizMod.chara,
-                        obj_id = item_no,
-                        ng = true,
-                        shop_price = "2",
-                        shop_st_day = 1,
-                        shop_st_month = 1,
-                        shop_st_year = 2009
-                    };
-                }
-                if (Program.Databases.CheckID(used.customize_item_tbl, wizMod.id) == false)
-                {
-                    used.customize_item_tbl.Add(temp.id);
-                }
-                else
-                {
-                    Program.NotiBox(Properties.Resources.warn_used_0 + Properties.Resources.cmn_id + Properties.Resources.warn_used_1, Properties.Resources.window_notice);
-                }
-
-                if (Program.Databases.CheckID(used.customize_item_tbl_index, wizMod.sort_index) == false)
-                {
-                    used.customize_item_tbl_index.Add(wizMod.sort_index);
-                }
-                else
-                {
-                    Program.NotiBox(Properties.Resources.warn_used_0 + Properties.Resources.cmn_index + Properties.Resources.warn_used_1, Properties.Resources.window_notice);
-                }
-                temp.sort_index = wizMod.sort_index;
-                Program.Databases.AddToSpriteDatabase(spr_db, wizMod.id, true, used.spr_db);
-                used.Add(temp);
-            }
-
-            public static ObjectSetInfo CreateObjInfo(WizardObject wiz, string chara, UsedIdSet used, string exportFolder)
-            {
-                ObjectSetInfo objSetInfo = new();
-                var farc = BinaryFile.Load<FarcArchive>(wiz.objectFilePath);
-                string subName = chara.ToUpper() + "ITM" + Program.Databases.GetUnusedID(used.chritm_prop_item[Program.Databases.GetChritmName(chara)]);
-                var newFarc = new FarcArchive();
-                foreach (string fileName in farc)
-                {
-                    if (fileName.EndsWith("_obj.bin"))
-                    {
-                        string mainName = fileName.Remove(fileName.Length - 8, 8);
-                        if (wiz.item.attr != 2085)
-                        {
-                            objSetInfo.Name = mainName.ToUpper();
-                        }
-                        else
-                        {
-                            objSetInfo.Name = subName;
-                        }
-                        objSetInfo.ArchiveFileName = mainName + ".farc";
-                        objSetInfo.FileName = fileName;
-                        objSetInfo.TextureFileName = mainName + "_tex.bin";
-                        var stream = new MemoryStream();
-                        var source = farc.Open(fileName, EntryStreamMode.MemoryStream);
-                        var objset = new ObjectSet();
-                        objset.Load(source);
-                        Program.Wizard.ConvertToTriangleStrips(objset);
-                        List<Object> headObj = new List<Object>();
-                        int hCount = 0;
-                        foreach (Object obj in objset.Objects)
-                        {
-                            if (wiz.item.attr != 2085)
-                            {
-                                ObjectInfo objInfo = new();
-                                objInfo.Name = obj.Name;
-                                objInfo.Id = obj.Id;
-                                objSetInfo.Objects.Add(objInfo);
-                            }
-                            else
-                            {
-                                headObj.Add(obj);
-                            }
-                        }
-                        foreach (Object hObj in headObj)
-                        {
-                            ObjectInfo objInfo = new();
-                            if (hObj.Name.Contains("_head_0") || hObj.Name.Contains("_HEAD_0"))
-                            {
-                                objInfo.Name = subName + $"_ATAM_HEAD_0{hCount}_SP__DIVSKN";
-                                hCount++;
-                            }
-                            else
-                            {
-                                objInfo.Name = subName + $"_ATAM_HEAD_999__DIVSKN";
-                            }
-                            objInfo.Id = hObj.Id;
-                            objSetInfo.Objects.Add(objInfo);
-                        }
-                        Program.Wizard.ProcessTextures(objset, mainName, used, tex_db);
-                        objset.Save(stream, true);
-                        farc.Add(objSetInfo.FileName, stream, false, ConflictPolicy.Replace);
-                        farc.Save(exportFolder + "/objset/" + objSetInfo.ArchiveFileName);
-                    }
-                }
-                farc.Dispose();
-                newFarc.Dispose();
-                return objSetInfo;
-            }
-
-            public static void AddToCharaItemTable(ModuleInfo modInfo)
-            {
-                List<ObjectSetInfo> entries = new(); // this is where we're storing the ObjSetInfo classes we create below so they can be used for chritm_tbl generating ig?
-                if (!modInfo.wizMod.isItem)
-                {
-                    foreach (WizardObject wiz in modInfo.wizMod.objects)
-                    {
-                        wiz.objectSet = CreateObjInfo(wiz, Program.Databases.GetChritmName(modInfo.CharacterBox.Text.ToUpper()));
-                        entries.Add(wiz.objectSet);
-                    }
-                }
-                else
-                {
-                    modInfo.wizMod.objects[0].objectSet = CreateObjInfo(modInfo.wizMod.objects[0], "CMN");
-                    entries.Add(modInfo.wizMod.objects[0].objectSet);
-                }
-                foreach (ObjectSetInfo o in entries)
-                {
-                    o.Id = Program.Databases.GetUnusedID(finalUsedIDs.obj_db, 19999);
-                    finalUsedIDs.obj_db.Add(o.Id);
-                    obj_db.ObjectSets.Add(o);
-                }
-                if (!modInfo.wizMod.isItem)
-                {
-                    CharacterCostumeEntry cos = new()
-                    {
-                        id = modInfo.wizMod.id,
-                        items = new()
-                    };
-                    bool containsHands = false;
-                    foreach (CharacterItemEntry x in modInfo.wizMod.existingItems)
-                    {
-                        cos.items.Add(x.no);
-                        if (x.subID == 14)
-                        {
-                            containsHands = true;
-                        }
-                    }
-                    foreach (WizardObject o in modInfo.wizMod.objects)
-                    {
-                        if (o.item.subID == 14)
-                        {
-                            containsHands = true;
-                        }
-                    }
-                    if (!containsHands)
-                    {
-                        if (modInfo.wizMod.chara != "SAKINE")
-                        {
-                            cos.items.Add(301);
-                        }
-                        else
-                        {
-                            cos.items.Add(306);
-                        }
-                    }
-                    foreach (WizardObject x in modInfo.wizMod.objects)
-                    {
-                        x.item.name = x.objectSet.Name + " " + Program.Wizard.ReturnSubIDString(x.item.subID);
-                        x.item.uid = x.objectSet.Objects[0].Name;
-                        x.item.objset = new List<string>
-                    {
-                        x.objectSet.Name
-                    };
-                        if (x.item.attr == 2085)
-                        {
-                            x.item.no = int.Parse(x.objectSet.Name.Split(new string[] { "ITM" }, StringSplitOptions.None).LastOrDefault());
-                        }
-                        else
-                        {
-                            int itm_num = Program.Wizard.GetItemNumber(x.objectFilePath, modInfo.wizMod.chara, finalUsedIDs);
-                            x.item.no = itm_num;
-                        }
-                        list[modInfo.CharacterBox.SelectedIndex].items.Add(x.item);
-                        cos.items.Add(x.item.no);
-                        if (x.item.subID == 1 && !modInfo.wizMod.hairNG)
-                        {
-                            AddItemToCustomizeTable(modInfo.wizMod, x.item.no);
-                        }
-                    }
-                    list[modInfo.CharacterBox.SelectedIndex].costumes.Add(cos);
-                }
-                else
-                {
-                    modInfo.wizMod.objects[0].item.name = modInfo.wizMod.objects[0].objectSet.Name + " " + Program.Wizard.ReturnSubIDString(modInfo.wizMod.objects[0].item.subID);
-                    modInfo.wizMod.objects[0].item.uid = modInfo.wizMod.objects[0].objectSet.Objects[0].Name;
-                    for (int x = 0; x < Program.charas.Count; x++)
-                    {
-                        int itm_num = Program.Wizard.GetItemNumber(modInfo.wizMod.objects[0].objectFilePath, Program.charas[x], );
-                        modInfo.wizMod.objects[0].item.no = itm_num;
-                        list[x].items.Add(modInfo.wizMod.objects[0].item);
-                    }
-                    AddItemToCustomizeTable(modInfo.wizMod, modInfo.wizMod.objects[0].item.no);
-                }
-            }
-            }*/
         }
 
         public class IO
@@ -1122,13 +805,14 @@ namespace Armoire
             }
             string jsonFile = Encoding.UTF8.GetString(json.ToArray());
             JsonObject job = (JsonObject)JsonNode.Parse(jsonFile);
-            var assets = (JsonObject)job["assets"][0];
-            DateTime updateTime = (DateTime)assets["updated_at"];
-            if (versionDate < updateTime)
+            DateTime updateTime = (DateTime)job["updated_at"];
+            Debug.WriteLine(updateTime.Date + " x " + versionDate.Date);
+            if (versionDate.Date < updateTime.Date)
             {
                 ChoiceWindow choice = new($"{Resources.update_new_found} ({(string)job["name"]})\n{Resources.update_new_found_2}\n\nChangelog\n{(string)job["body"]}", Resources.cmn_no, Resources.cmn_yes);
                 if (choice.isRightClicked)
                 {
+                    var assets = (JsonObject)job["assets"][0];
                     await downloader.DownloadFileASync((string)assets["browser_download_url"], AppDomain.CurrentDomain.BaseDirectory, "update.rar");
                     SevenZipBase.SetLibraryPath(AppDomain.CurrentDomain.BaseDirectory + "\\7z.dll");
                     var extractor = new SevenZipExtractor("update.rar");

@@ -733,4 +733,13 @@
   <data name="align_centre" xml:space="preserve">
     <value>左右中央揃え</value>
   </data>
+  <data name="settings_autocheck" xml:space="preserve">
+    <value>起動時に更新情報の取得:</value>
+  </data>
+  <data name="settings_autocheck_on" xml:space="preserve">
+    <value>する</value>
+  </data>
+  <data name="settings_autocheck_off" xml:space="preserve">
+    <value>しない</value>
+  </data>
 </root>

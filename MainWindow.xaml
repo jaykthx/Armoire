@@ -218,6 +218,7 @@
                     <RowDefinition MinHeight="50" Height="*"/>
                     <RowDefinition MinHeight="30" Height="50"/>
                     <RowDefinition MinHeight="30" Height="50"/>
+                    <RowDefinition MinHeight="30" Height="50"/>
                     <RowDefinition MinHeight="20" Height="*"/>
                 </Grid.RowDefinitions>
                 <UniformGrid Columns="2" Rows="0">
@@ -237,7 +238,14 @@
                         <ComboBoxItem Content="{x:Static p:Resources.align_right}"/>
                     </ComboBox>
                 </UniformGrid>
-                <Border Grid.Row="4" BorderBrush="{StaticResource Color3Brush}" BorderThickness="1">
+                <UniformGrid Columns="2" Grid.Row="4">
+                    <TextBlock Text="{x:Static p:Resources.settings_autocheck}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="AutoCheckComboBox" Style="{StaticResource ComboStyle}" SelectionChanged="AutoCheckComboBox_SelectionChanged">
+                        <ComboBoxItem Content="{x:Static p:Resources.settings_autocheck_off}"/>
+                        <ComboBoxItem Content="{x:Static p:Resources.settings_autocheck_on}"/>
+                    </ComboBox>
+                </UniformGrid>
+                <Border Grid.Row="5" BorderBrush="{StaticResource Color3Brush}" BorderThickness="1">
                     <TextBlock TextAlignment="Center" VerticalAlignment="Center">
     Armoire by jaykthx.
     <LineBreak/>Thanks to <Hyperlink NavigateUri="https://github.com/blueskythlikesclouds" RequestNavigate="Hyperlink_RequestNavigate">Skyth</Hyperlink> for <Hyperlink NavigateUri="https://github.com/blueskythlikesclouds/MikuMikuLibrary" RequestNavigate="Hyperlink_RequestNavigate">MikuMikuLibrary</Hyperlink>.<LineBreak/>

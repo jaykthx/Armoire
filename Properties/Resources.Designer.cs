@@ -1241,6 +1241,33 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for updates on launch:.
+        /// </summary>
+        public static string settings_autocheck {
+            get {
+                return ResourceManager.GetString("settings_autocheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string settings_autocheck_off {
+            get {
+                return ResourceManager.GetString("settings_autocheck_off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string settings_autocheck_on {
+            get {
+                return ResourceManager.GetString("settings_autocheck_on", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set DMA Information Path.
         /// </summary>
         public static string settings_dma {

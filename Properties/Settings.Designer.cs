@@ -105,5 +105,17 @@ namespace Armoire.Properties {
                 this["alignmentSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoCheckSetting {
+            get {
+                return ((bool)(this["autoCheckSetting"]));
+            }
+            set {
+                this["autoCheckSetting"] = value;
+            }
+        }
     }
 }

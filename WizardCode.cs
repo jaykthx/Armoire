@@ -373,7 +373,7 @@ namespace Armoire
                             }
                             if (wizObj.item.subID != 24)
                             {
-                                wizObj.item.uid = $"{fileName}_skin";
+                                wizObj.item.uid = $"{fileName}_skin".ToUpper();
                             }
                             else
                             {

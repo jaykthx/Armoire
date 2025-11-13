@@ -733,4 +733,13 @@
   <data name="align_centre" xml:space="preserve">
     <value>Centre</value>
   </data>
+  <data name="settings_autocheck" xml:space="preserve">
+    <value>Check for updates on launch:</value>
+  </data>
+  <data name="settings_autocheck_on" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="settings_autocheck_off" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
 </root>

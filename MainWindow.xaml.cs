@@ -114,6 +114,11 @@ namespace Armoire
             InitializeComponent();
             this.Title = $"Armoire ({Program.versionDate.Date.ToShortDateString()})";
             SetAlignment(Settings.Default.alignmentSetting);
+            AutoCheckComboBox.SelectedIndex = Convert.ToInt32(Settings.Default.autoCheckSetting);
+            if (Settings.Default.autoCheckSetting)
+            {
+                Program.DownloadUpdate();
+            }
             charaBox_Modules.ItemsSource = Program.charas;
             attrBox.ItemsSource = Enum.GetValues(typeof(Attr)).Cast<Attr>();
             DataGrid_Modules.ItemsSource = Modules;
@@ -887,7 +892,7 @@ namespace Armoire
             }
         }
 
-        private async void SelfUpdate_Click(object sender, RoutedEventArgs e)
+        private void SelfUpdate_Click(object sender, RoutedEventArgs e)
         {
             Program.DownloadUpdate();
             LockControls();
@@ -1034,6 +1039,15 @@ namespace Armoire
             if(AlignmentComboBox.SelectedIndex != align)
             {
                 AlignmentComboBox.SelectedIndex = align;
+            }
+        }
+
+        private void AutoCheckComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(AutoCheckComboBox.SelectedIndex > -1)
+            {
+                Settings.Default.autoCheckSetting = Convert.ToBoolean(AutoCheckComboBox.SelectedIndex);
+                Settings.Default.Save();
             }
         }
     }
