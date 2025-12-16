@@ -28,12 +28,13 @@ namespace Armoire
 {
     public class Program
     {
-        public static readonly DateTime versionDate = new DateTime(2025,11,13);
+        public static readonly DateTime versionDate = new DateTime(2025,12,16);
         public static string modulePath;
         public static Downloader downloader = new();
         public static string customPath;
         public static string charaPath;
         public readonly static List<string> charas = ["MIKU", "RIN", "LEN", "LUKA", "KAITO", "MEIKO", "NERU", "HAKU", "SAKINE", "TETO"];
+        public static bool isLocked;
         public static DateTime dmaLastUpdate
         {
             get
@@ -51,7 +52,7 @@ namespace Armoire
         {
             public static void SetModuleImage(Bitmap pngFile, System.Windows.Controls.Image image)
             {
-                Sprite spr = GetSprite(false);
+                Sprite spr = GetSprite(false, false);
                 SpriteSet sprite = new();
                 sprite.Sprites.Add(spr);
                 Bitmap newBitmap = new(pngFile);
@@ -657,7 +658,7 @@ namespace Armoire
                 }
             }
         }
-        public static Sprite GetSprite(bool isCustomize)
+        public static Sprite GetSprite(bool isCustomize, bool isFT)
         {
             Sprite spr = new()
             {
@@ -672,6 +673,11 @@ namespace Armoire
             else
             {
                 spr.Name = "MD_IMG";
+            }
+            if (isFT)
+            {
+                spr.Name += "_FT";
+                spr.TextureIndex = 1;
             }
             spr.X = 2;
             spr.Y = 2;
@@ -733,7 +739,7 @@ namespace Armoire
             }
         }
 
-        public static BitmapImage GetImage(Bitmap pngFile)
+        /*public static BitmapImage GetImage(Bitmap pngFile)
         {
             Sprite spr = GetSprite(false);
             SpriteSet sprite = new();
@@ -745,48 +751,9 @@ namespace Armoire
             Bitmap cropSprite = SpriteCropper.Crop(sprite.Sprites[0], sprite);
             BitmapImage img = ToBitmapImage(cropSprite);
             return img;
-        }
+        }*/
 
-        public async static Task GetLocalUsedInformation(bool useDMA)
-        {
-            if (Settings.Default.gamePath == null)
-            {
-                OpenFolderDialog ofd = new();
-                if (ofd.ShowDialog() == true && ofd.FolderName.EndsWith("Hatsune Miku Project DIVA Mega Mix Plus"))
-                {
-                    Settings.Default.gamePath = ofd.FolderName;
-                }
-            }
-            if ((!File.Exists(Settings.Default.gamePath + "/diva_main.cpk") || !File.Exists(Settings.Default.gamePath + "/diva_dlc00_region.cpk")) && !useDMA)
-            {
-                NotiBox("Please make sure you have diva_main.cpk (base game) and diva_dlc00_region.cpk (region dlc) in your game folder.\nOtherwise, use DMA compatibility information.", "Error");
-                throw new Exception("Could not locate diva_main.cpk or diva_dlc00_region.cpk.");
-            }
-            else
-            {
-                UsedIdSet usedIds = new();
-                await Task.Run(usedIds.ProcessLocalFiles);
-                await Task.Run(() => usedIds.GetUsedModIds(useDMA));
-            }
-        }
-
-        public void CheckGamePath()
-        {
-            while (Settings.Default.gamePath == null || !Settings.Default.gamePath.Contains("Hatsune Miku Project DIVA Mega Mix Plus") || !Directory.Exists(Settings.Default.gamePath))
-            {
-                OpenFolderDialog ofd = new()
-                {
-                    Title = "Please select your game directory.",
-                    RootDirectory = Settings.Default.gamePath
-                };
-                if(ofd.ShowDialog() == true)
-                {
-                    Settings.Default.gamePath = ofd.FolderName;
-                    Settings.Default.Save();
-                }
-            }
-        }
-        public static async Task DownloadUpdate()
+        public static async Task<(bool isAvailable, string? url, string? blurb)> CheckForUpdate()
         {
             MemoryStream json = new();
             using (var httpClient = new HttpClient())
@@ -809,26 +776,23 @@ namespace Armoire
             Debug.WriteLine(updateTime.Date + " x " + versionDate.Date);
             if (versionDate.Date < updateTime.Date)
             {
-                ChoiceWindow choice = new($"{Resources.update_new_found} ({(string)job["name"]})\n{Resources.update_new_found_2}\n\nChangelog\n{(string)job["body"]}", Resources.cmn_no, Resources.cmn_yes);
-                if (choice.isRightClicked)
-                {
-                    var assets = (JsonObject)job["assets"][0];
-                    await downloader.DownloadFileASync((string)assets["browser_download_url"], AppDomain.CurrentDomain.BaseDirectory, "update.rar");
-                    SevenZipBase.SetLibraryPath(AppDomain.CurrentDomain.BaseDirectory + "\\7z.dll");
-                    var extractor = new SevenZipExtractor("update.rar");
-                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\update");
-                    await extractor.ExtractArchiveAsync(AppDomain.CurrentDomain.BaseDirectory + "\\update");
-                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "\\update.rar");
-                    Program.LaunchUpdater();
-                }
+                var assets = (JsonObject)job["assets"][0];
+                return (true, (string)assets["browser_download_url"], $"{Resources.update_new_found} ({(string)job["name"]})\n{Resources.update_new_found_2}\n\nChangelog\n{(string)job["body"]}");
             }
             else
             {
-                App.Current.Dispatcher.Invoke((Action)delegate
-                {
-                    PopupNotification pop = new(Resources.notice_update_newest);
-                });
+                return (false, null, null);
             }
+        }
+        public static async Task DownloadUpdate(string url)
+        {
+            await downloader.DownloadFileASync(url, AppDomain.CurrentDomain.BaseDirectory, "update.rar");
+            SevenZipBase.SetLibraryPath(AppDomain.CurrentDomain.BaseDirectory + "\\7z.dll");
+            var extractor = new SevenZipExtractor("update.rar");
+            Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\update");
+            await extractor.ExtractArchiveAsync(AppDomain.CurrentDomain.BaseDirectory + "\\update");
+            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "\\update.rar");
+            Program.LaunchUpdater();
         }
 
         public static async void LaunchUpdater()

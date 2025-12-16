@@ -38,7 +38,7 @@
         <Button x:Name="IdButton" Content="{x:Static p:Resources.cmn_button_edit}" Grid.Row="2" Click="IdButton_Click" Grid.Column="1"/>
         <Button x:Name="IndexButton" Grid.Row="3" Content="{x:Static p:Resources.cmn_button_edit}" Click="IndexButton_Click" Grid.Column="1"/>
         <ComboBox x:Name="CharacterBox" Style="{StaticResource ComboStyle}" Grid.Row="4" SelectionChanged="CharacterBox_SelectionChanged" MinWidth="140" Grid.Column="1" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
-        <CheckBox x:Name="HairSwapCheckBox" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+        <CheckBox x:Name="HairSwapCheckBox" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Checked="HairSwapCheckBox_Checked"/>
         <UniformGrid x:Name="ModuleItemEditPanel" Grid.Column="1" Grid.Row="6">
             <Button Content="{x:Static p:Resources.wizard_add_new}" Click="AddButton_Click"/>
             <Button Content="{x:Static p:Resources.wizard_add_exist}" Click="AddExistingButton_Click"/>
@@ -51,10 +51,38 @@
             <Button Content="{x:Static p:Resources.cmn_sel}" Click="SelectItem_Click"/>
         </UniformGrid>
         <StackPanel x:Name="ModuleItemPanel" Grid.Row="7" Grid.ColumnSpan="2"/>
-        <StackPanel Grid.RowSpan="7" Grid.Column="2" Grid.Row="1">
-            <TextBlock Text="{x:Static p:Resources.cmn_preview_img}" HorizontalAlignment="Center"/>
-            <Image x:Name="moduleImage" Height="225"/>
+        <TabControl Grid.RowSpan="7" Grid.Column="2" Grid.Row="1">
+            <TabItem Header="Module (MM)">
+                <Button Click="SelectModuleImageMMButton_Click" ToolTip="Click to select image">
+                    <Image x:Name="moduleImageMM"/>
+                </Button>
+            </TabItem>
+            <TabItem x:Name="ModuleTabFT" Header="Module (FT)">
+                <Button Click="SelectModuleImageFTButton_Click" ToolTip="Click to select image">
+                    <Image x:Name="moduleImageFT"/>
+                </Button>
+            </TabItem>
+            <TabItem Header="Hair (MM)">
+                <Button Click="SelectHairImageMMButton_Click" ToolTip="Click to select image">
+                    <Image x:Name="hairImageMM"/>
+                </Button>
+            </TabItem>
+            <TabItem x:Name="HairTabFT" Header="Hair (FT)">
+                <Button Click="SelectHairImageFTButton_Click" ToolTip="Click to select image">
+                    <Image x:Name="hairImageFT"/>
+                </Button>
+            </TabItem>
+        </TabControl>
+        <!--<DockPanel Grid.RowSpan="7" Grid.Column="2" Grid.Row="1">
+            <TextBlock DockPanel.Dock="Top" Text="{x:Static p:Resources.cmn_preview_img}" TextAlignment="Center"/>
+            <TextBlock x:Name="SelectedPageName" DockPanel.Dock="Top" Text="(Mega Mix)" TextAlignment="Center" FontSize="8"/>
+            <Image DockPanel.Dock="Top" x:Name="moduleImage" Height="175"/>
+            <TextBlock x:Name="SelectedPageDots" Margin="0,5,0,5" Text="○  ○  ○  ○" DockPanel.Dock="Top" TextAlignment="Center" FontSize="8"/>
+            <UniformGrid DockPanel.Dock="Top" Columns="2">
+                <Button Content="←"/>
+                <Button Content="→" Click="Button_Click"/>
+            </UniformGrid>
             <Button Content="{x:Static p:Resources.select_png}" Click="SelectImageButton_Click" MinHeight="34"/>
-        </StackPanel>
+        </DockPanel>!-->
     </Grid>
 </UserControl>

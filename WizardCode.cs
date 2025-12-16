@@ -12,8 +12,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace Armoire
 {
@@ -62,7 +64,7 @@ namespace Armoire
                     bind_module = exportId,
                     chara = wizMod.chara,
                     parts = "KAMI",
-                    id = usedId.GetUnusedID_Maximum(usedId.customize_item_tbl, 1000000),
+                    id = usedId.GetUnusedId_Regular(exportId, wizMod.chara.Remove(3)),
                     name = wizMod.name,
                     obj_id = itemNo,
                     sell_type = false,
@@ -76,45 +78,157 @@ namespace Armoire
             return cust;
         }
 
-        public static SpriteSetInfo ExportSprite(Bitmap bmp, int id, string outputFolder, bool isCustomize, UsedIdSet usedIdSet)
+        /*public static SpriteSet GenerateSpriteFarc()
         {
-            SpriteSetInfo dbEntry = new();
+            SpriteSet set = new();
+            set.Sprites.Add
+        }*/
+        public static Sprite GetSprite(bool isCustomize, bool isFT)
+        {
+            Sprite spr = new()
+            {
+                Width = 408,
+                Height = 494, // official width + height
+                TextureIndex = 0
+            };
+            if (isCustomize)
+            {
+                spr.Name = "ITM_IMG";
+            }
+            else
+            {
+                spr.Name = "MD_IMG";
+            }
+            if (isFT)
+            {
+                spr.Name += "_FT";
+                spr.TextureIndex = 1;
+            }
+            spr.X = 2;
+            spr.Y = 2;
+            spr.ResolutionMode = ResolutionMode.HDTV1080;
+            return spr;
+        }
+
+        public static int GetIDFromFileName(string fileName)
+        {
+            if (fileName.Contains("itm"))
+            {
+                string[] split = fileName.Split("itm");
+                try
+                {
+                    return int.Parse(split[1].Split('.').FirstOrDefault());
+                }
+                catch(Exception ex)
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate {
+                        PopupNotification pop = new("FARC filename did not contain a number after \"itm\"");
+                    });
+                    return 1000;
+                }
+            }
+            else
+            {
+                return 1000;
+            }
+        }
+        public static SpriteSetInfo ExportSprite(WizardEntry wiz, int id, string outputFolder, bool isCustomize, UsedIdSet usedIdSet)
+        {
+            //make file
             SpriteSet sprSet = new();
-            SpriteInfo sprInfo = new();
-            SpriteTextureInfo sprTexInfo = new();
-            Sprite spr = Program.GetSprite(isCustomize);
-            Bitmap newBitmap = new(bmp);
-            newBitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
-            Texture text = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(newBitmap, TextureFormat.DXT5, true);
+            Sprite spr = Program.GetSprite(isCustomize, false);
+            Sprite sprFT = Program.GetSprite(isCustomize, true);
+            //make db ??
+            SpriteSetInfo dbEntry = new();
+            SpriteTextureInfo sprTexInfoMM = new();
+            SpriteTextureInfo sprTexInfoFT = new();
+            Texture textureMM;
+            Texture textureFT;
+            Bitmap bit = new(wiz.img_mm);
+            Bitmap bitFT = new(wiz.img_ft);
+            if (isCustomize)
+            {
+                bit = new(wiz.img_h_mm);
+                bitFT = new(wiz.img_h_ft);
+            }
+            bit.RotateFlip(RotateFlipType.Rotate180FlipX);
+            bitFT.RotateFlip(RotateFlipType.Rotate180FlipX);
+            textureMM = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(bit, TextureFormat.DXT5, true);
+            textureMM.Name = "MERGE_BC5COMP_0";
+            textureFT = MikuMikuLibrary.Native.TextureEncoder.EncodeFromBitmap(bitFT, TextureFormat.DXT5, true);
+            textureFT.Name = "MERGE_BC5COMP_1";
+            sprSet.TextureSet.Textures.Add(textureMM);
+            if (Settings.Default.ftCustomise)
+            {
+                sprSet.TextureSet.Textures.Add(textureFT);
+            }
             FarcArchive farc = new();
             var stream = new MemoryStream();
             string fileName = "spr_";
             if (isCustomize)
             {
-                fileName = fileName + "cmnitm_thmb" + id;
+                fileName += "cmnitm_thmb" + id;
                 dbEntry.Name = fileName.ToUpper();
             }
             else
             {
-                fileName = fileName + "sel_md" + id + "cmn";
+                fileName += "sel_md" + id + "cmn";
                 dbEntry.Name = fileName.ToUpper();
             }
             dbEntry.FileName = fileName + ".bin";
-            dbEntry.Id = usedIdSet.GetUnusedID_Maximum(usedIdSet.spr_db, 9999999);
+            Debug.WriteLine($"check 1: {Settings.Default.wizardSequence} wizard seq");
+            if (Settings.Default.wizardSequence)
+            {
+                dbEntry.Id = usedIdSet.GetUnusedID_Sequence(usedIdSet.spr_db, (uint)id);
+            }
+            else
+            {
+                dbEntry.Id = usedIdSet.GetUnusedID_Maximum(usedIdSet.spr_db, 9999999);
+            }
             usedIdSet.spr_db.Add(dbEntry.Id, "Armoire Wizard");
-            text.Name = "MERGE_BC5COMP_0";
-            sprTexInfo.Name = $"SPRTEX_{fileName.ToUpper()}_MERGE_BC5COMP_0";
-            sprTexInfo.Id = usedIdSet.GetUnusedID_Maximum(usedIdSet.spr_db, 9999999);
-            usedIdSet.spr_db.Add(sprTexInfo.Id, "Armoire Wizard");
-            sprInfo.Name = fileName.ToUpper() + "_" + spr.Name;
-            sprInfo.Id = usedIdSet.GetUnusedID_Maximum(usedIdSet.spr_db, 9999999);
-            usedIdSet.spr_db.Add(sprInfo.Id, "Armoire Wizard");
-
+            Debug.WriteLine("added to usedIds");
+            //START TEXTURES TO DB
+            for (int i = 0; i < sprSet.TextureSet.Textures.Count; i++)
+            {
+                SpriteTextureInfo info = new()
+                {
+                    Name = $"SPRTEX_{fileName.ToUpper()}_MERGE_BC5COMP_{i}"
+                };
+                if (Settings.Default.wizardSequence)
+                {
+                    info.Id = usedIdSet.GetUnusedID_Sequence(usedIdSet.spr_db, (uint)id);
+                }
+                else
+                {
+                    info.Id = usedIdSet.GetUnusedID_Maximum(usedIdSet.spr_db, 9999999);
+                }
+                usedIdSet.spr_db.Add(info.Id, "Armoire Wizard");
+                dbEntry.Textures.Add(info);
+            }
+            Debug.WriteLine("added to usedIds 2");
+            //END TEXTURES TO DB
+            //ADD SPRITES TO DB
             //finalize
-            sprSet.TextureSet.Textures.Add(text);
             sprSet.Sprites.Add(spr);
-            dbEntry.Textures.Add(sprTexInfo);
-            dbEntry.Sprites.Add(sprInfo);
+            if (Settings.Default.ftCustomise)
+            {
+                sprSet.Sprites.Add(sprFT);
+            }
+            foreach(Sprite s in sprSet.Sprites)
+            {
+                SpriteInfo sprInf = new();
+                sprInf.Name = fileName.ToUpper() + "_" + s.Name;
+                if (Settings.Default.wizardSequence)
+                {
+                    sprInf.Id = usedIdSet.GetUnusedID_Sequence(usedIdSet.spr_db, (uint)id);
+                }
+                else
+                {
+                    sprInf.Id = usedIdSet.GetUnusedID_Maximum(usedIdSet.spr_db, 9999999);
+                }
+                usedIdSet.spr_db.Add(sprInf.Id, "Auto ID");
+                dbEntry.Sprites.Add(sprInf);
+            }
             //save
             sprSet.Save(stream, true);
             farc.IsCompressed = true;
@@ -333,6 +447,7 @@ namespace Armoire
                 }
             }
             //farc.Dispose();
+            newFarc.IsCompressed = true;
             newFarc.Save($"{modFolderPath}objset\\{fileName}.farc");
             newFarc.Dispose();
         }
@@ -345,121 +460,179 @@ namespace Armoire
             Dictionary<string, CharacterItemFile> exportCharacters = CreateCharacterItemFile();
             string modFolderPath = CreateSubDirectories(Settings.Default.gamePath, modName);
             UsedIdSet usedId = new();
+            Debug.WriteLine("Start process local");
             await Task.Run(() => usedId.ProcessLocalFiles());
+            Debug.WriteLine("Start process DMA");
             await usedId.GetUsedModIds(useDMA);
-            if (itemHost.Children.Count > 0) //check if entries are actually there
+            try
             {
-                ObjectDatabase obj_db = new();
-                TextureDatabase tex_db = new(); //create databases before processing each entry so that they are combined into one mod.
-                foreach (WizardInfo wizInfo in itemHost.Children) //each module/customize item
+                if (itemHost.Children.Count > 0) //check if entries are actually there
                 {
-                    CharacterCostumeEntry costume = new();
-                    costume.items.Clear();
-                    // objset+texset generating
-                    int exportId = usedId.GetUnusedId_Regular(wizInfo.wizMod.id, wizInfo.wizMod.chara);
-                    wizInfo.finalizeModule();
-                    if (!wizInfo.wizMod.isItem)
+                    ObjectDatabase obj_db = new();
+                    TextureDatabase tex_db = new(); //create databases before processing each entry so that they are combined into one mod.
+                    foreach (WizardInfo wizInfo in itemHost.Children) //each module/customize item
                     {
-                        costume.id = usedId.GetUnusedID_Maximum(usedId.chritm_prop_cos[wizInfo.wizMod.chara.Remove(3)], 1000000);
-                    }
-                    foreach (WizardObject wizObj in wizInfo.wizMod.objects)
-                    {
-                        if (!wizObj.isExisting)
+                        CharacterCostumeEntry costume = new();
+                        costume.items.Clear();
+                        // objset+texset generating
+                        int exportId = usedId.GetUnusedId_Regular(wizInfo.wizMod.id, wizInfo.wizMod.chara);
+                        Debug.WriteLine("Start finalize item");
+                        wizInfo.finalizeModule();
+                        if (!wizInfo.wizMod.isItem)
                         {
-                            string fileName = $"{wizInfo.wizMod.chara.Remove(3).ToLower()}itm{exportId}_{wizObj.item.subID}";
-                            if (wizInfo.wizMod.isItem)
+                            Debug.WriteLine("Start check sequence");
+                            if (Settings.Default.wizardSequence)
                             {
-                                fileName = $"cmnitm{exportId}_{wizObj.item.subID}";
-                            }
-                            if (wizObj.item.subID != 24)
-                            {
-                                wizObj.item.uid = $"{fileName}_skin".ToUpper();
+                                costume.id = usedId.GetUnusedID_Sequence(usedId.chritm_prop_cos[wizInfo.wizMod.chara.Remove(3)], wizInfo.wizMod.id);
                             }
                             else
                             {
-                                wizObj.item.uid = "NULL";
+                                costume.id = usedId.GetUnusedID_Maximum(usedId.chritm_prop_cos[wizInfo.wizMod.chara.Remove(3)], 1000000);
                             }
-                            wizObj.item.name = fileName;
-                            wizObj.item.objset = new() { fileName.ToUpper() };
-                            foreach (DataSetTex tex in wizObj.item.dataSetTex)
+                            usedId.chritm_prop_cos[wizInfo.wizMod.chara.Remove(3)].Add(costume.id, "Auto ID");
+                        }
+                        foreach (WizardObject wizObj in wizInfo.wizMod.objects)
+                        {
+                            int subExportID = usedId.GetUnusedId_Regular(GetIDFromFileName(wizObj.objectFilePath), wizInfo.wizMod.chara.Remove(3));
+                            Debug.WriteLine("Start check sequence 2");
+                            if (!Settings.Default.wizardSequence)
                             {
-                                if (tex.chg.Contains("ARMOIREREPLACE"))
+                                subExportID = exportId;
+                            }
+                            if (!wizObj.isExisting)
+                            {
+                                string fileName = $"{wizInfo.wizMod.chara.Remove(3).ToLower()}itm{subExportID}";
+                                Debug.WriteLine("Start check sequence 3");
+                                if (!Settings.Default.wizardSequence)
                                 {
-                                    tex.chg = tex.chg.Replace("ARMOIREREPLACE", fileName.ToUpper());
+                                    fileName = $"{wizInfo.wizMod.chara.Remove(3).ToLower()}itm{subExportID}_{wizObj.item.subID}";
                                 }
-                            }
-                            if (wizInfo.wizMod.isItem)
-                            {
-                                wizObj.item.no = usedId.GetUnusedID_CustomizeItem(wizInfo.wizMod.id);
-                                foreach (CharacterItemFile charaFile in exportCharacters.Values)
+                                if (wizInfo.wizMod.isItem)
                                 {
-                                    charaFile.items.Add(wizObj.item);
+                                    fileName = $"cmnitm{subExportID}_{wizObj.item.subID}";
                                 }
-                                CustomizeItem cust = CreateCustomiseItem(wizInfo.wizMod, usedId, exportId, wizObj.item.no);
-                                exportCustoms.Add(cust);
-                            }
-                            else
-                            {
-                                wizObj.item.no = usedId.GetUnusedID_Maximum(usedId.chritm_prop_item[wizInfo.wizMod.chara.Remove(3)], 1000000);
-                                exportCharacters[wizInfo.wizMod.chara.Remove(3)].items.Add(wizObj.item);
-                                costume.items.Add(wizObj.item.no);
-                                if (wizObj.item.subID == 1)
+                                if (Settings.Default.wizardSequence)
                                 {
+                                    usedId.itmFarcs.Add(fileName, "Auto ID");
+                                }
+                                if (wizObj.item.subID != 24)
+                                {
+                                    wizObj.item.uid = $"{fileName}_skin".ToUpper();
+                                }
+                                else
+                                {
+                                    wizObj.item.uid = "NULL";
+                                }
+                                wizObj.item.name = fileName;
+                                wizObj.item.objset = new() { fileName.ToUpper() };
+                                foreach (DataSetTex tex in wizObj.item.dataSetTex)
+                                {
+                                    if (tex.chg.Contains("ARMOIREREPLACE"))
+                                    {
+                                        tex.chg = tex.chg.Replace("ARMOIREREPLACE", fileName.ToUpper());
+                                    }
+                                }
+                                if (wizInfo.wizMod.isItem)
+                                {
+                                    wizObj.item.no = usedId.GetUnusedID_CharacterItem(wizInfo.wizMod.id);
+                                    foreach (CharacterItemFile charaFile in exportCharacters.Values)
+                                    {
+                                        charaFile.items.Add(wizObj.item);
+                                    }
                                     CustomizeItem cust = CreateCustomiseItem(wizInfo.wizMod, usedId, exportId, wizObj.item.no);
+                                    foreach (Dictionary<int, string> key in usedId.chritm_prop_item.Values)
+                                    {
+                                        key.Add(wizObj.item.no, "Auto ID");
+                                    }
                                     exportCustoms.Add(cust);
                                 }
+                                else
+                                {
+                                    wizObj.item.no = usedId.GetUnusedID_Maximum(usedId.chritm_prop_item[wizInfo.wizMod.chara.Remove(3)], 1000000);
+                                    Debug.WriteLine("Start check sequence 4");
+                                    if (Settings.Default.wizardSequence)
+                                    {
+                                        wizObj.item.no = usedId.GetUnusedID_Sequence(usedId.chritm_prop_item[wizInfo.wizMod.chara.Remove(3)], subExportID);
+                                    }
+                                    usedId.chritm_prop_item[wizInfo.wizMod.chara.Remove(3)].Add(wizObj.item.no, "");
+                                    Debug.WriteLine("midgap");
+                                    exportCharacters[wizInfo.wizMod.chara.Remove(3)].items.Add(wizObj.item);
+                                    costume.items.Add(wizObj.item.no);
+                                    if (wizObj.item.subID == 1 && !wizInfo.wizMod.hairNG)
+                                    {
+                                        Debug.WriteLine("hair gap");
+                                        CustomizeItem cust = CreateCustomiseItem(wizInfo.wizMod, usedId, exportId, wizObj.item.no);
+                                        spr_db.SpriteSets.Add(ExportSprite(wizInfo.wizMod, exportId, modFolderPath + "2d\\", true, usedId));
+                                        exportCustoms.Add(cust);
+                                    }
+                                }
+                                Debug.WriteLine("generate databases");
+                                GenerateObjsetDatabases(wizObj, usedId, tex_db, obj_db, modFolderPath, fileName);
                             }
-                            GenerateObjsetDatabases(wizObj, usedId, tex_db, obj_db, modFolderPath, fileName);
                         }
+                        if (!wizInfo.wizMod.isItem)
+                        {
+                            foreach (CharacterItemEntry existingItem in wizInfo.wizMod.existingItems)
+                            {
+                                costume.items.Add(existingItem.no);
+                                Debug.WriteLine("Added to cos");
+                            }
+                            exportCharacters[wizInfo.wizMod.chara.Remove(3)].costumes.Add(costume);
+                            Debug.WriteLine("Added cos to exportCharacters");
+                            Module module = CreateModule(wizInfo.wizMod, usedId, exportId, costume.id);
+                            Debug.WriteLine("Created module");
+                            if (wizInfo.wizMod.hairNG)
+                            {
+                                module.attr = Attr.NoSwap_CT;
+                            }
+                            Debug.WriteLine("assigned module attr");
+                            exportModules.Add(module);
+                            Debug.WriteLine("added module");
+                        }
+                        //sprite
+                        spr_db.SpriteSets.Add(ExportSprite(wizInfo.wizMod, exportId, modFolderPath + "2d\\", wizInfo.wizMod.isItem, usedId));
+                            Debug.WriteLine("added sprite and exported");
                     }
-                    if (!wizInfo.wizMod.isItem)
+                    if (exportModules.Count > 0)
                     {
-                        foreach (CharacterItemEntry existingItem in wizInfo.wizMod.existingItems)
-                        {
-                            costume.items.Add(existingItem.no);
-                            Debug.WriteLine("Added to cos");
-                        }
-                        exportCharacters[wizInfo.wizMod.chara.Remove(3)].costumes.Add(costume);
-                        Debug.WriteLine("Added cos to exportCharacters");
-                        Module module = CreateModule(wizInfo.wizMod, usedId, exportId, costume.id);
-                        if (wizInfo.wizMod.hairNG)
-                        {
-                            module.attr = Attr.NoSwap_CT;
-                        }
-                        exportModules.Add(module);
+                        Program.IO.SaveFile<Module>(modFolderPath + "mod_gm_module_tbl.farc", exportModules);
                     }
-                    //sprite
-                    spr_db.SpriteSets.Add(ExportSprite(wizInfo.wizMod.bitmap, exportId, modFolderPath + "2d\\", wizInfo.wizMod.isItem, usedId));
+                    Debug.WriteLine("modules saved");
+                    WriteLangFile(modFolderPath, exportModules, exportCustoms);
+                    Debug.WriteLine("lang saved");
+                    if (exportCustoms.Count > 0)
+                    {
+                        Program.IO.SaveFile<CustomizeItem>(modFolderPath + "mod_gm_customize_item_tbl.farc", exportCustoms);
+                    }
+                    Debug.WriteLine("customize items saved");
+                    ObservableCollection<CharacterItemFile> exportChara = new();
+                    foreach (CharacterItemFile chritmFile in exportCharacters.Values)
+                    {
+                        exportChara.Add(chritmFile);
+                    }
+                    Program.IO.SaveChr($"{modFolderPath}mod_chritm_prop.farc", exportChara);
+                    Debug.WriteLine("Saved chritm");
+                    spr_db.Save($"{modFolderPath}2d\\mod_spr_db.bin");
+                    Debug.WriteLine("spr_db saved");
+                    if (obj_db.ObjectSets.Count > 0)
+                    {
+                        obj_db.Save($"{modFolderPath}objset\\mod_obj_db.bin");
+                    }
+                    Debug.WriteLine("obj_db saved");
+                    if (tex_db.Textures.Count > 0)
+                    {
+                        tex_db.Save($"{modFolderPath}objset\\mod_tex_db.bin");
+                    }
+                    Debug.WriteLine("tex_db saved");
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        PopupNotification popup = new("The Wizard has finished creating your items.");
+                    });
                 }
-                if (exportModules.Count > 0)
-                {
-                    Program.IO.SaveFile<Module>(modFolderPath + "mod_gm_module_tbl.farc", exportModules);
-                }
-                WriteLangFile(modFolderPath, exportModules, exportCustoms);
-                if (exportCustoms.Count > 0)
-                {
-                    Program.IO.SaveFile<CustomizeItem>(modFolderPath + "mod_gm_customize_item_tbl.farc", exportCustoms);
-                }
-                ObservableCollection<CharacterItemFile> exportChara = new();
-                foreach (CharacterItemFile chritmFile in exportCharacters.Values)
-                {
-                    exportChara.Add(chritmFile);
-                }
-                Program.IO.SaveChr($"{modFolderPath}mod_chritm_prop.farc", exportChara);
-                Debug.WriteLine("Saved chritm");
-                spr_db.Save($"{modFolderPath}2d\\mod_spr_db.bin");
-                if (obj_db.ObjectSets.Count > 0)
-                {
-                    obj_db.Save($"{modFolderPath}objset\\mod_obj_db.bin");
-                }
-                if (tex_db.Textures.Count > 0)
-                {
-                    tex_db.Save($"{modFolderPath}objset\\mod_tex_db.bin");
-                }
-                App.Current.Dispatcher.Invoke((Action)delegate
-                {
-                    PopupNotification popup = new("The Wizard has finished creating your items.");
-                });
+            }
+            catch (Exception ex)
+            {
+                NotiBox noti = new((ex.Source + " - " + ex.Message), "ERROR - Please report to Jay!");
             }
         }
     }

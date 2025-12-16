@@ -1,4 +1,5 @@
 ﻿using Armoire.Dialogs;
+using Armoire.Properties;
 using Microsoft.Win32;
 using System;
 using System.Drawing;
@@ -17,7 +18,15 @@ namespace Armoire
             CharacterBox.ItemsSource = Program.charas;
             CharacterBox.SelectedIndex = 0;
             wizMod.chara = Program.charas[0];
-            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, moduleImage);
+            if (!Settings.Default.ftCustomise)
+            {
+                HairTabFT.Visibility = Visibility.Collapsed;
+                ModuleTabFT.Visibility = Visibility.Collapsed;
+            }
+            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, moduleImageMM);
+            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, moduleImageFT);
+            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, hairImageMM);
+            Program.Wizard.SetModuleImage(Properties.Resources.md_dummy, hairImageFT);
         }
 
         private void Preset_Click(object sender, RoutedEventArgs e)
@@ -75,7 +84,6 @@ namespace Armoire
         private void NameButton_Click(object sender, RoutedEventArgs e)
         {
             TextEntry tex = new(false, "Enter Item Name");
-            tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrWhiteSpace(tex.Result))
             {
                 NameText.Text = Properties.Resources.cmn_name + ": " + tex.Result;
@@ -87,7 +95,6 @@ namespace Armoire
         private void IdButton_Click(object sender, RoutedEventArgs e)
         {
             TextEntry tex = new(true, "Enter ID Value");
-            tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
                 wizMod.id = int.Parse(tex.Result);
@@ -99,7 +106,6 @@ namespace Armoire
         private void IndexButton_Click(object sender, RoutedEventArgs e)
         {
             TextEntry tex = new(true, "Enter Sorting Index Value");
-            tex.ShowDialog();
             if (tex.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrWhiteSpace(tex.Result) && !tex.Result.Contains(' '))
             {
                 wizMod.sort_index = int.Parse(tex.Result);
@@ -144,7 +150,7 @@ namespace Armoire
             }
         }
 
-        private void SelectImageButton_Click(object sender, RoutedEventArgs e)
+        private void SelectModuleImageMMButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new() { Filter = "PNG Files|*.png" };
             if (ofd.ShowDialog() == true)
@@ -152,8 +158,59 @@ namespace Armoire
                 Bitmap pngImage = new(ofd.FileName);
                 if (pngImage.Width == 512 && pngImage.Height == 512)
                 {
-                    Program.Wizard.SetModuleImage(pngImage, moduleImage);
-                    wizMod.bitmap = pngImage;
+                    Program.Wizard.SetModuleImage(pngImage, moduleImageMM);
+                    wizMod.img_mm = pngImage;
+                }
+                else
+                {
+                    Program.NotiBox(Properties.Resources.exp_3, Properties.Resources.cmn_error);
+                }
+            }
+        }
+        private void SelectModuleImageFTButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new() { Filter = "PNG Files|*.png" };
+            if (ofd.ShowDialog() == true)
+            {
+                Bitmap pngImage = new(ofd.FileName);
+                if (pngImage.Width == 512 && pngImage.Height == 512)
+                {
+                    Program.Wizard.SetModuleImage(pngImage, moduleImageFT);
+                    wizMod.img_ft = pngImage;
+                }
+                else
+                {
+                    Program.NotiBox(Properties.Resources.exp_3, Properties.Resources.cmn_error);
+                }
+            }
+        }
+        private void SelectHairImageMMButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new() { Filter = "PNG Files|*.png" };
+            if (ofd.ShowDialog() == true)
+            {
+                Bitmap pngImage = new(ofd.FileName);
+                if (pngImage.Width == 512 && pngImage.Height == 512)
+                {
+                    Program.Wizard.SetModuleImage(pngImage, hairImageMM);
+                    wizMod.img_h_mm = pngImage;
+                }
+                else
+                {
+                    Program.NotiBox(Properties.Resources.exp_3, Properties.Resources.cmn_error);
+                }
+            }
+        }
+        private void SelectHairImageFTButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new() { Filter = "PNG Files|*.png" };
+            if (ofd.ShowDialog() == true)
+            {
+                Bitmap pngImage = new(ofd.FileName);
+                if (pngImage.Width == 512 && pngImage.Height == 512)
+                {
+                    Program.Wizard.SetModuleImage(pngImage, hairImageFT);
+                    wizMod.img_h_ft = pngImage;
                 }
                 else
                 {
@@ -234,6 +291,16 @@ namespace Armoire
                 wizMod.objects.Add(wizObj);
                 ItemFileName.Text = Path.GetFileNameWithoutExtension(ofd.FileName);
             }
+        }
+
+        private void HairSwapCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PreviewImage_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

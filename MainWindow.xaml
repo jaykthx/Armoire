@@ -171,9 +171,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <UniformGrid Grid.ColumnSpan="3" Columns="3" Grid.Row="1">
-                    <Button Content="{x:Static p:Resources.cmn_add}" Click="WizardAddButton_Click"/>
-                    <Button Content="{x:Static p:Resources.cmn_remove_all}" Click="WizardRemoveButton_Click"/>
-                    <Button Content="{x:Static p:Resources.cmn_finish}" FontWeight="Bold" Click="WizardCreateButton_Click"/>
+                    <Button x:Name="WizardAddButton" Content="{x:Static p:Resources.cmn_add}" Click="WizardAddButton_Click"/>
+                    <Button x:Name="WizardRemoveButton" Content="{x:Static p:Resources.cmn_remove_all}" Click="WizardRemoveButton_Click"/>
+                    <Button x:Name="WizardCreateButton" Content="{x:Static p:Resources.cmn_finish}" FontWeight="Bold" Click="WizardCreateButton_Click"/>
                 </UniformGrid>
                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" CanContentScroll="True" Grid.Row="0" Grid.ColumnSpan="4">
                     <StackPanel x:Name="itemHost"/>
@@ -219,6 +219,8 @@
                     <RowDefinition MinHeight="30" Height="50"/>
                     <RowDefinition MinHeight="30" Height="50"/>
                     <RowDefinition MinHeight="30" Height="50"/>
+                    <RowDefinition MinHeight="30" Height="50"/>
+                    <RowDefinition MinHeight="30" Height="50"/>
                     <RowDefinition MinHeight="20" Height="*"/>
                 </Grid.RowDefinitions>
                 <UniformGrid Columns="2" Rows="0">
@@ -245,7 +247,21 @@
                         <ComboBoxItem Content="{x:Static p:Resources.settings_autocheck_on}"/>
                     </ComboBox>
                 </UniformGrid>
-                <Border Grid.Row="5" BorderBrush="{StaticResource Color3Brush}" BorderThickness="1">
+                <UniformGrid Columns="2" Grid.Row="5">
+                    <TextBlock Text="{x:Static p:Resources.settings_wizard_sequence}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="WizardSequenceComboBox" Style="{StaticResource ComboStyle}" SelectionChanged="WizardSequenceComboBox_SelectionChanged">
+                        <ComboBoxItem Content="{x:Static p:Resources.settings_wizard_sequence_random}"/>
+                        <ComboBoxItem Content="{x:Static p:Resources.settings_wizard_sequence_order}"/>
+                    </ComboBox>
+                </UniformGrid>
+                <UniformGrid Columns="2" Grid.Row="6">
+                    <TextBlock Text="{x:Static p:Resources.settings_ftcustom}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip=""/>
+                    <ComboBox x:Name="FutureToneCustomiseComboBox" Style="{StaticResource ComboStyle}" SelectionChanged="FutureToneCustomiseComboBox_SelectionChanged">
+                        <ComboBoxItem Content="{x:Static p:Resources.settings_ftcustom_nouse}"/>
+                        <ComboBoxItem Content="{x:Static p:Resources.settings_ftcustom_use}"/>
+                    </ComboBox>
+                </UniformGrid>
+                <Border Grid.Row="7" BorderBrush="{StaticResource Color3Brush}" BorderThickness="1">
                     <TextBlock TextAlignment="Center" VerticalAlignment="Center">
     Armoire by jaykthx.
     <LineBreak/>Thanks to <Hyperlink NavigateUri="https://github.com/blueskythlikesclouds" RequestNavigate="Hyperlink_RequestNavigate">Skyth</Hyperlink> for <Hyperlink NavigateUri="https://github.com/blueskythlikesclouds/MikuMikuLibrary" RequestNavigate="Hyperlink_RequestNavigate">MikuMikuLibrary</Hyperlink>.<LineBreak/>
@@ -254,7 +270,6 @@
                         <LineBreak/>P.S. both modding servers are bad rest in piss
                     </TextBlock>
                 </Border>
-                
             </Grid>
         </TabItem>
     </TabControl>

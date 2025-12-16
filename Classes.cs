@@ -215,6 +215,7 @@ namespace Armoire
             {
                 outValue = (uint)random.Next(0, maximum);
             }
+            //list.Add(outValue, "Auto ID");
             return outValue;
         }
         public int GetUnusedID_Maximum(Dictionary<int, string> list, int maximum)
@@ -225,10 +226,29 @@ namespace Armoire
             {
                 outValue = random.Next(0, maximum);
             }
+            //list.Add(outValue, "Auto ID");
             return outValue;
         }
+        public int GetUnusedID_Sequence(Dictionary<int, string> list, int current)
+        {
+            while (list.Keys.Contains(current))
+            {
+                current++;
+            }
+            //list.Add(current, "Auto ID");
+            return current;
+        }
+        public uint GetUnusedID_Sequence(Dictionary<uint, string> list, uint current)
+        {
+            while (list.Keys.Contains(current))
+            {
+                current++;
+            }
+            //list.Add(current, "Auto ID");
+            return current;
+        }
 
-        public int GetUnusedID_CustomizeItem(int currentId)
+        public int GetUnusedID_CharacterItem(int currentId)
         {
             List<int> allIds = new();
             foreach(Dictionary<int, string> ids in chritm_prop_item.Values)
@@ -1196,7 +1216,10 @@ namespace Armoire
         public string chara;
         public int sort_index = 999;
         public List<CharacterItemEntry> existingItems = new();
-        public Bitmap bitmap = Resources.md_dummy;
+        public Bitmap img_mm = Resources.md_dummy;
+        public Bitmap img_ft = Resources.md_dummy;
+        public Bitmap img_h_mm = Resources.md_dummy;
+        public Bitmap img_h_ft = Resources.md_dummy;
     }
 
     public class LocalisedNames

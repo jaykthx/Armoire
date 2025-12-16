@@ -25,15 +25,12 @@ namespace Armoire.Dialogs
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             TextEntry win = new(true, "Enter desired value.");
-            if (win.ShowDialog() == true)
+            if (win.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrEmpty(win.Result))
             {
-                if (win.Result != Properties.Resources.cmn_enter_value && !string.IsNullOrEmpty(win.Result))
-                {
-                    cosCxt.items.Add(int.Parse(win.Result));
-                    itemList.Items.Refresh();
-                }
-                else { Program.NotiBox(Properties.Resources.warn_enter_value, Properties.Resources.cmn_error); }
+                cosCxt.items.Add(int.Parse(win.Result));
+                itemList.Items.Refresh();
             }
+            else { Program.NotiBox(Properties.Resources.warn_enter_value, Properties.Resources.cmn_error); }
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -55,7 +52,6 @@ namespace Armoire.Dialogs
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TextEntry tex = new(true, Properties.Resources.cmn_enter_value);
-            tex.ShowDialog();
             if(!string.IsNullOrEmpty(tex.Result))
             {
                 cosCxt.id = int.Parse(tex.Result);

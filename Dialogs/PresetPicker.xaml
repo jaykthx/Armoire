@@ -17,11 +17,11 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="holdName" Text="{Binding name}" TextAlignment="Center" VerticalAlignment="Center"/>
             <UniformGrid Rows="9" Grid.Row="1">
-                <Button x:Name="hairButton" Content="{x:Static p:Resources.item_hair}" Click="hair_Click"/>
                 <Button x:Name="bodyButton" Content="{x:Static p:Resources.item_body}" Click="body_Click"/>
                 <Button x:Name="handButton" Content="{x:Static p:Resources.item_hands}" Click="hand_Click"/>
-                <Button x:Name="eyeButton" Content="{x:Static p:Resources.item_eye}" Click="eye_Click"/>
+                <Button x:Name="hairButton" Content="{x:Static p:Resources.item_hair}" Click="hair_Click"/>
                 <Button x:Name="contactButton" Content="{x:Static p:Resources.item_contact}" Click="contact_Click"/>
+                <Button x:Name="eyeButton" Content="{x:Static p:Resources.item_eye}" Click="eye_Click"/>
                 <Button x:Name="headAccButton" Content="{x:Static p:Resources.item_headacc}" Click="headAcc_Click"/>
                 <Button x:Name="faceAccButton" Content="{x:Static p:Resources.item_faceacc}" Click="faceAcc_Click"/>
                 <Button x:Name="chestAccButton" Content="{x:Static p:Resources.item_chestacc}" Click="chestAcc_Click"/>

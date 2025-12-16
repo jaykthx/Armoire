@@ -160,7 +160,7 @@
     <value>ENTER VALUE HERE</value>
   </data>
   <data name="cmn_error" xml:space="preserve">
-    <value>エラーが発生しました。</value>
+    <value>エラーが発生しました</value>
   </data>
   <data name="cmn_exit" xml:space="preserve">
     <value>終了</value>
@@ -596,7 +596,7 @@
     <value>まだ保存していないデータがあります、本当にArmoireを終了してよろしいですか？</value>
   </data>
   <data name="cmn_lang" xml:space="preserve">
-    <value>言語:</value>
+    <value>言語</value>
   </data>
   <data name="dma_check_1" xml:space="preserve">
     <value>このプロセスはmodsというフォルダにある各MODとMega39s+の基盤ファイルやDivaModArchiveにアップされているMODの一致しているIDなどをテキストファイルに記します。</value>
@@ -647,10 +647,10 @@
     <value>スプライトテクスチャID</value>
   </data>
   <data name="settings_dma" xml:space="preserve">
-    <value>DivaModArchive対応詳細保存先設定</value>
+    <value>DivaModArchive対応詳細保存先</value>
   </data>
   <data name="settings_game" xml:space="preserve">
-    <value>ゲームデータ先設定</value>
+    <value>ゲームデータ先</value>
   </data>
   <data name="wizard_add_new" xml:space="preserve">
     <value>新しく追加</value>
@@ -734,12 +734,30 @@
     <value>左右中央揃え</value>
   </data>
   <data name="settings_autocheck" xml:space="preserve">
-    <value>起動時に更新情報の取得:</value>
+    <value>起動時に更新情報の取得</value>
   </data>
   <data name="settings_autocheck_on" xml:space="preserve">
     <value>する</value>
   </data>
   <data name="settings_autocheck_off" xml:space="preserve">
+    <value>しない</value>
+  </data>
+  <data name="settings_wizard_sequence" xml:space="preserve">
+    <value>ウイザードID生成方法</value>
+  </data>
+  <data name="settings_wizard_sequence_random" xml:space="preserve">
+    <value>ランダム</value>
+  </data>
+  <data name="settings_wizard_sequence_order" xml:space="preserve">
+    <value>順次</value>
+  </data>
+  <data name="settings_ftcustom" xml:space="preserve">
+    <value>「Future Tone Customization」というMODの対応</value>
+  </data>
+  <data name="settings_ftcustom_use" xml:space="preserve">
+    <value>する</value>
+  </data>
+  <data name="settings_ftcustom_nouse" xml:space="preserve">
     <value>しない</value>
   </data>
 </root>

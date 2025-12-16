@@ -100,7 +100,7 @@ namespace Armoire.Dialogs
             int index = 0;
             List<ObjectSetInfo> objColle = new();
             TextEntry tex = new TextEntry(true, Properties.Resources.warn_increment);
-            if (tex.ShowDialog() == true && tex.Result.Length > 0)
+            if (tex.Result.Length > 0)
             {
                 foreach (var x in Grid1.SelectedItems)
                 {
@@ -235,13 +235,9 @@ namespace Armoire.Dialogs
         {
             Program.NotiBox(Properties.Resources.warn_case_sensitive, Properties.Resources.window_notice);
             TextEntry ti = new(false, Properties.Resources.replace_old);
+            string detect = ti.Result;
             TextEntry ti2 = new(false, Properties.Resources.replace_new);
-            string detect;
-            string number;
-            ti.ShowDialog();
-            ti2.ShowDialog();
-            detect = ti.Result;
-            number = ti2.Result;
+            string number = ti2.Result;
             foreach (ObjectSetInfo objSet in Grid1.SelectedItems)
             {
                 if (objSet.ArchiveFileName.Contains(detect))

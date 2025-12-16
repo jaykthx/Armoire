@@ -27,6 +27,7 @@ namespace Armoire.Dialogs
                 numBox.Focus();
             }
             win1.Title = topTitle;
+            this.ShowDialog();
         }
 
         public string Result

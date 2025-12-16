@@ -10,6 +10,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -109,15 +110,18 @@ namespace Armoire
         {
             ContextMenuFix();
             Settings.Default.Reload();
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB", false);
             var selLang = (LanguageSetting)Settings.Default.languageSetting;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(selLang.ToString());
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(selLang.ToString());
             InitializeComponent();
             this.Title = $"Armoire ({Program.versionDate.Date.ToShortDateString()})";
             SetAlignment(Settings.Default.alignmentSetting);
             AutoCheckComboBox.SelectedIndex = Convert.ToInt32(Settings.Default.autoCheckSetting);
+            WizardSequenceComboBox.SelectedIndex = Convert.ToInt32(Settings.Default.wizardSequence);
+            FutureToneCustomiseComboBox.SelectedIndex = Convert.ToInt32(Settings.Default.ftCustomise);
             if (Settings.Default.autoCheckSetting)
             {
-                Program.DownloadUpdate();
+                Program.CheckForUpdate();
             }
             charaBox_Modules.ItemsSource = Program.charas;
             attrBox.ItemsSource = Enum.GetValues(typeof(Attr)).Cast<Attr>();
@@ -737,45 +741,54 @@ namespace Armoire
             Program.charaPath = null;
         }
 
-        private void DMAUpdate_Click(object sender, RoutedEventArgs e) //DMA Update
+        private async void DMAUpdate_Click(object sender, RoutedEventArgs e) //DMA Update
         {
             if (Settings.Default.lastDmaUpdate.Date == DateTime.Today.Date)
             {
                 ChoiceWindow choice = new(Properties.Resources.dma_update_already, Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
                 if (choice.isRightClicked)
                 {
-                    Program.IO.DMAUpdate();
-                    LockControls();
+                    LockControls(true);
+                    await Program.IO.DMAUpdate();
+                    LockControls(false);
                 }
             }
             else
             {
-                Program.IO.DMAUpdate();
-                LockControls();
+                LockControls(true);
+                await Program.IO.DMAUpdate();
+                LockControls(false);
             }
         }
 
-        private void LockControls()
+        private void LockControls(bool setLock)
         {
-            Task.Run(() =>
+            if (setLock)
             {
-                while (Program.downloader.downloads.Count > 0)
+                SelfUpdateButton.IsEnabled = false;
+                DmaDownloadButton.IsEnabled = false;
+                WizardCreateButton.IsEnabled = false;
+                WizardAddButton.IsEnabled = false;
+                WizardRemoveButton.IsEnabled = false;
+                foreach (WizardInfo info in itemHost.Children)
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
-                    {
-                        SelfUpdateButton.IsEnabled = false;
-                        DmaDownloadButton.IsEnabled = false;
-                    });
-                    
+                    info.IsEnabled = false;
                 }
-                App.Current.Dispatcher.Invoke((Action)delegate
+            }
+            else
+            {
+                SelfUpdateButton.IsEnabled = true;
+                DmaDownloadButton.IsEnabled = true;
+                WizardCreateButton.IsEnabled = true;
+                WizardAddButton.IsEnabled = true;
+                WizardRemoveButton.IsEnabled = true;
+                foreach (WizardInfo info in itemHost.Children)
                 {
-                    SelfUpdateButton.IsEnabled = true;
-                    DmaDownloadButton.IsEnabled = true;
-                });
-            });
+                    info.IsEnabled = true;
+                }
+            }
         }
-        
+
         private async void DMACheck_Click(object sender, RoutedEventArgs e) //DMA Check
         {
             ChoiceWindow choice = new($"{Properties.Resources.dma_check_1}\n{Properties.Resources.dma_check_2}\n{Properties.Resources.cmn_sure}", Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
@@ -850,7 +863,6 @@ namespace Armoire
 
         private async void WizardCreateButton_Click(object sender, RoutedEventArgs e)
         {
-            //Task.Run(() => Create());
             if(itemHost.Children.Count > 0)
             {
                 while (string.IsNullOrEmpty(Settings.Default.gamePath) || !Settings.Default.gamePath.EndsWith("Hatsune Miku Project DIVA Mega Mix Plus"))
@@ -868,14 +880,16 @@ namespace Armoire
                 TextEntry tex = new(false, "Enter Mod Title");
                 while (string.IsNullOrWhiteSpace(tex.Result))
                 {
-                    tex.ShowDialog();
+                    tex = new(false, "Enter Mod Title");
                     if (string.IsNullOrWhiteSpace(tex.Result))
                     {
                         PopupNotification pop = new("Please enter a valid name.");
                     }
                 }
                 ChoiceWindow choice = new("Would you like to use DMA to increase compatibility with existing mods?", Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
+                LockControls(true);
                 await WizardCode.WizardCreate(itemHost, choice.isRightClicked, tex.Result);
+                LockControls(false);
             }
             else
             {
@@ -894,8 +908,29 @@ namespace Armoire
 
         private void SelfUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Program.DownloadUpdate();
-            LockControls();
+            UpdateCheck();
+        }
+
+        private async void UpdateCheck()
+        {
+            (bool isAvailable, string? url, string? blurb) = await Program.CheckForUpdate();
+            if (isAvailable)
+            {
+                LockControls(true);
+                ChoiceWindow choice = new(blurb, Properties.Resources.cmn_no, Properties.Resources.cmn_yes);
+                if (choice.isRightClicked)
+                {
+                    Program.DownloadUpdate(url);
+                }
+                else
+                {
+                    LockControls(false);
+                }
+            }
+            else
+            {
+                PopupNotification pop = new(Properties.Resources.notice_update_newest);
+            }
         }
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -905,7 +940,7 @@ namespace Armoire
                 switch (LanguageComboBox.SelectedIndex)
                 {
                     case 0:
-                        System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
+                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
                         Settings.Default.languageSetting = LanguageComboBox.SelectedIndex;
                         Settings.Default.Save();
                         foreach (Window win in Application.Current.Windows)
@@ -920,7 +955,7 @@ namespace Armoire
                         this.Close();
                         break;
                     case 1:
-                        System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ja");
+                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ja");
                         Settings.Default.languageSetting = LanguageComboBox.SelectedIndex;
                         Settings.Default.Save();
                         foreach (Window win in Application.Current.Windows)
@@ -938,11 +973,6 @@ namespace Armoire
                         break;
                 }
             }
-        }
-
-        private void About_Click(object sender, RoutedEventArgs e)
-        {
-            Program.NotiBox("" + new Hyperlink(), "About");
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) //https://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf tysm
@@ -1022,7 +1052,6 @@ namespace Armoire
             switch (align)
             {
                 case 0:
-                    Debug.WriteLine("honestly");
                     app.ChangeAlignment(HorizontalAlignment.Center);
                     break;
                 case 1:
@@ -1048,6 +1077,40 @@ namespace Armoire
             {
                 Settings.Default.autoCheckSetting = Convert.ToBoolean(AutoCheckComboBox.SelectedIndex);
                 Settings.Default.Save();
+            }
+        }
+
+        private void WizardSequenceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WizardSequenceComboBox.SelectedIndex > -1)
+            {
+                Settings.Default.wizardSequence = Convert.ToBoolean(WizardSequenceComboBox.SelectedIndex);
+                Settings.Default.Save();
+            }
+        }
+
+        private void FutureToneCustomiseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (FutureToneCustomiseComboBox.SelectedIndex > -1)
+            {
+                Settings.Default.ftCustomise = Convert.ToBoolean(FutureToneCustomiseComboBox.SelectedIndex);
+                Settings.Default.Save();
+                if (Settings.Default.ftCustomise)
+                {
+                    foreach(WizardInfo wiz in itemHost.Children)
+                    {
+                        wiz.HairTabFT.Visibility = Visibility.Visible;
+                        wiz.ModuleTabFT.Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    foreach (WizardInfo wiz in itemHost.Children)
+                    {
+                        wiz.HairTabFT.Visibility = Visibility.Collapsed;
+                        wiz.ModuleTabFT.Visibility = Visibility.Collapsed;
+                    }
+                }
             }
         }
     }

@@ -596,7 +596,7 @@
     <value>You have unsaved changes, are you sure you want to exit Armoire?</value>
   </data>
   <data name="cmn_lang" xml:space="preserve">
-    <value>Language:</value>
+    <value>Language</value>
   </data>
   <data name="dma_check_1" xml:space="preserve">
     <value>This process will check EVERY mod in your mods folder and export any conflicts with the base game AND the DMA compatibility information.</value>
@@ -734,12 +734,30 @@
     <value>Centre</value>
   </data>
   <data name="settings_autocheck" xml:space="preserve">
-    <value>Check for updates on launch:</value>
+    <value>Check for updates on launch</value>
   </data>
   <data name="settings_autocheck_on" xml:space="preserve">
     <value>Enabled</value>
   </data>
   <data name="settings_autocheck_off" xml:space="preserve">
     <value>Disabled</value>
+  </data>
+  <data name="settings_wizard_sequence" xml:space="preserve">
+    <value>Wizard ID Generation Setting</value>
+  </data>
+  <data name="settings_wizard_sequence_random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="settings_wizard_sequence_order" xml:space="preserve">
+    <value>Sequential</value>
+  </data>
+  <data name="settings_ftcustom" xml:space="preserve">
+    <value>'Future Tone Customization' Compatibility </value>
+  </data>
+  <data name="settings_ftcustom_use" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="settings_ftcustom_nouse" xml:space="preserve">
+    <value>Don't Add</value>
   </data>
 </root>

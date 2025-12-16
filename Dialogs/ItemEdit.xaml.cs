@@ -25,18 +25,15 @@ namespace Armoire.Dialogs
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            if(ObjsetBox.Items.Count < 2)
+            if (ObjsetBox.Items.Count < 2)
             {
                 TextEntry win = new(false, Properties.Resources.warn_enter_value);
-                if(win.ShowDialog() == true)
+                if (win.Result != "ENTER VALUE HERE")
                 {
-                    if (win.Result != "ENTER VALUE HERE")
-                    {
-                        itemCxt.objset.Add(win.Result);
-                        ObjsetBox.Items.Refresh();
-                    }
-                    else { Program.NotiBox(Properties.Resources.warn_enter_value, Properties.Resources.cmn_error); }
+                    itemCxt.objset.Add(win.Result);
+                    ObjsetBox.Items.Refresh();
                 }
+                else { Program.NotiBox(Properties.Resources.warn_enter_value, Properties.Resources.cmn_error); }
             }
             else
             {

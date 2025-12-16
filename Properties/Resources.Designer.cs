@@ -313,7 +313,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language:.
+        ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string cmn_lang {
             get {
@@ -1241,7 +1241,7 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check for updates on launch:.
+        ///   Looks up a localized string similar to Check for updates on launch.
         /// </summary>
         public static string settings_autocheck {
             get {
@@ -1277,11 +1277,65 @@ namespace Armoire.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;Future Tone Customization&apos; Compatibility .
+        /// </summary>
+        public static string settings_ftcustom {
+            get {
+                return ResourceManager.GetString("settings_ftcustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t Add.
+        /// </summary>
+        public static string settings_ftcustom_nouse {
+            get {
+                return ResourceManager.GetString("settings_ftcustom_nouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string settings_ftcustom_use {
+            get {
+                return ResourceManager.GetString("settings_ftcustom_use", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Game Data Path.
         /// </summary>
         public static string settings_game {
             get {
                 return ResourceManager.GetString("settings_game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wizard ID Generation Setting.
+        /// </summary>
+        public static string settings_wizard_sequence {
+            get {
+                return ResourceManager.GetString("settings_wizard_sequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequential.
+        /// </summary>
+        public static string settings_wizard_sequence_order {
+            get {
+                return ResourceManager.GetString("settings_wizard_sequence_order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        public static string settings_wizard_sequence_random {
+            get {
+                return ResourceManager.GetString("settings_wizard_sequence_random", resourceCulture);
             }
         }
         

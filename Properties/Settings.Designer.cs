@@ -117,5 +117,29 @@ namespace Armoire.Properties {
                 this["autoCheckSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool wizardSequence {
+            get {
+                return ((bool)(this["wizardSequence"]));
+            }
+            set {
+                this["wizardSequence"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ftCustomise {
+            get {
+                return ((bool)(this["ftCustomise"]));
+            }
+            set {
+                this["ftCustomise"] = value;
+            }
+        }
     }
 }
